@@ -1,0 +1,21 @@
+{
+    "name": "Unity.Mathematics.Fixed.Tests",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Mathematics.Fixed",
+        "UnityEngine.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
