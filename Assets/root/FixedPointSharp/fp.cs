@@ -98,6 +98,9 @@ namespace Deterministic.FixedPoint {
         public static readonly fp snoiseA = ParseUnsafe(1.79284291400159f);
         public static readonly fp snoiseB = ParseUnsafe(0.85373472095314f);
         
+        public static readonly fp TODEGREES = ((fp)360)/fp.pi2;
+        public static readonly fp TORADIANS = fp.pi2/((fp)360);
+        
         public static class raw {
 
             public const long max        = long.MaxValue;

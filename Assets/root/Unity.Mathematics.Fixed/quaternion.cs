@@ -555,7 +555,7 @@ namespace Unity.Mathematics.Fixed
         {
             float4 x = q.value;
             fp len = math.dot(x, x);
-            return quaternion(math.select(Mathematics.Fixed.quaternion.identity.value, x * math.rsqrt(len), len > FLT_MIN_NORMAL));
+            return quaternion(math.select(Mathematics.Fixed.quaternion.identity.value, x * math.rsqrt(len), len > FP_MIN_NORMAL));
         }
 
         /// <summary>
@@ -570,7 +570,7 @@ namespace Unity.Mathematics.Fixed
         {
             float4 x = q.value;
             fp len = math.dot(x, x);
-            return quaternion(math.select(defaultvalue.value, x * math.rsqrt(len), len > FLT_MIN_NORMAL));
+            return quaternion(math.select(defaultvalue.value, x * math.rsqrt(len), len > FP_MIN_NORMAL));
         }
 
         /// <summary>Returns the natural exponent of a quaternion. Assumes w is zero.</summary>

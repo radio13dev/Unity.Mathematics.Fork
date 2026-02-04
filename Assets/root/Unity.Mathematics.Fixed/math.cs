@@ -126,58 +126,59 @@ namespace Unity.Mathematics.Fixed
         public const double NAN_DBL = Double.NaN;
 
         /// <summary>The smallest positive normal number representable in a fp.</summary>
-        public const fp FLT_MIN_NORMAL = 1.175494351e-38F;
+        public const float FLT_MIN_NORMAL = 1.175494351e-38F;
+        public static readonly fp FP_MIN_NORMAL = fp.epsilon;
 
         /// <summary>The smallest positive normal number representable in a double. This is a f64/double precision constant.</summary>
         public const double DBL_MIN_NORMAL = 2.2250738585072014e-308;
 
         /// <summary>The mathematical constant e also known as Euler's number. Approximately 2.72.</summary>
-        public const fp E = (fp)E_DBL;
+        public const float E = (float)E_DBL;
 
         /// <summary>The base 2 logarithm of e. Approximately 1.44.</summary>
-        public const fp LOG2E = (fp)LOG2E_DBL;
+        public const float LOG2E = (float)LOG2E_DBL;
 
         /// <summary>The base 10 logarithm of e. Approximately 0.43.</summary>
-        public const fp LOG10E = (fp)LOG10E_DBL;
+        public const float LOG10E = (float)LOG10E_DBL;
 
         /// <summary>The natural logarithm of 2. Approximately 0.69.</summary>
-        public const fp LN2 = (fp)LN2_DBL;
+        public const float LN2 = (float)LN2_DBL;
 
         /// <summary>The natural logarithm of 10. Approximately 2.30.</summary>
-        public const fp LN10 = (fp)LN10_DBL;
+        public const float LN10 = (float)LN10_DBL;
 
         /// <summary>The mathematical constant pi. Approximately 3.14.</summary>
-        public const fp PI = (fp)PI_DBL;
+        public const float PI = (float)PI_DBL;
 
         /// <summary>
         /// The mathematical constant (2 * pi). Approximately 6.28. Also known as <see cref="TAU"/>.
         /// </summary>
-        public const fp PI2 = (fp)PI2_DBL;
+        public const float PI2 = (float)PI2_DBL;
 
         /// <summary>
         /// The mathematical constant (pi / 2). Approximately 1.57.
         /// </summary>
-        public const fp PIHALF = (fp)PIHALF_DBL;
+        public const float PIHALF = (float)PIHALF_DBL;
 
         /// <summary>
         /// The mathematical constant tau. Approximately 6.28. Also known as <see cref="PI2"/>.
         /// </summary>
-        public const fp TAU = (fp)PI2_DBL;
+        public const float TAU = (float)PI2_DBL;
 
         /// <summary>
         /// The conversion constant used to convert radians to degrees. Multiply the radian value by this constant to get degrees.
         /// </summary>
         /// <remarks>Multiplying by this constant is equivalent to using <see cref="math.degrees(fp)"/>.</remarks>
-        public const fp TODEGREES = (fp)TODEGREES_DBL;
+        public const float TODEGREES = (float)TODEGREES_DBL;
 
         /// <summary>
         /// The conversion constant used to convert degrees to radians. Multiply the degree value by this constant to get radians.
         /// </summary>
         /// <remarks>Multiplying by this constant is equivalent to using <see cref="math.radians(fp)"/>.</remarks>
-        public const fp TORADIANS = (fp)TORADIANS_DBL;
+        public const float TORADIANS = (float)TORADIANS_DBL;
 
         /// <summary>The square root 2. Approximately 1.41.</summary>
-        public const fp SQRT2 = (fp)SQRT2_DBL;
+        public const float SQRT2 = (float)SQRT2_DBL;
 
         /// <summary>
         /// The difference between fp._1 and the next representable f32/single precision number.
@@ -185,12 +186,12 @@ namespace Unity.Mathematics.Fixed
         /// Beware:
         /// This value is different from System.Single.Epsilon, which is the smallest, positive, denormalized f32/single.
         /// </summary>
-        public const fp EPSILON = 1.1920928955078125e-7f;
+        public const float EPSILON = 1.1920928955078125e-7f;
 
         /// <summary>
         /// Single precision constant for positive infinity.
         /// </summary>
-        public const fp INFINITY = Single.PositiveInfinity;
+        public const float INFINITY = Single.PositiveInfinity;
 
         /// <summary>
         /// Single precision constant for Not a Number.
@@ -201,7 +202,7 @@ namespace Unity.Mathematics.Fixed
         /// Additionally, there are multiple bit representations for Not a Number, so if you must test if your value
         /// is NAN, use isnan().
         /// </summary>
-        public const fp NAN = Single.NaN;
+        public const float NAN = Single.NaN;
 
         /// <summary>Returns the bit pattern of a uint as an int.</summary>
         /// <param name="x">The uint bits to copy.</param>
@@ -570,25 +571,25 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">The fp value to test.</param>
         /// <returns>True if the fp is finite, false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool isfinite(fp x) { return abs(x) < fp.PositiveInfinity; }
+        public static bool isfinite(fp x) { return abs(x) <= fp.usable_max; }
 
         /// <summary>Returns a bool2 indicating for each component of a float2 whether it is a finite floating point value.</summary>
         /// <param name="x">The float2 value to test.</param>
         /// <returns>A bool2 where it is true in a component if that component is finite, false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool2 isfinite(float2 x) { return abs(x) < fp.PositiveInfinity; }
+        public static bool2 isfinite(float2 x) { return abs(x) <= fp.usable_max; }
 
         /// <summary>Returns a bool3 indicating for each component of a float3 whether it is a finite floating point value.</summary>
         /// <param name="x">The float3 value to test.</param>
         /// <returns>A bool3 where it is true in a component if that component is finite, false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3 isfinite(float3 x) { return abs(x) < fp.PositiveInfinity; }
+        public static bool3 isfinite(float3 x) { return abs(x) <= fp.usable_max; }
 
         /// <summary>Returns a bool4 indicating for each component of a float4 whether it is a finite floating point value.</summary>
         /// <param name="x">The float4 value to test.</param>
         /// <returns>A bool4 where it is true in a component if that component is finite, false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4 isfinite(float4 x) { return abs(x) < fp.PositiveInfinity; }
+        public static bool4 isfinite(float4 x) { return abs(x) <= fp.usable_max; }
 
 
         /// <summary>Returns true if the input double is a finite floating point value, false otherwise.</summary>
@@ -620,25 +621,25 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>True if the input was an infinite value; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool isinf(fp x) { return abs(x) == fp.PositiveInfinity; }
+        public static bool isinf(fp x) { return abs(x) > fp.usable_max; }
 
         /// <summary>Returns a bool2 indicating for each component of a float2 whether it is an infinite floating point value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>True if the component was an infinite value; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool2 isinf(float2 x) { return abs(x) == fp.PositiveInfinity; }
+        public static bool2 isinf(float2 x) { return abs(x) > fp.usable_max; }
 
         /// <summary>Returns a bool3 indicating for each component of a float3 whether it is an infinite floating point value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>True if the component was an infinite value; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3 isinf(float3 x) { return abs(x) == fp.PositiveInfinity; }
+        public static bool3 isinf(float3 x) { return abs(x) > fp.usable_max; }
 
         /// <summary>Returns a bool4 indicating for each component of a float4 whether it is an infinite floating point value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>True if the component was an infinite value; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4 isinf(float4 x) { return abs(x) == fp.PositiveInfinity; }
+        public static bool4 isinf(float4 x) { return abs(x) > fp.usable_max; }
 
         /// <summary>Returns true if the input double is an infinite floating point value, false otherwise.</summary>
         /// <param name="x">Input value.</param>
@@ -927,7 +928,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="y">The second input value.</param>
         /// <returns>The minimum of the two input values.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp min(fp x, fp y) { return fp.IsNaN(y) || x < y ? x : y; }
+        public static fp min(fp x, fp y) { return x < y ? x : y; }
 
         /// <summary>Returns the componentwise minimum of two float2 vectors.</summary>
         /// <param name="x">The first input value.</param>
@@ -1059,7 +1060,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="y">The second input value.</param>
         /// <returns>The maximum of the two input values.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp max(fp x, fp y) { return fp.IsNaN(y) || x > y ? x : y; }
+        public static fp max(fp x, fp y) { return x > y ? x : y; }
 
         /// <summary>Returns the componentwise maximum of two float2 vectors.</summary>
         /// <param name="x">The first input value.</param>
@@ -2008,7 +2009,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp tan(fp x) { return (fp)System.Math.Tan(x); }
+        public static fp tan(fp x) { return (fp)fixmath.Tan(x); }
 
         /// <summary>Returns the componentwise tangent of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -2058,7 +2059,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The hyperbolic tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp tanh(fp x) { return (fp)System.Math.Tanh(x); }
+        public static fp tanh(fp x) { throw new NotImplementedException(); } //{ return (fp)System.Math.Tanh(x); }
 
         /// <summary>Returns the componentwise hyperbolic tangent of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -2108,7 +2109,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
         /// <returns>The arctangent of the input, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp atan(fp x) { return (fp)System.Math.Atan(x); }
+        public static fp atan(fp x) { return (fp)fixmath.Atan(x); }
 
         /// <summary>Returns the componentwise arctangent of a float2 vector.</summary>
         /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
@@ -2159,7 +2160,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
         /// <returns>The arctangent of the ratio y/x, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp atan2(fp y, fp x) { return (fp)System.Math.Atan2(y, x); }
+        public static fp atan2(fp y, fp x) { return (fp)fixmath.Atan2(y, x); }
 
         /// <summary>Returns the componentwise 2-argument arctangent of a pair of floats2 vectors.</summary>
         /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
@@ -2216,7 +2217,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The cosine cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp cos(fp x) { return (fp)System.Math.Cos(x); }
+        public static fp cos(fp x) { return (fp)fixmath.Cos(x); }
 
         /// <summary>Returns the componentwise cosine of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -2266,7 +2267,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The hyperbolic cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp cosh(fp x) { return (fp)System.Math.Cosh(x); }
+        public static fp cosh(fp x) { return (fp)fixmath.cosh(x); }
 
         /// <summary>Returns the componentwise hyperbolic cosine of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -2316,7 +2317,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The arccosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp acos(fp x) { return (fp)System.Math.Acos((fp)x); }
+        public static fp acos(fp x) { return (fp)fixmath.Acos((fp)x); }
 
         /// <summary>Returns the componentwise arccosine of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -2366,7 +2367,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp sin(fp x) { return (fp)System.Math.Sin((fp)x); }
+        public static fp sin(fp x) { return (fp)fixmath.Sin((fp)x); }
 
         /// <summary>Returns the componentwise sine of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -2416,7 +2417,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The hyperbolic sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp sinh(fp x) { return (fp)System.Math.Sinh((fp)x); }
+        public static fp sinh(fp x) { return (fp)fixmath.sinh((fp)x); }
 
         /// <summary>Returns the componentwise hyperbolic sine of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -2466,7 +2467,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The arcsine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp asin(fp x) { return (fp)System.Math.Asin((fp)x); }
+        public static fp asin(fp x) { return (fp)fixmath.Asin((fp)x); }
 
         /// <summary>Returns the componentwise arcsine of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -2516,7 +2517,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The round down to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp floor(fp x) { return (fp)System.Math.Floor((fp)x); }
+        public static fp floor(fp x) { return (fp)fixmath.Floor((fp)x); }
 
         /// <summary>Returns the result of rounding each component of a float2 vector value down to the nearest value less or equal to the original value.</summary>
         /// <param name="x">Input value.</param>
@@ -2566,7 +2567,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The round up to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp ceil(fp x) { return (fp)System.Math.Ceiling((fp)x); }
+        public static fp ceil(fp x) { return (fp)fixmath.Ceil((fp)x); }
 
         /// <summary>Returns the result of rounding each component of a float2 vector value up to the nearest value greater or equal to the original value.</summary>
         /// <param name="x">Input value.</param>
@@ -2616,7 +2617,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The round to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp round(fp x) { return (fp)System.Math.Round((fp)x); }
+        public static fp round(fp x) { return fixmath.RoundToInt(x); }
 
         /// <summary>Returns the result of rounding each component of a float2 vector value to the nearest integral value.</summary>
         /// <param name="x">Input value.</param>
@@ -2666,7 +2667,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The truncation of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp trunc(fp x) { return (fp)System.Math.Truncate((fp)x); }
+        public static fp trunc(fp x) { return (fp)fixmath.Truncate(x); }
 
         /// <summary>Returns the result of a componentwise truncation of a float2 value to an integral float2 value.</summary>
         /// <param name="x">Input value.</param>
@@ -2890,7 +2891,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="y">The exponent power.</param>
         /// <returns>The result of raising x to the power y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp pow(fp x, fp y) { return (fp)System.Math.Pow((fp)x, (fp)y); }
+        public static fp pow(fp x, fp y) { throw new NotImplementedException(); } //{ return (fp)System.Math.Pow((fp)x, (fp)y); }
 
         /// <summary>Returns the componentwise result of raising x to the power y.</summary>
         /// <param name="x">The exponent base.</param>
@@ -2947,7 +2948,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The base-e exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp exp(fp x) { return (fp)System.Math.Exp((fp)x); }
+        public static fp exp(fp x) { return (fp)fixmath.Exp((fp)x); }
 
         /// <summary>Returns the componentwise base-e exponential of x.</summary>
         /// <param name="x">Input value.</param>
@@ -2997,7 +2998,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The base-2 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp exp2(fp x) { return (fp)System.Math.Exp((fp)x * 0.69314718f); }
+        public static fp exp2(fp x) { throw new NotImplementedException(); } //{ return (fp)exp((fp)x * 0.69314718f); }
 
         /// <summary>Returns the componentwise base-2 exponential of x.</summary>
         /// <param name="x">Input value.</param>
@@ -3047,7 +3048,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The base-10 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp exp10(fp x) { return (fp)System.Math.Exp((fp)x * 2.30258509f); }
+        public static fp exp10(fp x) { throw new NotImplementedException(); } //{ return (fp)System.Math.Exp((fp)x * 2.30258509f); }
 
         /// <summary>Returns the componentwise base-10 exponential of x.</summary>
         /// <param name="x">Input value.</param>
@@ -3097,7 +3098,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The natural logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp log(fp x) { return (fp)System.Math.Log((fp)x); }
+        public static fp log(fp x) { throw new NotImplementedException(); } //{ return (fp)System.Math.Log((fp)x); }
 
         /// <summary>Returns the componentwise natural logarithm of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -3147,7 +3148,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The base-2 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp log2(fp x) { return (fp)System.Math.Log((fp)x, fp._2); }
+        public static fp log2(fp x) { throw new NotImplementedException(); }// return (fp)System.Math.Log((fp)x, fp._2); }
 
         /// <summary>Returns the componentwise base-2 logarithm of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -3196,7 +3197,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The base-10 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp log10(fp x) { return (fp)System.Math.Log10((fp)x); }
+        public static fp log10(fp x) { throw new NotImplementedException(); } //{ return (fp)System.Math.Log10((fp)x); }
 
         /// <summary>Returns the componentwise base-10 logarithm of a float2 vector.</summary>
         /// <param name="x">Input value.</param>
@@ -3380,7 +3381,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Value to use when computing square root.</param>
         /// <returns>The square root.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp sqrt(fp x) { return (fp)System.Math.Sqrt((fp)x); }
+        public static fp sqrt(fp x) { return (fp)fixmath.Sqrt((fp)x); }
 
         /// <summary>Returns the componentwise square root of a float2 vector.</summary>
         /// <param name="x">Value to use when computing square root.</param>
@@ -3525,7 +3526,7 @@ namespace Unity.Mathematics.Fixed
         static public float2 normalizesafe(float2 x, float2 defaultvalue = new float2())
         {
             fp len = math.dot(x, x);
-            return math.select(defaultvalue, x * math.rsqrt(len), len > FLT_MIN_NORMAL);
+            return math.select(defaultvalue, x * math.rsqrt(len), len > FP_MIN_NORMAL);
         }
 
         /// <summary>
@@ -3539,7 +3540,7 @@ namespace Unity.Mathematics.Fixed
         static public float3 normalizesafe(float3 x, float3 defaultvalue = new float3())
         {
             fp len = math.dot(x, x);
-            return math.select(defaultvalue, x * math.rsqrt(len), len > FLT_MIN_NORMAL);
+            return math.select(defaultvalue, x * math.rsqrt(len), len > FP_MIN_NORMAL);
         }
 
         /// <summary>
@@ -3553,7 +3554,7 @@ namespace Unity.Mathematics.Fixed
         static public float4 normalizesafe(float4 x, float4 defaultvalue = new float4())
         {
             fp len = math.dot(x, x);
-            return math.select(defaultvalue, x * math.rsqrt(len), len > FLT_MIN_NORMAL);
+            return math.select(defaultvalue, x * math.rsqrt(len), len > FP_MIN_NORMAL);
         }
 
 
@@ -3840,7 +3841,7 @@ namespace Unity.Mathematics.Fixed
         public static fp smoothstep(fp xMin, fp xMax, fp x)
         {
             var t = saturate((x - xMin) / (xMax - xMin));
-            return t * t * (3.fp._0 - (fp._2 * t));
+            return t * t * (fp._3 - (fp._2 * t));
         }
 
         /// <summary>Returns a componentwise smooth Hermite interpolation between fp._0 and fp._1 when x is in the interval (inclusive) [xMin, xMax].</summary>
@@ -3852,7 +3853,7 @@ namespace Unity.Mathematics.Fixed
         public static float2 smoothstep(float2 xMin, float2 xMax, float2 x)
         {
             var t = saturate((x - xMin) / (xMax - xMin));
-            return t * t * (3.fp._0 - (fp._2 * t));
+            return t * t * (fp._3 - (fp._2 * t));
         }
 
         /// <summary>Returns a componentwise smooth Hermite interpolation between fp._0 and fp._1 when x is in the interval (inclusive) [xMin, xMax].</summary>
@@ -3864,7 +3865,7 @@ namespace Unity.Mathematics.Fixed
         public static float3 smoothstep(float3 xMin, float3 xMax, float3 x)
         {
             var t = saturate((x - xMin) / (xMax - xMin));
-            return t * t * (3.fp._0 - (fp._2 * t));
+            return t * t * (fp._3 - (fp._2 * t));
         }
 
         /// <summary>Returns a componentwise smooth Hermite interpolation between fp._0 and fp._1 when x is in the interval (inclusive) [xMin, xMax].</summary>
@@ -3876,7 +3877,7 @@ namespace Unity.Mathematics.Fixed
         public static float4 smoothstep(float4 xMin, float4 xMax, float4 x)
         {
             var t = saturate((x - xMin) / (xMax - xMin));
-            return t * t * (3.fp._0 - (fp._2 * t));
+            return t * t * (fp._3 - (fp._2 * t));
         }
 
 
@@ -4466,21 +4467,21 @@ namespace Unity.Mathematics.Fixed
         /// <param name="n">Normal vector.</param>
         /// <returns>Reflection vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 reflect(float2 i, float2 n) { return i - 2f * n * dot(i, n); }
+        public static float2 reflect(float2 i, float2 n) { return i - 2 * n * dot(i, n); }
 
         /// <summary>Given an incident vector i and a normal vector n, returns the reflection vector r = i - fp._2 * dot(i, n) * n.</summary>
         /// <param name="i">Incident vector.</param>
         /// <param name="n">Normal vector.</param>
         /// <returns>Reflection vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 reflect(float3 i, float3 n) { return i - 2f * n * dot(i, n); }
+        public static float3 reflect(float3 i, float3 n) { return i - 2 * n * dot(i, n); }
 
         /// <summary>Given an incident vector i and a normal vector n, returns the reflection vector r = i - fp._2 * dot(i, n) * n.</summary>
         /// <param name="i">Incident vector.</param>
         /// <param name="n">Normal vector.</param>
         /// <returns>Reflection vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 reflect(float4 i, float4 n) { return i - 2f * n * dot(i, n); }
+        public static float4 reflect(float4 i, float4 n) { return i - 2 * n * dot(i, n); }
 
 
         /// <summary>Given an incident vector i and a normal vector n, returns the reflection vector r = i - 2.0 * dot(i, n) * n.</summary>
@@ -4849,7 +4850,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="ng">Second vector in direction comparison.</param>
         /// <returns>-n if i and ng point in the same direction; otherwise return n unchanged.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 faceforward(double2 n, double2 i, double2 ng) { return select(n, -n, dot(ng, i) >= fp._0); }
+        public static double2 faceforward(double2 n, double2 i, double2 ng) { return select(n, -n, dot(ng, i) >= 0); }
 
         /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</summary>
         /// <param name="n">Vector to conditionally flip.</param>
@@ -4857,7 +4858,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="ng">Second vector in direction comparison.</param>
         /// <returns>-n if i and ng point in the same direction; otherwise return n unchanged.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 faceforward(double3 n, double3 i, double3 ng) { return select(n, -n, dot(ng, i) >= fp._0); }
+        public static double3 faceforward(double3 n, double3 i, double3 ng) { return select(n, -n, dot(ng, i) >= 0); }
 
         /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</summary>
         /// <param name="n">Vector to conditionally flip.</param>
@@ -4865,7 +4866,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="ng">Second vector in direction comparison.</param>
         /// <returns>-n if i and ng point in the same direction; otherwise return n unchanged.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 faceforward(double4 n, double4 i, double4 ng) { return select(n, -n, dot(ng, i) >= fp._0); }
+        public static double4 faceforward(double4 n, double4 i, double4 ng) { return select(n, -n, dot(ng, i) >= 0); }
 
 
         /// <summary>Returns the sine and cosine of the input fp value x through the out parameters s and c.</summary>
@@ -5891,25 +5892,25 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Angle in degrees.</param>
         /// <returns>Angle converted to radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp radians(fp x) { return x * TORADIANS; }
+        public static fp radians(fp x) { return x * fp.TORADIANS; }
 
         /// <summary>Returns the result of a componentwise conversion of a float2 vector from degrees to radians.</summary>
         /// <param name="x">Vector containing angles in degrees.</param>
         /// <returns>Vector containing angles converted to radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 radians(float2 x) { return x * TORADIANS; }
+        public static float2 radians(float2 x) { return x * fp.TORADIANS; }
 
         /// <summary>Returns the result of a componentwise conversion of a float3 vector from degrees to radians.</summary>
         /// <param name="x">Vector containing angles in degrees.</param>
         /// <returns>Vector containing angles converted to radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 radians(float3 x) { return x * TORADIANS; }
+        public static float3 radians(float3 x) { return x * fp.TORADIANS; }
 
         /// <summary>Returns the result of a componentwise conversion of a float4 vector from degrees to radians.</summary>
         /// <param name="x">Vector containing angles in degrees.</param>
         /// <returns>Vector containing angles converted to radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 radians(float4 x) { return x * TORADIANS; }
+        public static float4 radians(float4 x) { return x * fp.TORADIANS; }
 
 
         /// <summary>Returns the result of converting a fp value from degrees to radians.</summary>
@@ -5941,25 +5942,25 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Angle in radians.</param>
         /// <returns>Angle converted to degrees.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp degrees(fp x) { return x * TODEGREES; }
+        public static fp degrees(fp x) { return x * fp.TODEGREES; }
 
         /// <summary>Returns the result of a componentwise conversion of a double2 vector from radians to degrees.</summary>
         /// <param name="x">Vector containing angles in radians.</param>
         /// <returns>Vector containing angles converted to degrees.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float2 degrees(float2 x) { return x * TODEGREES; }
+        public static float2 degrees(float2 x) { return x * fp.TODEGREES; }
 
         /// <summary>Returns the result of a componentwise conversion of a double3 vector from radians to degrees.</summary>
         /// <param name="x">Vector containing angles in radians.</param>
         /// <returns>Vector containing angles converted to degrees.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3 degrees(float3 x) { return x * TODEGREES; }
+        public static float3 degrees(float3 x) { return x * fp.TODEGREES; }
 
         /// <summary>Returns the result of a componentwise conversion of a double4 vector from radians to degrees.</summary>
         /// <param name="x">Vector containing angles in radians.</param>
         /// <returns>Vector containing angles converted to degrees.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4 degrees(float4 x) { return x * TODEGREES; }
+        public static float4 degrees(float4 x) { return x * fp.TODEGREES; }
 
 
         /// <summary>Returns the result of converting a double value from radians to degrees.</summary>
@@ -6497,14 +6498,15 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp f16tof32(uint x)
         {
-            const uint shifted_exp = (0x7c00 << 13);
-            uint uf = (x & 0x7fff) << 13;
-            uint e = uf & shifted_exp;
-            uf += (127 - 15) << 23;
-            uf += select(0, (128u - 16u) << 23, e == shifted_exp);
-            uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
-            uf |= (x & 0x8000) << 16;
-            return asfloat(uf);
+            { throw new NotImplementedException(); } //
+            //const uint shifted_exp = (0x7c00 << 13);
+            //uint uf = (x & 0x7fff) << 13;
+            //uint e = uf & shifted_exp;
+            //uf += (127 - 15) << 23;
+            //uf += select(0, (128u - 16u) << 23, e == shifted_exp);
+            //uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
+            //uf |= (x & 0x8000) << 16;
+            //return asfloat(uf);
         }
 
         /// <summary>Returns the floating point representation of a half-precision floating point vector.</summary>
@@ -6513,14 +6515,15 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float2 f16tof32(uint2 x)
         {
-            const uint shifted_exp = (0x7c00 << 13);
-            uint2 uf = (x & 0x7fff) << 13;
-            uint2 e = uf & shifted_exp;
-            uf += (127 - 15) << 23;
-            uf += select(0, (128u - 16u) << 23, e == shifted_exp);
-            uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
-            uf |= (x & 0x8000) << 16;
-            return asfloat(uf);
+            { throw new NotImplementedException(); } //
+            //const uint shifted_exp = (0x7c00 << 13);
+            //uint2 uf = (x & 0x7fff) << 13;
+            //uint2 e = uf & shifted_exp;
+            //uf += (127 - 15) << 23;
+            //uf += select(0, (128u - 16u) << 23, e == shifted_exp);
+            //uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
+            //uf |= (x & 0x8000) << 16;
+            //return asfloat(uf);
         }
 
         /// <summary>Returns the floating point representation of a half-precision floating point vector.</summary>
@@ -6529,14 +6532,15 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 f16tof32(uint3 x)
         {
-            const uint shifted_exp = (0x7c00 << 13);
-            uint3 uf = (x & 0x7fff) << 13;
-            uint3 e = uf & shifted_exp;
-            uf += (127 - 15) << 23;
-            uf += select(0, (128u - 16u) << 23, e == shifted_exp);
-            uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
-            uf |= (x & 0x8000) << 16;
-            return asfloat(uf);
+            { throw new NotImplementedException(); } //
+            //const uint shifted_exp = (0x7c00 << 13);
+            //uint3 uf = (x & 0x7fff) << 13;
+            //uint3 e = uf & shifted_exp;
+            //uf += (127 - 15) << 23;
+            //uf += select(0, (128u - 16u) << 23, e == shifted_exp);
+            //uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
+            //uf |= (x & 0x8000) << 16;
+            //return asfloat(uf);
         }
 
         /// <summary>Returns the floating point representation of a half-precision floating point vector.</summary>
@@ -6545,14 +6549,15 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 f16tof32(uint4 x)
         {
-            const uint shifted_exp = (0x7c00 << 13);
-            uint4 uf = (x & 0x7fff) << 13;
-            uint4 e = uf & shifted_exp;
-            uf += (127 - 15) << 23;
-            uf += select(0, (128u - 16u) << 23, e == shifted_exp);
-            uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
-            uf |= (x & 0x8000) << 16;
-            return asfloat(uf);
+            { throw new NotImplementedException(); } //
+            //const uint shifted_exp = (0x7c00 << 13);
+            //uint4 uf = (x & 0x7fff) << 13;
+            //uint4 e = uf & shifted_exp;
+            //uf += (127 - 15) << 23;
+            //uf += select(0, (128u - 16u) << 23, e == shifted_exp);
+            //uf = select(uf, asuint(asfloat(uf + (1 << 23)) - 6.10351563e-05f), e == 0);
+            //uf |= (x & 0x8000) << 16;
+            //return asfloat(uf);
         }
 
         /// <summary>Returns the result converting a fp value to its nearest half-precision floating point representation.</summary>
@@ -6561,14 +6566,15 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint f32tof16(fp x)
         {
-            const int infinity_32 = 255 << 23;
-            const uint msk = 0x7FFFF000u;
-
-            uint ux = asuint(x);
-            uint uux = ux & msk;
-            uint h = (uint)(asuint(min(asfloat(uux) * 1.92592994e-34f, 260042752.fp._0)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
-            h = select(h, select(0x7c00u, 0x7e00u, (int)uux > infinity_32), (int)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
-            return h | (ux & ~msk) >> 16;
+            { throw new NotImplementedException(); } //
+            //const int infinity_32 = 255 << 23;
+            //const uint msk = 0x7FFFF000u;
+//
+            //uint ux = asuint(x);
+            //uint uux = ux & msk;
+            //uint h = (uint)(asuint(min(asfloat(uux) * 1.92592994e-34f, 260042752.fp._0)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
+            //h = select(h, select(0x7c00u, 0x7e00u, (int)uux > infinity_32), (int)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
+            //return h | (ux & ~msk) >> 16;
         }
 
         /// <summary>Returns the result of a componentwise conversion of a float2 vector to its nearest half-precision floating point representation.</summary>
@@ -6577,14 +6583,15 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint2 f32tof16(float2 x)
         {
-            const int infinity_32 = 255 << 23;
-            const uint msk = 0x7FFFF000u;
-
-            uint2 ux = asuint(x);
-            uint2 uux = ux & msk;
-            uint2 h = (uint2)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.fp._0)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
-            h = select(h, select(0x7c00u, 0x7e00u, (int2)uux > infinity_32), (int2)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
-            return h | (ux & ~msk) >> 16;
+            { throw new NotImplementedException(); } //
+            //const int infinity_32 = 255 << 23;
+            //const uint msk = 0x7FFFF000u;
+//
+            //uint2 ux = asuint(x);
+            //uint2 uux = ux & msk;
+            //uint2 h = (uint2)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.fp._0)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
+            //h = select(h, select(0x7c00u, 0x7e00u, (int2)uux > infinity_32), (int2)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
+            //return h | (ux & ~msk) >> 16;
         }
 
         /// <summary>Returns the result of a componentwise conversion of a float3 vector to its nearest half-precision floating point representation.</summary>
@@ -6593,14 +6600,15 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint3 f32tof16(float3 x)
         {
-            const int infinity_32 = 255 << 23;
-            const uint msk = 0x7FFFF000u;
-
-            uint3 ux = asuint(x);
-            uint3 uux = ux & msk;
-            uint3 h = (uint3)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.fp._0)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
-            h = select(h, select(0x7c00u, 0x7e00u, (int3)uux > infinity_32), (int3)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
-            return h | (ux & ~msk) >> 16;
+            { throw new NotImplementedException(); } //
+            //const int infinity_32 = 255 << 23;
+            //const uint msk = 0x7FFFF000u;
+//
+            //uint3 ux = asuint(x);
+            //uint3 uux = ux & msk;
+            //uint3 h = (uint3)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.fp._0)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
+            //h = select(h, select(0x7c00u, 0x7e00u, (int3)uux > infinity_32), (int3)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
+            //return h | (ux & ~msk) >> 16;
         }
 
         /// <summary>Returns the result of a componentwise conversion of a float4 vector to its nearest half-precision floating point representation.</summary>
@@ -6609,14 +6617,15 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint4 f32tof16(float4 x)
         {
-            const int infinity_32 = 255 << 23;
-            const uint msk = 0x7FFFF000u;
-
-            uint4 ux = asuint(x);
-            uint4 uux = ux & msk;
-            uint4 h = (uint4)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.fp._0)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
-            h = select(h, select(0x7c00u, 0x7e00u, (int4)uux > infinity_32), (int4)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
-            return h | (ux & ~msk) >> 16;
+            { throw new NotImplementedException(); } //
+            //const int infinity_32 = 255 << 23;
+            //const uint msk = 0x7FFFF000u;
+//
+            //uint4 ux = asuint(x);
+            //uint4 uux = ux & msk;
+            //uint4 h = (uint4)(asint(min(asfloat(uux) * 1.92592994e-34f, 260042752.fp._0)) + 0x1000) >> 13;   // Clamp to signed infinity if overflowed
+            //h = select(h, select(0x7c00u, 0x7e00u, (int4)uux > infinity_32), (int4)uux >= infinity_32);   // NaN->qNaN and Inf->Inf
+            //return h | (ux & ~msk) >> 16;
         }
 
         /// <summary>
@@ -6895,13 +6904,10 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 EulerXYZ(quaternion q)
         {
-            const fp epsilon = 1e-6f;
-            const fp cutoff = (fp._1 - 2f * epsilon) * (fp._1 - 2f * epsilon);
-
             // prepare the data
             var qv = q.value;
-            var d1 = qv * qv.wwww * float4(2f); //xw, yw, zw, ww
-            var d2 = qv * qv.yzxw * float4(2f); //xy, yz, zx, ww
+            var d1 = qv * qv.wwww * float4(2); //xw, yw, zw, ww
+            var d2 = qv * qv.yzxw * float4(2); //xy, yz, zx, ww
             var d3 = qv * qv;
             var euler = Unity.Mathematics.Fixed.float3.zero;
 
@@ -6918,13 +6924,16 @@ namespace Unity.Mathematics.Fixed
             {
                 y1 = clamp(y1, -fp._1, fp._1);
                 var abcd = float4(d2.z, d1.y, d2.x, d1.z);
-                var x1 = 2f * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
+                var x1 = 2 * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
                 var x2 = csum(abcd * abcd * float4(-fp._1, fp._1, -fp._1, fp._1));
                 euler = float3(atan2(x1, x2), -asin(y1), fp._0);
             }
 
             return euler;
         }
+
+        static readonly fp epsilon = fp.epsilon_e6f;
+        static readonly fp cutoff = (fp._1 - 2 * epsilon) * (fp._1 - 2 * epsilon);
 
         /// <summary>
         /// Returns the Euler angle representation of the quaternion following the XZY rotation order.
@@ -6935,13 +6944,10 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 EulerXZY(quaternion q)
         {
-            const fp epsilon = 1e-6f;
-            const fp cutoff = (fp._1 - 2f * epsilon) * (fp._1 - 2f * epsilon);
-
             // prepare the data
             var qv = q.value;
-            var d1 = qv * qv.wwww * float4(2f); //xw, yw, zw, ww
-            var d2 = qv * qv.yzxw * float4(2f); //xy, yz, zx, ww
+            var d1 = qv * qv.wwww * float4(2); //xw, yw, zw, ww
+            var d2 = qv * qv.yzxw * float4(2); //xy, yz, zx, ww
             var d3 = qv * qv;
             var euler = Unity.Mathematics.Fixed.float3.zero;
 
@@ -6958,7 +6964,7 @@ namespace Unity.Mathematics.Fixed
             {
                 y1 = clamp(y1, -fp._1, fp._1);
                 var abcd = float4(d2.x, d1.z, d2.z, d1.y);
-                var x1 = 2f * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
+                var x1 = 2 * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
                 var x2 = csum(abcd * abcd * float4(-fp._1, fp._1, -fp._1, fp._1));
                 euler = float3(atan2(x1, x2), asin(y1), fp._0);
             }
@@ -6975,13 +6981,10 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 EulerYXZ(quaternion q)
         {
-            const fp epsilon = 1e-6f;
-            const fp cutoff = (fp._1 - 2f * epsilon) * (fp._1 - 2f * epsilon);
-
             // prepare the data
             var qv = q.value;
-            var d1 = qv * qv.wwww * float4(2f); //xw, yw, zw, ww
-            var d2 = qv * qv.yzxw * float4(2f); //xy, yz, zx, ww
+            var d1 = qv * qv.wwww * float4(2); //xw, yw, zw, ww
+            var d2 = qv * qv.yzxw * float4(2); //xy, yz, zx, ww
             var d3 = qv * qv;
             var euler = Unity.Mathematics.Fixed.float3.zero;
 
@@ -6998,7 +7001,7 @@ namespace Unity.Mathematics.Fixed
             {
                 y1 = clamp(y1, -fp._1, fp._1);
                 var abcd = float4(d2.x, d1.z, d2.y, d1.x);
-                var x1 = 2f * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
+                var x1 = 2 * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
                 var x2 = csum(abcd * abcd * float4(-fp._1, fp._1, -fp._1, fp._1));
                 euler = float3(atan2(x1, x2), asin(y1), fp._0);
             }
@@ -7015,13 +7018,10 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 EulerYZX(quaternion q)
         {
-            const fp epsilon = 1e-6f;
-            const fp cutoff = (fp._1 - 2f * epsilon) * (fp._1 - 2f * epsilon);
-
             // prepare the data
             var qv = q.value;
-            var d1 = qv * qv.wwww * float4(2f); //xw, yw, zw, ww
-            var d2 = qv * qv.yzxw * float4(2f); //xy, yz, zx, ww
+            var d1 = qv * qv.wwww * float4(2); //xw, yw, zw, ww
+            var d2 = qv * qv.yzxw * float4(2); //xy, yz, zx, ww
             var d3 = qv * qv;
             var euler = Unity.Mathematics.Fixed.float3.zero;
 
@@ -7038,7 +7038,7 @@ namespace Unity.Mathematics.Fixed
             {
                 y1 = clamp(y1, -fp._1, fp._1);
                 var abcd = float4(d2.x, d1.z, d2.y, d1.x);
-                var x1 = 2f * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
+                var x1 = 2 * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
                 var x2 = csum(abcd * abcd * float4(-fp._1, fp._1, -fp._1, fp._1));
                 euler = float3(atan2(x1, x2), -asin(y1), fp._0);
             }
@@ -7055,13 +7055,10 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 EulerZXY(quaternion q)
         {
-            const fp epsilon = 1e-6f;
-            const fp cutoff = (fp._1 - 2f * epsilon) * (fp._1 - 2f * epsilon);
-
             // prepare the data
             var qv = q.value;
-            var d1 = qv * qv.wwww * float4(2f); //xw, yw, zw, ww
-            var d2 = qv * qv.yzxw * float4(2f); //xy, yz, zx, ww
+            var d1 = qv * qv.wwww * float4(2); //xw, yw, zw, ww
+            var d2 = qv * qv.yzxw * float4(2); //xy, yz, zx, ww
             var d3 = qv * qv;
             var euler = Unity.Mathematics.Fixed.float3.zero;
 
@@ -7078,7 +7075,7 @@ namespace Unity.Mathematics.Fixed
             {
                 y1 = clamp(y1, -fp._1, fp._1);
                 var abcd = float4(d2.z, d1.y, d2.y, d1.x);
-                var x1 = 2f * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
+                var x1 = 2 * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
                 var x2 = csum(abcd * abcd * float4(-fp._1, fp._1, -fp._1, fp._1));
                 euler = float3(atan2(x1, x2), -asin(y1), fp._0);
             }
@@ -7095,12 +7092,9 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 EulerZYX(quaternion q)
         {
-            const fp epsilon = 1e-6f;
-            const fp cutoff = (fp._1 - 2f * epsilon) * (fp._1 - 2f * epsilon);
-
             var qv = q.value;
-            var d1 = qv * qv.wwww * float4(2f); //xw, yw, zw, ww
-            var d2 = qv * qv.yzxw * float4(2f); //xy, yz, zx, ww
+            var d1 = qv * qv.wwww * float4(2); //xw, yw, zw, ww
+            var d2 = qv * qv.yzxw * float4(2); //xy, yz, zx, ww
             var d3 = qv * qv;
             var euler = Unity.Mathematics.Fixed.float3.zero;
 
@@ -7117,7 +7111,7 @@ namespace Unity.Mathematics.Fixed
             {
                 y1 = clamp(y1, -fp._1, fp._1);
                 var abcd = float4(d2.z, d1.y, d2.y, d1.x);
-                var x1 = 2f * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
+                var x1 = 2 * (abcd.x * abcd.w + abcd.y * abcd.z); //2(ad+bc)
                 var x2 = csum(abcd * abcd * float4(-fp._1, fp._1, -fp._1, fp._1));
                 euler = float3(atan2(x1, x2), asin(y1), fp._0);
             }

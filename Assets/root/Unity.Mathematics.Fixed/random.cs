@@ -602,7 +602,7 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float2 NextFloat2Direction()
         {
-            fp angle = NextFloat() * PI * fp._2;
+            fp angle = NextFloat() * fp.pi2;
             fp s, c;
             sincos(angle, out s, out c);
             return float2(c, s);
@@ -627,7 +627,7 @@ namespace Unity.Mathematics.Fixed
             float2 rnd = NextFloat2();
             fp z = rnd.x * fp._2 - fp._1;
             fp r = sqrt(max(fp._1 - z * z, fp._0));
-            fp angle = rnd.y * PI * fp._2;
+            fp angle = rnd.y * fp.pi2;
             fp s, c;
             sincos(angle, out s, out c);
             return float3(c*r, s*r, z);
@@ -652,7 +652,7 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public quaternion NextQuaternionRotation()
         {
-            float3 rnd = NextFloat3(float3(fp._2 * PI, fp._2 * PI, fp._1));
+            float3 rnd = NextFloat3(float3(fp.pi2, fp.pi2, fp._1));
             fp u1 = rnd.z;
             float2 theta_rho = rnd.xy;
 

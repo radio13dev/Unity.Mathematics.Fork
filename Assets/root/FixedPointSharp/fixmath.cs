@@ -172,6 +172,11 @@ namespace Deterministic.FixedPoint {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static fp Truncate(fp num) {
+            return new fp(num.value & ~0x000000000000FFFFL);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int RoundToInt(fp num) {
             var fraction = num.value & 0x000000000000FFFFL;
 
@@ -323,6 +328,63 @@ namespace Deterministic.FixedPoint {
             }
 
             if (neg) result = fp._1 / result;
+
+            return result;
+        }
+
+        public static fp sinh(fp x) {
+            // For a practical implementation, the input x must be range-reduced.
+            // The range for which a polynomial or LUT is valid needs to be defined.
+    
+            // For small values, a polynomial approximation is efficient.
+            // Coefficients for the polynomial need to be pre-calculated in Q48.16 format.
+    
+            // Example using Taylor series (simplified and conceptual):
+            fp result = x;
+            fp x2 = (x*x);
+            fp term = x;
+    
+            // Term 2: x^3 / 3! 
+            term = (term*x2);
+            // Pre-calculated 3! (6.0) in Q48.16
+            result += (term * fp._1div6);
+
+            // Term 3: x^5 / 5! (120.0)
+            term = (term * x2);
+            // Pre-calculated 5! (120.0) in Q48.16
+            fp div_120 = (fp._1 / (fp)120); // Or precomputed constant
+            result += (term * div_120);
+
+            // Add more terms for better accuracy. Range checking is crucial to prevent overflow.
+
+            return result;
+        }
+        
+        public static fp cosh(fp x) {
+            // cosh(x) = cosh(-x), so work with positive values
+            if (x < 0) x = -x;
+
+            // Handle large values by clamping or returning max possible value if overflow is a concern
+            // The range of Q48.16 is large (approx +/- 2.8e14), so overflow is unlikely in typical use
+            // unless x itself is very large. Check the expected input range.
+
+            fp result = fp._1; // Start with the first term (1)
+            fp term = fp._1;
+            fp x_sq = (x* x);
+            int n = 1;
+
+            // Iterate until terms become very small
+            while (true) {
+                // Calculate the next term: term * x^2 / ((2n)*(2n-1))
+                term = (term* x_sq);
+                term = (term/ (2 * n));
+                term = (term/ (2 * n - 1));
+
+                if (term == 0) break; // Term is too small to affect the result
+
+                result += term;
+                n++;
+            }
 
             return result;
         }
