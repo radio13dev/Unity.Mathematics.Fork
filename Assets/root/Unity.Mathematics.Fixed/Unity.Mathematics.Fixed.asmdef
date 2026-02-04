@@ -1,0 +1,16 @@
+{
+    "name": "Unity.Mathematics.Fixed",
+    "rootNamespace": "",
+    "references": [
+        "FixedPointSharp"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

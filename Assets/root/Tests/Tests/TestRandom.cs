@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using static Unity.Mathematics.Fixed.math;
 using Burst.Compiler.IL.Tests;
+using Deterministic.FixedPoint;
 
 namespace Unity.Mathematics.Fixed.Tests
 {
@@ -72,6 +73,7 @@ namespace Unity.Mathematics.Fixed.Tests
             Assert.Less(abs(r), 0.05);
         }
 
+        private static float range_check01(fp x) => range_check01((float)x);
         private static float range_check01(float x)
         {
             Assert.GreaterOrEqual(x, 0.0f);
