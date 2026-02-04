@@ -54,52 +54,52 @@ namespace Unity.Mathematics.Fixed
         };
 
         /// <summary>The mathematical constant e also known as Euler's number. Approximately 2.72. This is a f64/double precision constant.</summary>
-        public const double E_DBL = 2.71828182845904523536;
+        internal const double E_DBL = 2.71828182845904523536;
 
         /// <summary>The base 2 logarithm of e. Approximately 1.44. This is a f64/double precision constant.</summary>
-        public const double LOG2E_DBL = 1.44269504088896340736;
+        internal const double LOG2E_DBL = 1.44269504088896340736;
 
         /// <summary>The base 10 logarithm of e. Approximately 0.43. This is a f64/double precision constant.</summary>
-        public const double LOG10E_DBL = 0.434294481903251827651;
+        internal const double LOG10E_DBL = 0.434294481903251827651;
 
         /// <summary>The natural logarithm of 2. Approximately 0.69. This is a f64/double precision constant.</summary>
-        public const double LN2_DBL = 0.693147180559945309417;
+        internal const double LN2_DBL = 0.693147180559945309417;
 
         /// <summary>The natural logarithm of 10. Approximately 2.30. This is a f64/double precision constant.</summary>
-        public const double LN10_DBL = 2.30258509299404568402;
+        internal const double LN10_DBL = 2.30258509299404568402;
 
         /// <summary>The mathematical constant pi. Approximately 3.14. This is a f64/double precision constant.</summary>
-        public const double PI_DBL = 3.14159265358979323846;
+        internal const double PI_DBL = 3.14159265358979323846;
 
         /// <summary>
         /// The mathematical constant (2 * pi). Approximately 6.28. This is a f64/double precision constant. Also known as <see cref="TAU_DBL"/>.
         /// </summary>
-        public const double PI2_DBL = PI_DBL * 2.0;
+        internal const double PI2_DBL = PI_DBL * 2.0;
 
         /// <summary>
         /// The mathematical constant (pi / 2). Approximately 1.57. This is a f64/double precision constant.
         /// </summary>
-        public const double PIHALF_DBL = PI_DBL * 0.5;
+        internal const double PIHALF_DBL = PI_DBL * 0.5;
 
         /// <summary>
         /// The mathematical constant tau. Approximately 6.28. This is a f64/double precision constant. Also known as <see cref="PI2_DBL"/>.
         /// </summary>
-        public const double TAU_DBL = PI2_DBL;
+        internal const double TAU_DBL = PI2_DBL;
 
         /// <summary>
         /// The conversion constant used to convert radians to degrees. Multiply the radian value by this constant to get degrees.
         /// </summary>
         /// <remarks>Multiplying by this constant is equivalent to using <see cref="math.degrees(double)"/>.</remarks>
-        public const double TODEGREES_DBL = 57.29577951308232;
+        internal const double TODEGREES_DBL = 57.29577951308232;
 
         /// <summary>
         /// The conversion constant used to convert degrees to radians. Multiply the degree value by this constant to get radians.
         /// </summary>
         /// <remarks>Multiplying by this constant is equivalent to using <see cref="math.radians(double)"/>.</remarks>
-        public const double TORADIANS_DBL = 0.017453292519943296;
+        internal const double TORADIANS_DBL = 0.017453292519943296;
 
         /// <summary>The square root 2. Approximately 1.41. This is a f64/double precision constant.</summary>
-        public const double SQRT2_DBL = 1.41421356237309504880;
+        internal const double SQRT2_DBL = 1.41421356237309504880;
 
         /// <summary>
         /// The difference between 1.0 and the next representable f64/double precision number.
@@ -107,12 +107,12 @@ namespace Unity.Mathematics.Fixed
         /// Beware:
         /// This value is different from System.Double.Epsilon, which is the smallest, positive, denormalized f64/double.
         /// </summary>
-        public const double EPSILON_DBL = 2.22044604925031308085e-16;
+        internal const double EPSILON_DBL = 2.22044604925031308085e-16;
 
         /// <summary>
         /// Double precision constant for positive infinity.
         /// </summary>
-        public const double INFINITY_DBL = Double.PositiveInfinity;
+        internal const double INFINITY_DBL = Double.PositiveInfinity;
 
         /// <summary>
         /// Double precision constant for Not a Number.
@@ -123,62 +123,62 @@ namespace Unity.Mathematics.Fixed
         /// Additionally, there are multiple bit representations for Not a Number, so if you must test if your value
         /// is NAN_DBL, use isnan().
         /// </summary>
-        public const double NAN_DBL = Double.NaN;
+        internal const double NAN_DBL = Double.NaN;
 
         /// <summary>The smallest positive normal number representable in a fp.</summary>
-        public const float FLT_MIN_NORMAL = 1.175494351e-38F;
+        internal const float FLT_MIN_NORMAL = 1.175494351e-38F;
         public static readonly fp FP_MIN_NORMAL = fp.epsilon;
 
         /// <summary>The smallest positive normal number representable in a double. This is a f64/double precision constant.</summary>
-        public const double DBL_MIN_NORMAL = 2.2250738585072014e-308;
+        internal const double DBL_MIN_NORMAL = 2.2250738585072014e-308;
 
         /// <summary>The mathematical constant e also known as Euler's number. Approximately 2.72.</summary>
-        public const float E = (float)E_DBL;
+        internal const float E = (float)E_DBL;
 
         /// <summary>The base 2 logarithm of e. Approximately 1.44.</summary>
-        public const float LOG2E = (float)LOG2E_DBL;
+        internal const float LOG2E = (float)LOG2E_DBL;
 
         /// <summary>The base 10 logarithm of e. Approximately 0.43.</summary>
-        public const float LOG10E = (float)LOG10E_DBL;
+        internal const float LOG10E = (float)LOG10E_DBL;
 
         /// <summary>The natural logarithm of 2. Approximately 0.69.</summary>
-        public const float LN2 = (float)LN2_DBL;
+        internal const float LN2 = (float)LN2_DBL;
 
         /// <summary>The natural logarithm of 10. Approximately 2.30.</summary>
-        public const float LN10 = (float)LN10_DBL;
+        internal const float LN10 = (float)LN10_DBL;
 
         /// <summary>The mathematical constant pi. Approximately 3.14.</summary>
-        public const float PI = (float)PI_DBL;
+        internal const float PI = (float)PI_DBL;
 
         /// <summary>
         /// The mathematical constant (2 * pi). Approximately 6.28. Also known as <see cref="TAU"/>.
         /// </summary>
-        public const float PI2 = (float)PI2_DBL;
+        internal const float PI2 = (float)PI2_DBL;
 
         /// <summary>
         /// The mathematical constant (pi / 2). Approximately 1.57.
         /// </summary>
-        public const float PIHALF = (float)PIHALF_DBL;
+        internal const float PIHALF = (float)PIHALF_DBL;
 
         /// <summary>
         /// The mathematical constant tau. Approximately 6.28. Also known as <see cref="PI2"/>.
         /// </summary>
-        public const float TAU = (float)PI2_DBL;
+        internal const float TAU = (float)PI2_DBL;
 
         /// <summary>
         /// The conversion constant used to convert radians to degrees. Multiply the radian value by this constant to get degrees.
         /// </summary>
         /// <remarks>Multiplying by this constant is equivalent to using <see cref="math.degrees(fp)"/>.</remarks>
-        public const float TODEGREES = (float)TODEGREES_DBL;
+        internal const float TODEGREES = (float)TODEGREES_DBL;
 
         /// <summary>
         /// The conversion constant used to convert degrees to radians. Multiply the degree value by this constant to get radians.
         /// </summary>
         /// <remarks>Multiplying by this constant is equivalent to using <see cref="math.radians(fp)"/>.</remarks>
-        public const float TORADIANS = (float)TORADIANS_DBL;
+        internal const float TORADIANS = (float)TORADIANS_DBL;
 
         /// <summary>The square root 2. Approximately 1.41.</summary>
-        public const float SQRT2 = (float)SQRT2_DBL;
+        internal const float SQRT2 = (float)SQRT2_DBL;
 
         /// <summary>
         /// The difference between fp._1 and the next representable f32/single precision number.
@@ -186,12 +186,12 @@ namespace Unity.Mathematics.Fixed
         /// Beware:
         /// This value is different from System.Single.Epsilon, which is the smallest, positive, denormalized f32/single.
         /// </summary>
-        public const float EPSILON = 1.1920928955078125e-7f;
+        internal const float EPSILON = 1.1920928955078125e-7f;
 
         /// <summary>
         /// Single precision constant for positive infinity.
         /// </summary>
-        public const float INFINITY = Single.PositiveInfinity;
+        internal const float INFINITY = Single.PositiveInfinity;
 
         /// <summary>
         /// Single precision constant for Not a Number.
@@ -202,7 +202,7 @@ namespace Unity.Mathematics.Fixed
         /// Additionally, there are multiple bit representations for Not a Number, so if you must test if your value
         /// is NAN, use isnan().
         /// </summary>
-        public const float NAN = Single.NaN;
+        internal const float NAN = Single.NaN;
 
         /// <summary>Returns the bit pattern of a uint as an int.</summary>
         /// <param name="x">The uint bits to copy.</param>
