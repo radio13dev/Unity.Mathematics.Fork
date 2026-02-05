@@ -1,0 +1,26 @@
+{
+    "name": "Unity.Transforms.Fixed",
+    "rootNamespace": "",
+    "references": [
+        "FixedPointSharp",
+        "Unity.Mathematics.Fixed",
+        "Unity.Entities",
+        "Unity.Collections",
+        "Unity.Burst"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.entities",
+            "expression": "0",
+            "define": "ENTITIES_EXISTS"
+        }
+    ],
+    "noEngineReferences": false
+}
