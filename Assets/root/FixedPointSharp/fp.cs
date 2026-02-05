@@ -92,11 +92,11 @@ namespace Deterministic.FixedPoint {
         public static readonly fp _cos_pidiv8   = fixmath.Cos(fp.pi/fp._8);
         public static readonly fp _sin_pidiv8   = fixmath.Sin(fp.pi/fp._8);
         
-        public static readonly fp taylorInvSqrtA = ParseUnsafe(1.79284291400159f);
-        public static readonly fp taylorInvSqrtB = ParseUnsafe(0.85373472095314f);
+        public static readonly fp taylorInvSqrtA = new fp(raw.taylorInvSqrtA);//ParseUnsafe(1.79284291400159f);
+        public static readonly fp taylorInvSqrtB = new fp(raw.taylorInvSqrtB);//ParseUnsafe(0.85373472095314f);
         
-        public static readonly fp snoiseA = ParseUnsafe(1.79284291400159f);
-        public static readonly fp snoiseB = ParseUnsafe(0.85373472095314f);
+        public static readonly fp snoiseA = taylorInvSqrtA;
+        public static readonly fp snoiseB = taylorInvSqrtB;
         
         public static readonly fp TODEGREES = ((fp)360)/fp.pi2;
         public static readonly fp TORADIANS = fp.pi2/((fp)360);
@@ -111,10 +111,13 @@ namespace Deterministic.FixedPoint {
             public const long deg2rad          = 1143L;
             public const long rad2deg          = 3754936L;
             public const long epsilon          = 1;
-            public const long epsilonroot          = 1;
-            public const long epsilon_e9f          = 1;
-            public const long epsilon_e6f          = 1;
+            public const long epsilonroot          = 256;
+            public const long epsilon_e9f          = 4096;
+            public const long epsilon_e6f          = 16384;
             public const long e          = 178145L;
+            
+            public const long taylorInvSqrtA = 117496L;
+            public const long taylorInvSqrtB = 55950L;
         }
 
         [FieldOffset(0)]
