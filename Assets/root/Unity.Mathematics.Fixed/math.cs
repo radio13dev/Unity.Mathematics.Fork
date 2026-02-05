@@ -148,37 +148,37 @@ namespace Unity.Mathematics.Fixed
         internal const float LN10 = (float)LN10_DBL;
 
         /// <summary>The mathematical constant pi. Approximately 3.14.</summary>
-        internal const float PI = (float)PI_DBL;
+        public static readonly fp PI = fp.pi;
 
         /// <summary>
         /// The mathematical constant (2 * pi). Approximately 6.28. Also known as <see cref="TAU"/>.
         /// </summary>
-        internal const float PI2 = (float)PI2_DBL;
+        public static readonly fp PI2 = fp.pi2;
 
         /// <summary>
         /// The mathematical constant (pi / 2). Approximately 1.57.
         /// </summary>
-        internal const float PIHALF = (float)PIHALF_DBL;
+        public static readonly fp PIHALF = fp.pi_half;
 
         /// <summary>
         /// The mathematical constant tau. Approximately 6.28. Also known as <see cref="PI2"/>.
         /// </summary>
-        internal const float TAU = (float)PI2_DBL;
+        public static readonly fp TAU = fp.pi2;
 
         /// <summary>
         /// The conversion constant used to convert radians to degrees. Multiply the radian value by this constant to get degrees.
         /// </summary>
         /// <remarks>Multiplying by this constant is equivalent to using <see cref="math.degrees(fp)"/>.</remarks>
-        internal const float TODEGREES = (float)TODEGREES_DBL;
+        public static readonly fp TODEGREES = fp.TODEGREES;
 
         /// <summary>
         /// The conversion constant used to convert degrees to radians. Multiply the degree value by this constant to get radians.
         /// </summary>
         /// <remarks>Multiplying by this constant is equivalent to using <see cref="math.radians(fp)"/>.</remarks>
-        internal const float TORADIANS = (float)TORADIANS_DBL;
+        public static readonly fp TORADIANS = fp.TORADIANS;
 
         /// <summary>The square root 2. Approximately 1.41.</summary>
-        internal const float SQRT2 = (float)SQRT2_DBL;
+        public static readonly fp SQRT2 = fp.sqrt2;
 
         /// <summary>
         /// The difference between fp._1 and the next representable f32/single precision number.
@@ -186,7 +186,7 @@ namespace Unity.Mathematics.Fixed
         /// Beware:
         /// This value is different from System.Single.Epsilon, which is the smallest, positive, denormalized f32/single.
         /// </summary>
-        internal const float EPSILON = 1.1920928955078125e-7f;
+        public static readonly fp EPSILON = fp.epsilon;
 
         /// <summary>
         /// Single precision constant for positive infinity.
