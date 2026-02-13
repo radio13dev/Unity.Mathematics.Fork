@@ -2,7 +2,8 @@
     "name": "Unity.Mathematics.Fixed",
     "rootNamespace": "",
     "references": [
-        "FixedPointSharp"
+        "FixedPointSharp",
+        "Unity.Mathematics"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

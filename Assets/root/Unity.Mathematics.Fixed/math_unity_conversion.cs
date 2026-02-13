@@ -14,6 +14,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="v">float2 to convert.</param>
         /// <returns>The converted Vector2.</returns>
         public static implicit operator Vector2(float2 v)     { return new Vector2((float)v.x, (float)v.y); }
+        public static explicit operator Unity.Mathematics.float2(float2 v)     { return new Unity.Mathematics.float2((float)v.x, (float)v.y); }
 
         /// <summary>
         /// Converts a Vector2 to float2.
@@ -31,6 +32,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="v">float3 to convert.</param>
         /// <returns>The converted Vector3.</returns>
         public static implicit operator Vector3(float3 v)     { return new Vector3((float)v.x, (float)v.y, (float)v.z); }
+        public static explicit operator Unity.Mathematics.float3(float3 v)     { return new Unity.Mathematics.float3((float)v.x, (float)v.y, (float)v.z); }
 
         /// <summary>
         /// Converts a Vector3 to float3.
@@ -65,6 +67,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="q">quaternion to convert.</param>
         /// <returns>The converted Quaternion.</returns>
         public static implicit operator Quaternion(quaternion q)  { return new Quaternion((float)q.value.x, (float)q.value.y, (float)q.value.z, (float)q.value.w); }
+        public static explicit operator Unity.Mathematics.quaternion(quaternion q)  { return new Unity.Mathematics.quaternion((float)q.value.x, (float)q.value.y, (float)q.value.z, (float)q.value.w); }
 
         /// <summary>
         /// Converts a Quaternion to quaternion.
