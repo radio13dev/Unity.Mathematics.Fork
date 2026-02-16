@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using static Unity.Mathematics.math;
 using static Unity.Mathematics.Fixed.math;
 using System.Diagnostics;
 using Unity.IL2CPP.CompilerServices;
@@ -412,7 +413,7 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public fp NextFloat()
         {
-            return asfloat(0x3f800000 | (NextState() >> 9)) - fp._1;
+            return math.asfloat(0x3f800000 | (NextState() >> 9)) - fp._1;
         }
 
         /// <summary>Returns a uniformly random float2 value with all components in the interval [0, 1).</summary>
@@ -420,7 +421,7 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float2 NextFloat2()
         {
-            return asfloat(0x3f800000 | (uint2(NextState(), NextState()) >> 9)) - fp._1;
+            return math.asfloat(0x3f800000 | (uint2(NextState(), NextState()) >> 9)) - fp._1;
         }
 
         /// <summary>Returns a uniformly random float3 value with all components in the interval [0, 1).</summary>
@@ -428,7 +429,7 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float3 NextFloat3()
         {
-            return asfloat(0x3f800000 | (uint3(NextState(), NextState(), NextState()) >> 9)) - fp._1;
+            return math.asfloat(0x3f800000 | (uint3(NextState(), NextState(), NextState()) >> 9)) - fp._1;
         }
 
         /// <summary>Returns a uniformly random float4 value with all components in the interval [0, 1).</summary>
@@ -436,7 +437,7 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float4 NextFloat4()
         {
-            return asfloat(0x3f800000 | (uint4(NextState(), NextState(), NextState(), NextState()) >> 9)) - fp._1;
+            return math.asfloat(0x3f800000 | (uint4(NextState(), NextState(), NextState(), NextState()) >> 9)) - fp._1;
         }
 
 
@@ -493,110 +494,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float4 NextFloat4(float4 min, float4 max) { return NextFloat4() * (max - min) + min; }
 
-
-
-        /// <summary>Returns a uniformly random double value in the interval [0, 1).</summary>
-        /// <returns>A uniformly random double value in the range [0, 1).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NextDouble()
-        {
-            ulong sx = ((ulong)NextState() << 20) ^ NextState();
-            return asdouble(0x3ff0000000000000 | sx) - 1.0;
-        }
-
-        /// <summary>Returns a uniformly random double2 value with all components in the interval [0, 1).</summary>
-        /// <returns>A uniformly random double2 value in the range [0, 1).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double2 NextDouble2()
-        {
-            ulong sx = ((ulong)NextState() << 20) ^ NextState();
-            ulong sy = ((ulong)NextState() << 20) ^ NextState();
-            return double2(asdouble(0x3ff0000000000000 | sx),
-                           asdouble(0x3ff0000000000000 | sy)) - 1.0;
-        }
-
-        /// <summary>Returns a uniformly random double3 value with all components in the interval [0, 1).</summary>
-        /// <returns>A uniformly random double3 value in the range [0, 1).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double3 NextDouble3()
-        {
-            ulong sx = ((ulong)NextState() << 20) ^ NextState();
-            ulong sy = ((ulong)NextState() << 20) ^ NextState();
-            ulong sz = ((ulong)NextState() << 20) ^ NextState();
-            return double3(asdouble(0x3ff0000000000000 | sx),
-                           asdouble(0x3ff0000000000000 | sy),
-                           asdouble(0x3ff0000000000000 | sz)) - 1.0;
-        }
-
-        /// <summary>Returns a uniformly random double4 value with all components in the interval [0, 1).</summary>
-        /// <returns>A uniformly random double4 value in the range [0, 1).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double4 NextDouble4()
-        {
-            ulong sx = ((ulong)NextState() << 20) ^ NextState();
-            ulong sy = ((ulong)NextState() << 20) ^ NextState();
-            ulong sz = ((ulong)NextState() << 20) ^ NextState();
-            ulong sw = ((ulong)NextState() << 20) ^ NextState();
-            return double4(asdouble(0x3ff0000000000000 | sx),
-                           asdouble(0x3ff0000000000000 | sy),
-                           asdouble(0x3ff0000000000000 | sz),
-                           asdouble(0x3ff0000000000000 | sw)) - 1.0;
-        }
-
-
-        /// <summary>Returns a uniformly random double value in the interval [0, max).</summary>
-        /// <param name="max">The maximum value to generate, exclusive.</param>
-        /// <returns>A uniformly random double value in the range [0, max).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NextDouble(double max) { return NextDouble() * max; }
-
-        /// <summary>Returns a uniformly random double2 value with all components in the interval [0, max).</summary>
-        /// <param name="max">The componentwise maximum value to generate, exclusive.</param>
-        /// <returns>A uniformly random double2 value in the range [0, max).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double2 NextDouble2(double2 max) { return NextDouble2() * max; }
-
-        /// <summary>Returns a uniformly random double3 value with all components in the interval [0, max).</summary>
-        /// <param name="max">The componentwise maximum value to generate, exclusive.</param>
-        /// <returns>A uniformly random double3 value in the range [0, max).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double3 NextDouble3(double3 max) { return NextDouble3() * max; }
-
-        /// <summary>Returns a uniformly random double4 value with all components in the interval [0, max).</summary>
-        /// <param name="max">The componentwise maximum value to generate, exclusive.</param>
-        /// <returns>A uniformly random double4 value in the range [0, max).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double4 NextDouble4(double4 max) { return NextDouble4() * max; }
-
-
-        /// <summary>Returns a uniformly random double value in the interval [min, max).</summary>
-        /// <param name="min">The minimum value to generate, inclusive.</param>
-        /// <param name="max">The maximum value to generate, exclusive.</param>
-        /// <returns>A uniformly random double value in the range [min, max).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double NextDouble(double min, double max) { return NextDouble() * (max - min) + min; }
-
-        /// <summary>Returns a uniformly random double2 value with all components in the interval [min, max).</summary>
-        /// <param name="min">The componentwise minimum value to generate, inclusive.</param>
-        /// <param name="max">The componentwise maximum value to generate, exclusive.</param>
-        /// <returns>A uniformly random double2 value in the range [min, max).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double2 NextDouble2(double2 min, double2 max) { return NextDouble2() * (max - min) + min; }
-
-        /// <summary>Returns a uniformly random double3 value with all components in the interval [min, max).</summary>
-        /// <param name="min">The componentwise minimum value to generate, inclusive.</param>
-        /// <param name="max">The componentwise maximum value to generate, exclusive.</param>
-        /// <returns>A uniformly random double3 value in the range [min, max).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double3 NextDouble3(double3 min, double3 max) { return NextDouble3() * (max - min) + min; }
-
-        /// <summary>Returns a uniformly random double4 value with all components in the interval [min, max).</summary>
-        /// <param name="min">The componentwise minimum value to generate, inclusive.</param>
-        /// <param name="max">The componentwise maximum value to generate, exclusive.</param>
-        /// <returns>A uniformly random double4 value in the range [min, max).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double4 NextDouble4(double4 min, double4 max) { return NextDouble4() * (max - min) + min; }
-
         /// <summary>Returns a unit length float2 vector representing a uniformly random 2D direction.</summary>
         /// <returns>A uniformly random unit length float2 vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -606,17 +503,6 @@ namespace Unity.Mathematics.Fixed
             fp s, c;
             sincos(angle, out s, out c);
             return float2(c, s);
-        }
-
-        /// <summary>Returns a unit length double2 vector representing a uniformly random 2D direction.</summary>
-        /// <returns>A uniformly random unit length double2 vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double2 NextDouble2Direction()
-        {
-            double angle = NextDouble() * PI_DBL * 2.0;
-            double s, c;
-            sincos(angle, out s, out c);
-            return double2(c, s);
         }
 
         /// <summary>Returns a unit length float3 vector representing a uniformly random 3D direction.</summary>
@@ -631,20 +517,6 @@ namespace Unity.Mathematics.Fixed
             fp s, c;
             sincos(angle, out s, out c);
             return float3(c*r, s*r, z);
-        }
-
-        /// <summary>Returns a unit length double3 vector representing a uniformly random 3D direction.</summary>
-        /// <returns>A uniformly random unit length double3 vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double3 NextDouble3Direction()
-        {
-            double2 rnd = NextDouble2();
-            double z = rnd.x * 2.0 - 1.0;
-            double r = sqrt(max(1.0 - z * z, 0.0));
-            double angle = rnd.y * PI_DBL * 2.0;
-            double s, c;
-            sincos(angle, out s, out c);
-            return double3(c * r, s * r, z);
         }
 
         /// <summary>Returns a unit length quaternion representing a uniformly 3D rotation.</summary>

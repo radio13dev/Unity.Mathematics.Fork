@@ -2,6 +2,7 @@
     "name": "Unity.Mathematics.Fixed.Editor",
     "rootNamespace": "",
     "references": [
+        "Unity.Mathematics",
         "Unity.Mathematics.Fixed"
     ],
     "includePlatforms": [

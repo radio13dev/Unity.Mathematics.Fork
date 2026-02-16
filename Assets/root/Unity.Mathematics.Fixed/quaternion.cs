@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
-
+using static Unity.Mathematics.math;
 using static Unity.Mathematics.Fixed.math;
 
 namespace Unity.Mathematics.Fixed
@@ -49,7 +49,7 @@ namespace Unity.Mathematics.Fixed
             float3 w = m.c2;
 
             uint u_sign = (asuint(u.x) & 0x80000000);
-            fp t = v.y + asfloat(asuint(w.z) ^ u_sign);
+            fp t = v.y + math.asfloat(asuint(w.z) ^ u_sign);
             uint4 u_mask = uint4((int)u_sign >> 31);
             uint4 t_mask = uint4(asint(t) >> 31);
 
@@ -57,10 +57,10 @@ namespace Unity.Mathematics.Fixed
 
             uint4 sign_flips = uint4(0x00000000, 0x80000000, 0x80000000, 0x80000000) ^ (u_mask & uint4(0x00000000, 0x80000000, 0x00000000, 0x80000000)) ^ (t_mask & uint4(0x80000000, 0x80000000, 0x80000000, 0x00000000));
 
-            value = float4(tr, u.y, w.x, v.z) + asfloat(asuint(float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
+            value = float4(tr, u.y, w.x, v.z) + math.asfloat(asuint(math.float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
 
-            value = asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
-            value = asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
+            value = math.asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
+            value = math.asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
             value = normalize(value);
         }
 
@@ -73,7 +73,7 @@ namespace Unity.Mathematics.Fixed
             float4 w = m.c2;
 
             uint u_sign = (asuint(u.x) & 0x80000000);
-            fp t = v.y + asfloat(asuint(w.z) ^ u_sign);
+            fp t = v.y + math.asfloat(asuint(w.z) ^ u_sign);
             uint4 u_mask = uint4((int)u_sign >> 31);
             uint4 t_mask = uint4(asint(t) >> 31);
 
@@ -81,10 +81,10 @@ namespace Unity.Mathematics.Fixed
 
             uint4 sign_flips = uint4(0x00000000, 0x80000000, 0x80000000, 0x80000000) ^ (u_mask & uint4(0x00000000, 0x80000000, 0x00000000, 0x80000000)) ^ (t_mask & uint4(0x80000000, 0x80000000, 0x80000000, 0x00000000));
 
-            value = float4(tr, u.y, w.x, v.z) + asfloat(asuint(float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
+            value = float4(tr, u.y, w.x, v.z) + math.asfloat(asuint(math.float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
 
-            value = asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
-            value = asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
+            value = math.asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
+            value = math.asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
 
             value = normalize(value);
         }
@@ -308,21 +308,21 @@ namespace Unity.Mathematics.Fixed
         /// <param name="order">The order in which the rotations are applied.</param>
         /// <returns>The quaternion representing the Euler angle rotation in the specified order.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static quaternion Euler(float3 xyz, RotationOrder order = RotationOrder.ZXY)
+        public static quaternion Euler(float3 xyz, math.RotationOrder order = math.RotationOrder.ZXY)
         {
             switch (order)
             {
-                case RotationOrder.XYZ:
+                case math.RotationOrder.XYZ:
                     return EulerXYZ(xyz);
-                case RotationOrder.XZY:
+                case math.RotationOrder.XZY:
                     return EulerXZY(xyz);
-                case RotationOrder.YXZ:
+                case math.RotationOrder.YXZ:
                     return EulerYXZ(xyz);
-                case RotationOrder.YZX:
+                case math.RotationOrder.YZX:
                     return EulerYZX(xyz);
-                case RotationOrder.ZXY:
+                case math.RotationOrder.ZXY:
                     return EulerZXY(xyz);
-                case RotationOrder.ZYX:
+                case math.RotationOrder.ZYX:
                     return EulerZYX(xyz);
                 default:
                     return quaternion.identity;
@@ -341,7 +341,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="order">The order in which the rotations are applied.</param>
         /// <returns>The quaternion representing the Euler angle rotation in the specified order.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static quaternion Euler(fp x, fp y, fp z, RotationOrder order = RotationOrder.Default)
+        public static quaternion Euler(fp x, fp y, fp z, math.RotationOrder order = math.RotationOrder.Default)
         {
             return Euler(float3(x, y, z), order);
         }

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Runtime.CompilerServices;
-
+using static Unity.Mathematics.math;
 
 namespace Unity.Mathematics.Fixed
 {

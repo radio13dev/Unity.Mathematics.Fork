@@ -10,7 +10,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using Unity.IL2CPP.CompilerServices;
-
+using static Unity.Mathematics.math;
 
 #pragma warning disable 0660, 0661
 
@@ -117,8 +117,8 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float2(half v)
         {
-            this.x = v;
-            this.y = v;
+            this.x = fp.ParseUnsafe(v);
+            this.y = fp.ParseUnsafe(v);
         }
 
         /// <summary>Constructs a float2 vector from a half2 vector by componentwise conversion.</summary>
@@ -126,8 +126,8 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float2(half2 v)
         {
-            this.x = v.x;
-            this.y = v.y;
+            this.x = fp.ParseUnsafe(v.x);
+            this.y = fp.ParseUnsafe(v.y);
         }
 
         /// <summary>Constructs a float2 vector from a single double value by converting it to fp and assigning it to every component.</summary>

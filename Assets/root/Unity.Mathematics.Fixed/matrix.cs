@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 
+using static Unity.Mathematics.math;
 using static Unity.Mathematics.Fixed.math;
 
 namespace Unity.Mathematics.Fixed
@@ -78,9 +79,9 @@ namespace Unity.Mathematics.Fixed
             uint3 npn = uint3(0x80000000, 0x00000000, 0x80000000);
             uint3 nnp = uint3(0x80000000, 0x80000000, 0x00000000);
             uint3 pnn = uint3(0x00000000, 0x80000000, 0x80000000);
-            c0 = v2.y * asfloat(asuint(v.yxw) ^ npn) - v2.z * asfloat(asuint(v.zwx) ^ pnn) + float3(1, 0, 0);
-            c1 = v2.z * asfloat(asuint(v.wzy) ^ nnp) - v2.x * asfloat(asuint(v.yxw) ^ npn) + float3(0, 1, 0);
-            c2 = v2.x * asfloat(asuint(v.zwx) ^ pnn) - v2.y * asfloat(asuint(v.wzy) ^ nnp) + float3(0, 0, 1);
+            c0 = v2.y * math.asfloat(asuint(v.yxw) ^ npn) - v2.z * math.asfloat(asuint(v.zwx) ^ pnn) + math.float3(1, 0, 0);
+            c1 = v2.z * math.asfloat(asuint(v.wzy) ^ nnp) - v2.x * math.asfloat(asuint(v.yxw) ^ npn) + math.float3(0, 1, 0);
+            c2 = v2.x * math.asfloat(asuint(v.zwx) ^ pnn) - v2.y * math.asfloat(asuint(v.wzy) ^ nnp) + math.float3(0, 0, 1);
         }
 
         /// <summary>
@@ -107,9 +108,9 @@ namespace Unity.Mathematics.Fixed
             uint3 pnp = uint3(0x00000000, 0x80000000, 0x00000000);
 
             return float3x3(
-                u.x * u_inv_cosa + asfloat(asuint(t.wzy) ^ ppn),
-                u.y * u_inv_cosa + asfloat(asuint(t.zwx) ^ npp),
-                u.z * u_inv_cosa + asfloat(asuint(t.yxw) ^ pnp)
+                u.x * u_inv_cosa + math.asfloat(asuint(t.wzy) ^ ppn),
+                u.y * u_inv_cosa + math.asfloat(asuint(t.zwx) ^ npp),
+                u.z * u_inv_cosa + math.asfloat(asuint(t.yxw) ^ pnp)
                 );
             /*
             return float3x3(
@@ -312,21 +313,21 @@ namespace Unity.Mathematics.Fixed
         /// <param name="order">The order in which the rotations are applied.</param>
         /// <returns>The float3x3 rotation matrix representing the rotation by Euler angles in the given order.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3x3 Euler(float3 xyz, RotationOrder order = RotationOrder.Default)
+        public static float3x3 Euler(float3 xyz, math.RotationOrder order = math.RotationOrder.Default)
         {
             switch (order)
             {
-                case RotationOrder.XYZ:
+                case math.RotationOrder.XYZ:
                     return EulerXYZ(xyz);
-                case RotationOrder.XZY:
+                case math.RotationOrder.XZY:
                     return EulerXZY(xyz);
-                case RotationOrder.YXZ:
+                case math.RotationOrder.YXZ:
                     return EulerYXZ(xyz);
-                case RotationOrder.YZX:
+                case math.RotationOrder.YZX:
                     return EulerYZX(xyz);
-                case RotationOrder.ZXY:
+                case math.RotationOrder.ZXY:
                     return EulerZXY(xyz);
-                case RotationOrder.ZYX:
+                case math.RotationOrder.ZYX:
                     return EulerZYX(xyz);
                 default:
                     return float3x3.identity;
@@ -345,7 +346,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="order">The order in which the rotations are applied.</param>
         /// <returns>The float3x3 rotation matrix representing the rotation by Euler angles in the given order.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float3x3 Euler(fp x, fp y, fp z, RotationOrder order = RotationOrder.Default)
+        public static float3x3 Euler(fp x, fp y, fp z, math.RotationOrder order = math.RotationOrder.Default)
         {
             return Euler(float3(x, y, z), order);
         }
@@ -467,9 +468,9 @@ namespace Unity.Mathematics.Fixed
 
             bool accept = mn > fp.epsilon && mx < fp.usable_max && isfinite(forwardLengthSq) && isfinite(upLengthSq) && isfinite(tLengthSq);
             return float3x3(
-                select(float3(1,0,0), t, accept),
-                select(float3(0,1,0), cross(forward, t), accept),
-                select(float3(0,0,1), forward, accept));
+                select(math.float3(1,0,0), t, accept),
+                select(math.float3(0,1,0), cross(forward, t), accept),
+                select(math.float3(0,0,1), forward, accept));
         }
 
         /// <summary>
@@ -541,9 +542,9 @@ namespace Unity.Mathematics.Fixed
             uint4 mask = uint4(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000);
 
             return float4x4(
-                u.x * u_inv_cosa + asfloat((asuint(t.wzyx) ^ ppnp) & mask),
-                u.y * u_inv_cosa + asfloat((asuint(t.zwxx) ^ nppp) & mask),
-                u.z * u_inv_cosa + asfloat((asuint(t.yxwx) ^ pnpp) & mask),
+                u.x * u_inv_cosa + math.asfloat((asuint(t.wzyx) ^ ppnp) & mask),
+                u.y * u_inv_cosa + math.asfloat((asuint(t.zwxx) ^ nppp) & mask),
+                u.z * u_inv_cosa + math.asfloat((asuint(t.yxwx) ^ pnpp) & mask),
                 float4(fp._0, fp._0, fp._0, fp._1)
                 );
 
@@ -747,21 +748,21 @@ namespace Unity.Mathematics.Fixed
         /// <param name="order">The order in which the rotations are applied.</param>
         /// <returns>The float4x4 rotation matrix of the Euler angle rotation in given order.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x4 Euler(float3 xyz, RotationOrder order = RotationOrder.Default)
+        public static float4x4 Euler(float3 xyz, math.RotationOrder order = math.RotationOrder.Default)
         {
             switch (order)
             {
-                case RotationOrder.XYZ:
+                case math.RotationOrder.XYZ:
                     return EulerXYZ(xyz);
-                case RotationOrder.XZY:
+                case math.RotationOrder.XZY:
                     return EulerXZY(xyz);
-                case RotationOrder.YXZ:
+                case math.RotationOrder.YXZ:
                     return EulerYXZ(xyz);
-                case RotationOrder.YZX:
+                case math.RotationOrder.YZX:
                     return EulerYZX(xyz);
-                case RotationOrder.ZXY:
+                case math.RotationOrder.ZXY:
                     return EulerZXY(xyz);
-                case RotationOrder.ZYX:
+                case math.RotationOrder.ZYX:
                     return EulerZYX(xyz);
                 default:
                     return float4x4.identity;
@@ -780,7 +781,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="order">The order in which the rotations are applied.</param>
         /// <returns>The float4x4 rotation matrix of the Euler angle rotation in given order.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float4x4 Euler(fp x, fp y, fp z, RotationOrder order = RotationOrder.Default)
+        public static float4x4 Euler(fp x, fp y, fp z, math.RotationOrder order = math.RotationOrder.Default)
         {
             return Euler(float3(x, y, z), order);
         }

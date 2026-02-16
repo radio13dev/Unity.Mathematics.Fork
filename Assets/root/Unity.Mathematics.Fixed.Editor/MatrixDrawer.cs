@@ -6,21 +6,9 @@ using UnityEngine;
 
 namespace Unity.Mathematics.Fixed.Editor
 {
-    [CustomPropertyDrawer(typeof(bool2x2)), CustomPropertyDrawer(typeof(bool2x3)), CustomPropertyDrawer(typeof(bool2x4))]
-    [CustomPropertyDrawer(typeof(bool3x2)), CustomPropertyDrawer(typeof(bool3x3)), CustomPropertyDrawer(typeof(bool3x4))]
-    [CustomPropertyDrawer(typeof(bool4x2)), CustomPropertyDrawer(typeof(bool4x3)), CustomPropertyDrawer(typeof(bool4x4))]
-    [CustomPropertyDrawer(typeof(double2x2)), CustomPropertyDrawer(typeof(double2x3)), CustomPropertyDrawer(typeof(double2x4))]
-    [CustomPropertyDrawer(typeof(double3x2)), CustomPropertyDrawer(typeof(double3x3)), CustomPropertyDrawer(typeof(double3x4))]
-    [CustomPropertyDrawer(typeof(double4x2)), CustomPropertyDrawer(typeof(double4x3)), CustomPropertyDrawer(typeof(double4x4))]
     [CustomPropertyDrawer(typeof(float2x2)), CustomPropertyDrawer(typeof(float2x3)), CustomPropertyDrawer(typeof(float2x4))]
     [CustomPropertyDrawer(typeof(float3x2)), CustomPropertyDrawer(typeof(float3x3)), CustomPropertyDrawer(typeof(float3x4))]
     [CustomPropertyDrawer(typeof(float4x2)), CustomPropertyDrawer(typeof(float4x3)), CustomPropertyDrawer(typeof(float4x4))]
-    [CustomPropertyDrawer(typeof(int2x2)), CustomPropertyDrawer(typeof(int2x3)), CustomPropertyDrawer(typeof(int2x4))]
-    [CustomPropertyDrawer(typeof(int3x2)), CustomPropertyDrawer(typeof(int3x3)), CustomPropertyDrawer(typeof(int3x4))]
-    [CustomPropertyDrawer(typeof(int4x2)), CustomPropertyDrawer(typeof(int4x3)), CustomPropertyDrawer(typeof(int4x4))]
-    [CustomPropertyDrawer(typeof(uint2x2)), CustomPropertyDrawer(typeof(uint2x3)), CustomPropertyDrawer(typeof(uint2x4))]
-    [CustomPropertyDrawer(typeof(uint3x2)), CustomPropertyDrawer(typeof(uint3x3)), CustomPropertyDrawer(typeof(uint3x4))]
-    [CustomPropertyDrawer(typeof(uint4x2)), CustomPropertyDrawer(typeof(uint4x3)), CustomPropertyDrawer(typeof(uint4x4))]
     class MatrixDrawer : PropertyDrawer
     {
 #if !UNITY_2023_2_OR_NEWER

@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using Unity.Mathematics;
 
 namespace Unity.Mathematics.Fixed.Editor
 {
@@ -12,7 +13,7 @@ namespace Unity.Mathematics.Fixed.Editor
 
         protected override double4 Normalize(double4 value)
         {
-            return math.normalizesafe(new quaternion((float4)value)).value;
+            return Unity.Mathematics.math.normalizesafe(new Unity.Mathematics.quaternion((Unity.Mathematics.float4)value)).value;
         }
     }
 }

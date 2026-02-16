@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
-
+using static Unity.Mathematics.math;
 
 namespace Unity.Mathematics.Fixed
 {
@@ -396,35 +396,11 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long aslong(ulong x) { return (long)x; }
 
-        /// <summary>Returns the bit pattern of a double as a long.</summary>
-        /// <param name="x">The double bits to copy.</param>
-        /// <returns>The long with the same bit pattern as the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long aslong(double x)
-        {
-            unsafe
-            {
-                return *(long*)&x;
-            }
-        }
-
         /// <summary>Returns the bit pattern of a long as a ulong.</summary>
         /// <param name="x">The long bits to copy.</param>
         /// <returns>The ulong with the same bit pattern as the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ulong asulong(long x) { return (ulong)x; }
-
-        /// <summary>Returns the bit pattern of a double as a ulong.</summary>
-        /// <param name="x">The double bits to copy.</param>
-        /// <returns>The ulong with the same bit pattern as the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ulong asulong(double x)
-        {
-            unsafe
-            {
-                return *(ulong*)&x;
-            }
-        }
 
         /// <summary>Returns the bit pattern of an int as a fp.</summary>
         /// <param name="x">The int bits to copy.</param>
@@ -543,30 +519,6 @@ namespace Unity.Mathematics.Fixed
             return mask;
         }
 
-        /// <summary>Returns the bit pattern of a long as a double.</summary>
-        /// <param name="x">The long bits to copy.</param>
-        /// <returns>The double with the same bit pattern as the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double asdouble(long x)
-        {
-            unsafe
-            {
-                return *(double*)&x;
-            }
-        }
-
-        /// <summary>Returns the bit pattern of a ulong as a double.</summary>
-        /// <param name="x">The ulong bits to copy.</param>
-        /// <returns>The double with the same bit pattern as the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double asdouble(ulong x)
-        {
-            unsafe
-            {
-                return *(double*)&x;
-            }
-        }
-
         /// <summary>Returns true if the input fp is a finite floating point value, false otherwise.</summary>
         /// <param name="x">The fp value to test.</param>
         /// <returns>True if the fp is finite, false otherwise.</returns>
@@ -591,32 +543,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool4 isfinite(float4 x) { return abs(x) <= fp.usable_max; }
 
-
-        /// <summary>Returns true if the input double is a finite floating point value, false otherwise.</summary>
-        /// <param name="x">The double value to test.</param>
-        /// <returns>True if the double is finite, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool isfinite(double x) { return abs(x) < double.PositiveInfinity; }
-
-        /// <summary>Returns a bool2 indicating for each component of a double2 whether it is a finite floating point value.</summary>
-        /// <param name="x">The double2 value to test.</param>
-        /// <returns>A bool2 where it is true in a component if that component is finite, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool2 isfinite(double2 x) { return abs(x) < double.PositiveInfinity; }
-
-        /// <summary>Returns a bool3 indicating for each component of a double3 whether it is a finite floating point value.</summary>
-        /// <param name="x">The double3 value to test.</param>
-        /// <returns>A bool3 where it is true in a component if that component is finite, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3 isfinite(double3 x) { return abs(x) < double.PositiveInfinity; }
-
-        /// <summary>Returns a bool4 indicating for each component of a double4 whether it is a finite floating point value.</summary>
-        /// <param name="x">The double4 value to test.</param>
-        /// <returns>A bool4 where it is true in a component if that component is finite, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4 isfinite(double4 x) { return abs(x) < double.PositiveInfinity; }
-
-
         /// <summary>Returns true if the input fp is an infinite floating point value, false otherwise.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>True if the input was an infinite value; false otherwise.</returns>
@@ -640,31 +566,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>True if the component was an infinite value; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool4 isinf(float4 x) { return abs(x) > fp.usable_max; }
-
-        /// <summary>Returns true if the input double is an infinite floating point value, false otherwise.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>True if the input was an infinite value; false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool isinf(double x) { return abs(x) == double.PositiveInfinity; }
-
-        /// <summary>Returns a bool2 indicating for each component of a double2 whether it is an infinite floating point value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>True if the component was an infinite value; false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool2 isinf(double2 x) { return abs(x) == double.PositiveInfinity; }
-
-        /// <summary>Returns a bool3 indicating for each component of a double3 whether it is an infinite floating point value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>True if the component was an infinite value; false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3 isinf(double3 x) { return abs(x) == double.PositiveInfinity; }
-
-        /// <summary>Returns a bool4 indicating for each component of a double4 whether it is an infinite floating point value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>True if the component was an infinite value; false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4 isinf(double4 x) { return abs(x) == double.PositiveInfinity; }
-
 
         /// <summary>Returns true if the input fp is a NaN (not a number) floating point value, false otherwise.</summary>
         /// <remarks>
@@ -701,57 +602,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>True if the component was NaN; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool4 isnan(float4 x) { return (asuint(x) & 0x7FFFFFFF) > 0x7F800000; }
-
-
-        /// <summary>Returns true if the input double is a NaN (not a number) floating point value, false otherwise.</summary>
-        /// <remarks>
-        /// NaN has several representations and may vary across architectures. Use this function to check if you have a NaN.
-        /// </remarks>
-        /// <param name="x">Input value.</param>
-        /// <returns>True if the value was NaN; false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool isnan(double x) { return (asulong(x) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000; }
-
-        /// <summary>Returns a bool2 indicating for each component of a double2 whether it is a NaN (not a number) floating point value.</summary>
-        /// <remarks>
-        /// NaN has several representations and may vary across architectures. Use this function to check if you have a NaN.
-        /// </remarks>
-        /// <param name="x">Input value.</param>
-        /// <returns>True if the component was NaN; false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool2 isnan(double2 x) {
-            return bool2((asulong(x.x) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000,
-                         (asulong(x.y) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000);
-        }
-
-        /// <summary>Returns a bool3 indicating for each component of a double3 whether it is a NaN (not a number) floating point value.</summary>
-        /// <remarks>
-        /// NaN has several representations and may vary across architectures. Use this function to check if you have a NaN.
-        /// </remarks>
-        /// <param name="x">Input value.</param>
-        /// <returns>True if the component was NaN; false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3 isnan(double3 x)
-        {
-            return bool3((asulong(x.x) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000,
-                         (asulong(x.y) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000,
-                         (asulong(x.z) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000);
-        }
-
-        /// <summary>Returns a bool4 indicating for each component of a double4 whether it is a NaN (not a number) floating point value.</summary>
-        /// <remarks>
-        /// NaN has several representations and may vary across architectures. Use this function to check if you have a NaN.
-        /// </remarks>
-        /// <param name="x">Input value.</param>
-        /// <returns>True if the component was NaN; false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4 isnan(double4 x)
-        {
-            return bool4((asulong(x.x) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000,
-                         (asulong(x.y) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000,
-                         (asulong(x.z) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000,
-                         (asulong(x.w) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000);
-        }
 
         /// <summary>
         /// Checks if the input is a power of two.
@@ -951,36 +801,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 min(float4 x, float4 y) { return new float4(min(x.x, y.x), min(x.y, y.y), min(x.z, y.z), min(x.w, y.w)); }
 
-
-        /// <summary>Returns the minimum of two double values.</summary>
-        /// <param name="x">The first input value.</param>
-        /// <param name="y">The second input value.</param>
-        /// <returns>The minimum of the two input values.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double min(double x, double y) { return double.IsNaN(y) || x < y ? x : y; }
-
-        /// <summary>Returns the componentwise minimum of two double2 vectors.</summary>
-        /// <param name="x">The first input value.</param>
-        /// <param name="y">The second input value.</param>
-        /// <returns>The componentwise minimum of the two input values.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 min(double2 x, double2 y) { return new double2(min(x.x, y.x), min(x.y, y.y)); }
-
-        /// <summary>Returns the componentwise minimum of two double3 vectors.</summary>
-        /// <param name="x">The first input value.</param>
-        /// <param name="y">The second input value.</param>
-        /// <returns>The componentwise minimum of the two input values.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 min(double3 x, double3 y) { return new double3(min(x.x, y.x), min(x.y, y.y), min(x.z, y.z)); }
-
-        /// <summary>Returns the componentwise minimum of two double4 vectors.</summary>
-        /// <param name="x">The first input value.</param>
-        /// <param name="y">The second input value.</param>
-        /// <returns>The componentwise minimum of the two input values.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 min(double4 x, double4 y) { return new double4(min(x.x, y.x), min(x.y, y.y), min(x.z, y.z), min(x.w, y.w)); }
-
-
         /// <summary>Returns the maximum of two int values.</summary>
         /// <param name="x">The first input value.</param>
         /// <param name="y">The second input value.</param>
@@ -1084,35 +904,6 @@ namespace Unity.Mathematics.Fixed
         public static float4 max(float4 x, float4 y) { return new float4(max(x.x, y.x), max(x.y, y.y), max(x.z, y.z), max(x.w, y.w)); }
 
 
-        /// <summary>Returns the maximum of two double values.</summary>
-        /// <param name="x">The first input value.</param>
-        /// <param name="y">The second input value.</param>
-        /// <returns>The maximum of the two input values.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double max(double x, double y) { return double.IsNaN(y) || x > y ? x : y; }
-
-        /// <summary>Returns the componentwise maximum of two double2 vectors.</summary>
-        /// <param name="x">The first input value.</param>
-        /// <param name="y">The second input value.</param>
-        /// <returns>The componentwise maximum of the two input values.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 max(double2 x, double2 y) { return new double2(max(x.x, y.x), max(x.y, y.y)); }
-
-        /// <summary>Returns the componentwise maximum of two double3 vectors.</summary>
-        /// <param name="x">The first input value.</param>
-        /// <param name="y">The second input value.</param>
-        /// <returns>The componentwise maximum of the two input values.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 max(double3 x, double3 y) { return new double3(max(x.x, y.x), max(x.y, y.y), max(x.z, y.z)); }
-
-        /// <summary>Returns the componentwise maximum of two double4 vectors.</summary>
-        /// <param name="x">The first input value.</param>
-        /// <param name="y">The second input value.</param>
-        /// <returns>The componentwise maximum of the two input values.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 max(double4 x, double4 y) { return new double4(max(x.x, y.x), max(x.y, y.y), max(x.z, y.z), max(x.w, y.w)); }
-
-
         /// <summary>Returns the result of linearly interpolating from start to end using the interpolation parameter t.</summary>
         /// <remarks>
         /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
@@ -1191,86 +982,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 lerp(float4 start, float4 end, float4 t) { return start + t * (end - start); }
 
-
-        /// <summary>Returns the result of linearly interpolating from x to y using the interpolation parameter t.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="start">The start point, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="end">The end point, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="t">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The interpolation from x to y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double lerp(double start, double end, double t) { return start + t * (end - start); }
-
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the interpolation parameter t.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="start">The start point, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="end">The end point, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="t">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 lerp(double2 start, double2 end, double t) { return start + t * (end - start); }
-
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the interpolation parameter t.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="start">The start point, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="end">The end point, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="t">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 lerp(double3 start, double3 end, double t) { return start + t * (end - start); }
-
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the interpolation parameter t.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="start">The start point, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="end">The end point, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="t">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 lerp(double4 start, double4 end, double t) { return start + t * (end - start); }
-
-
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the corresponding components of the interpolation parameter t.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="start">The start point, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="end">The end point, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="t">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 lerp(double2 start, double2 end, double2 t) { return start + t * (end - start); }
-
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the corresponding components of the interpolation parameter t.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="start">The start point, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="end">The end point, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="t">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 lerp(double3 start, double3 end, double3 t) { return start + t * (end - start); }
-
-        /// <summary>Returns the result of a componentwise linear interpolating from x to y using the corresponding components of the interpolation parameter t.</summary>
-        /// <remarks>
-        /// If the interpolation parameter is not in the range [0, 1], then this function extrapolates.
-        /// </remarks>
-        /// <param name="start">The start point, corresponding to the interpolation parameter value of 0.</param>
-        /// <param name="end">The end point, corresponding to the interpolation parameter value of 1.</param>
-        /// <param name="t">The interpolation parameter. May be a value outside the interval [0, 1].</param>
-        /// <returns>The componentwise interpolation from x to y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 lerp(double4 start, double4 end, double4 t) { return start + t * (end - start); }
-
-
         /// <summary>Returns the result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
         /// <param name="start">The start point of the range.</param>
         /// <param name="end">The end point of the range.</param>
@@ -1302,39 +1013,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise interpolation parameter of x with respect to the input range [a, b].</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 unlerp(float4 start, float4 end, float4 x) { return (x - start) / (end - start); }
-
-
-        /// <summary>Returns the result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
-        /// <param name="start">The start point of the range.</param>
-        /// <param name="end">The end point of the range.</param>
-        /// <param name="x">The value to normalize to the range.</param>
-        /// <returns>The interpolation parameter of x with respect to the input range [a, b].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double unlerp(double start, double end, double x) { return (x - start) / (end - start); }
-
-        /// <summary>Returns the componentwise result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
-        /// <param name="start">The start point of the range.</param>
-        /// <param name="end">The end point of the range.</param>
-        /// <param name="x">The value to normalize to the range.</param>
-        /// <returns>The componentwise interpolation parameter of x with respect to the input range [a, b].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 unlerp(double2 start, double2 end, double2 x) { return (x - start) / (end - start); }
-
-        /// <summary>Returns the componentwise result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
-        /// <param name="start">The start point of the range.</param>
-        /// <param name="end">The end point of the range.</param>
-        /// <param name="x">The value to normalize to the range.</param>
-        /// <returns>The componentwise interpolation parameter of x with respect to the input range [a, b].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 unlerp(double3 start, double3 end, double3 x) { return (x - start) / (end - start); }
-
-        /// <summary>Returns the componentwise result of normalizing a floating point value x to a range [a, b]. The opposite of lerp. Equivalent to (x - a) / (b - a).</summary>
-        /// <param name="start">The start point of the range.</param>
-        /// <param name="end">The end point of the range.</param>
-        /// <param name="x">The value to normalize to the range.</param>
-        /// <returns>The componentwise interpolation parameter of x with respect to the input range [a, b].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 unlerp(double4 start, double4 end, double4 x) { return (x - start) / (end - start); }
 
 
         /// <summary>Returns the result of a non-clamping linear remapping of a value x from source range [srcStart, srcEnd] to the destination range [dstStart, dstEnd].</summary>
@@ -1376,48 +1054,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise remap of input x from the source range to the destination range.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 remap(float4 srcStart, float4 srcEnd, float4 dstStart, float4 dstEnd, float4 x) { return lerp(dstStart, dstEnd, unlerp(srcStart, srcEnd, x)); }
-
-
-        /// <summary>Returns the result of a non-clamping linear remapping of a value x from source range [srcStart, srcEnd] to the destination range [dstStart, dstEnd].</summary>
-        /// <param name="srcStart">The start point of the source range [srcStart, srcEnd].</param>
-        /// <param name="srcEnd">The end point of the source range [srcStart, srcEnd].</param>
-        /// <param name="dstStart">The start point of the destination range [dstStart, dstEnd].</param>
-        /// <param name="dstEnd">The end point of the destination range [dstStart, dstEnd].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The remap of input x from the source range to the destination range.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double remap(double srcStart, double srcEnd, double dstStart, double dstEnd, double x) { return lerp(dstStart, dstEnd, unlerp(srcStart, srcEnd, x)); }
-
-        /// <summary>Returns the componentwise result of a non-clamping linear remapping of a value x from source range [srcStart, srcEnd] to the destination range [dstStart, dstEnd].</summary>
-        /// <param name="srcStart">The start point of the source range [srcStart, srcEnd].</param>
-        /// <param name="srcEnd">The end point of the source range [srcStart, srcEnd].</param>
-        /// <param name="dstStart">The start point of the destination range [dstStart, dstEnd].</param>
-        /// <param name="dstEnd">The end point of the destination range [dstStart, dstEnd].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The componentwise remap of input x from the source range to the destination range.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 remap(double2 srcStart, double2 srcEnd, double2 dstStart, double2 dstEnd, double2 x) { return lerp(dstStart, dstEnd, unlerp(srcStart, srcEnd, x)); }
-
-        /// <summary>Returns the componentwise result of a non-clamping linear remapping of a value x from source range [srcStart, srcEnd] to the destination range [dstStart, dstEnd].</summary>
-        /// <param name="srcStart">The start point of the source range [srcStart, srcEnd].</param>
-        /// <param name="srcEnd">The end point of the source range [srcStart, srcEnd].</param>
-        /// <param name="dstStart">The start point of the destination range [dstStart, dstEnd].</param>
-        /// <param name="dstEnd">The end point of the destination range [dstStart, dstEnd].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The componentwise remap of input x from the source range to the destination range.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 remap(double3 srcStart, double3 srcEnd, double3 dstStart, double3 dstEnd, double3 x) { return lerp(dstStart, dstEnd, unlerp(srcStart, srcEnd, x)); }
-
-        /// <summary>Returns the componentwise result of a non-clamping linear remapping of a value x from source range [srcStart, srcEnd] to the destination range [dstStart, dstEnd].</summary>
-        /// <param name="srcStart">The start point of the source range [srcStart, srcEnd].</param>
-        /// <param name="srcEnd">The end point of the source range [srcStart, srcEnd].</param>
-        /// <param name="dstStart">The start point of the destination range [dstStart, dstEnd].</param>
-        /// <param name="dstEnd">The end point of the destination range [dstStart, dstEnd].</param>
-        /// <param name="x">The value to remap from the source to destination range.</param>
-        /// <returns>The componentwise remap of input x from the source range to the destination range.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 remap(double4 srcStart, double4 srcEnd, double4 dstStart, double4 dstEnd, double4 x) { return lerp(dstStart, dstEnd, unlerp(srcStart, srcEnd, x)); }
-
 
         /// <summary>Returns the result of a multiply-add operation (a * b + c) on 3 int values.</summary>
         /// <param name="mulA">First value to multiply.</param>
@@ -1555,60 +1191,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 mad(float4 mulA, float4 mulB, float4 addC) { return mulA * mulB + addC; }
 
-
-        /// <summary>Returns the result of a multiply-add operation (a * b + c) on 3 double values.</summary>
-        /// <remarks>
-        /// When Burst compiled with fast math enabled on some architectures, this could be converted to a fused multiply add (FMA).
-        /// FMA is more accurate due to rounding once at the end of the computation rather than twice that is required when
-        /// this computation is not fused.
-        /// </remarks>
-        /// <param name="mulA">First value to multiply.</param>
-        /// <param name="mulB">Second value to multiply.</param>
-        /// <param name="addC">Third value to add to the product of a and b.</param>
-        /// <returns>The multiply-add of the inputs.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double mad(double mulA, double mulB, double addC) { return mulA * mulB + addC; }
-
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 double2 vectors.</summary>
-        /// <remarks>
-        /// When Burst compiled with fast math enabled on some architectures, this could be converted to a fused multiply add (FMA).
-        /// FMA is more accurate due to rounding once at the end of the computation rather than twice that is required when
-        /// this computation is not fused.
-        /// </remarks>
-        /// <param name="mulA">First value to multiply.</param>
-        /// <param name="mulB">Second value to multiply.</param>
-        /// <param name="addC">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 mad(double2 mulA, double2 mulB, double2 addC) { return mulA * mulB + addC; }
-
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 double3 vectors.</summary>
-        /// <remarks>
-        /// When Burst compiled with fast math enabled on some architectures, this could be converted to a fused multiply add (FMA).
-        /// FMA is more accurate due to rounding once at the end of the computation rather than twice that is required when
-        /// this computation is not fused.
-        /// </remarks>
-        /// <param name="mulA">First value to multiply.</param>
-        /// <param name="mulB">Second value to multiply.</param>
-        /// <param name="addC">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 mad(double3 mulA, double3 mulB, double3 addC) { return mulA * mulB + addC; }
-
-        /// <summary>Returns the result of a componentwise multiply-add operation (a * b + c) on 3 double4 vectors.</summary>
-        /// <remarks>
-        /// When Burst compiled with fast math enabled on some architectures, this could be converted to a fused multiply add (FMA).
-        /// FMA is more accurate due to rounding once at the end of the computation rather than twice that is required when
-        /// this computation is not fused.
-        /// </remarks>
-        /// <param name="mulA">First value to multiply.</param>
-        /// <param name="mulB">Second value to multiply.</param>
-        /// <param name="addC">Third value to add to the product of a and b.</param>
-        /// <returns>The componentwise multiply-add of the inputs.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 mad(double4 mulA, double4 mulB, double4 addC) { return mulA * mulB + addC; }
-
-
         /// <summary>Returns the result of clamping the value valueToClamp into the interval (inclusive) [lowerBound, upperBound], where valueToClamp, lowerBound and upperBound are int values.</summary>
         /// <param name="valueToClamp">Input value to be clamped.</param>
         /// <param name="lowerBound">Lower bound of the interval.</param>
@@ -1724,40 +1306,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 clamp(float4 valueToClamp, float4 lowerBound, float4 upperBound) { return max(lowerBound, min(upperBound, valueToClamp)); }
 
-
-        /// <summary>Returns the result of clamping the value valueToClamp into the interval (inclusive) [lowerBound, upperBound], where valueToClamp, lowerBound and upperBound are double values.</summary>
-        /// <param name="valueToClamp">Input value to be clamped.</param>
-        /// <param name="lowerBound">Lower bound of the interval.</param>
-        /// <param name="upperBound">Upper bound of the interval.</param>
-        /// <returns>The clamping of the input valueToClamp into the interval (inclusive) [lowerBound, upperBound].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double clamp(double valueToClamp, double lowerBound, double upperBound) { return max(lowerBound, min(upperBound, valueToClamp)); }
-
-        /// <summary>Returns the result of a componentwise clamping of the value valueToClamp into the interval (inclusive) [lowerBound, upperBound], where valueToClamp, lowerBound and upperBound are double2 vectors.</summary>
-        /// <param name="valueToClamp">Input value to be clamped.</param>
-        /// <param name="lowerBound">Lower bound of the interval.</param>
-        /// <param name="upperBound">Upper bound of the interval.</param>
-        /// <returns>The componentwise clamping of the input valueToClamp into the interval (inclusive) [lowerBound, upperBound].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 clamp(double2 valueToClamp, double2 lowerBound, double2 upperBound) { return max(lowerBound, min(upperBound, valueToClamp)); }
-
-        /// <summary>Returns the result of a componentwise clamping of the value valueToClamp into the interval (inclusive) [lowerBound, upperBound], where valueToClamp, lowerBound and upperBound are double3 vectors.</summary>
-        /// <param name="valueToClamp">Input value to be clamped.</param>
-        /// <param name="lowerBound">Lower bound of the interval.</param>
-        /// <param name="upperBound">Upper bound of the interval.</param>
-        /// <returns>The componentwise clamping of the input valueToClamp into the interval (inclusive) [lowerBound, upperBound].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 clamp(double3 valueToClamp, double3 lowerBound, double3 upperBound) { return max(lowerBound, min(upperBound, valueToClamp)); }
-
-        /// <summary>Returns the result of a componentwise clamping of the value valueToClamp into the interval (inclusive) [lowerBound, upperBound], where valueToClamp, lowerBound and upperBound are double4 vectors.</summary>
-        /// <param name="valueToClamp">Input value to be clamped.</param>
-        /// <param name="lowerBound">Lower bound of the interval.</param>
-        /// <param name="upperBound">Upper bound of the interval.</param>
-        /// <returns>The componentwise clamping of the input valueToClamp into the interval (inclusive) [lowerBound, upperBound].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 clamp(double4 valueToClamp, double4 lowerBound, double4 upperBound) { return max(lowerBound, min(upperBound, valueToClamp)); }
-
-
         /// <summary>Returns the result of clamping the fp value x into the interval [0, 1].</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The clamping of the input into the interval [0, 1].</returns>
@@ -1781,32 +1329,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise clamping of the input into the interval [0, 1].</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 saturate(float4 x) { return clamp(x, new float4(fp._0), new float4(fp._1)); }
-
-
-        /// <summary>Returns the result of clamping the double value x into the interval [0, 1].</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The clamping of the input into the interval [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double saturate(double x) { return clamp(x, 0.0, 1.0); }
-
-        /// <summary>Returns the result of a componentwise clamping of the double2 vector x into the interval [0, 1].</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise clamping of the input into the interval [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 saturate(double2 x) { return clamp(x, new double2(0.0), new double2(1.0)); }
-
-        /// <summary>Returns the result of a componentwise clamping of the double3 vector x into the interval [0, 1].</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise clamping of the input into the interval [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 saturate(double3 x) { return clamp(x, new double3(0.0), new double3(1.0)); }
-
-        /// <summary>Returns the result of a componentwise clamping of the double4 vector x into the interval [0, 1].</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise clamping of the input into the interval [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 saturate(double4 x) { return clamp(x, new double4(0.0), new double4(1.0)); }
-
 
         /// <summary>Returns the absolute value of a int value.</summary>
         /// <param name="x">Input value.</param>
@@ -1862,32 +1384,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise absolute value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 abs(float4 x) { return asfloat(asuint(x) & 0x7FFFFFFF); }
-
-
-        /// <summary>Returns the absolute value of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The absolute value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double abs(double x) { return asdouble(asulong(x) & 0x7FFFFFFFFFFFFFFF); }
-
-        /// <summary>Returns the componentwise absolute value of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise absolute value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 abs(double2 x) { return double2(asdouble(asulong(x.x) & 0x7FFFFFFFFFFFFFFF), asdouble(asulong(x.y) & 0x7FFFFFFFFFFFFFFF)); }
-
-        /// <summary>Returns the componentwise absolute value of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise absolute value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 abs(double3 x) { return double3(asdouble(asulong(x.x) & 0x7FFFFFFFFFFFFFFF), asdouble(asulong(x.y) & 0x7FFFFFFFFFFFFFFF), asdouble(asulong(x.z) & 0x7FFFFFFFFFFFFFFF)); }
-
-        /// <summary>Returns the componentwise absolute value of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise absolute value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 abs(double4 x) { return double4(asdouble(asulong(x.x) & 0x7FFFFFFFFFFFFFFF), asdouble(asulong(x.y) & 0x7FFFFFFFFFFFFFFF), asdouble(asulong(x.z) & 0x7FFFFFFFFFFFFFFF), asdouble(asulong(x.w) & 0x7FFFFFFFFFFFFFFF)); }
-
 
         /// <summary>Returns the dot product of two int values. Equivalent to multiplication.</summary>
         /// <param name="x">The first value.</param>
@@ -1975,36 +1471,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp dot(float4 x, float4 y) { return x.x * y.x + x.y * y.y + x.z * y.z + x.w * y.w; }
 
-
-        /// <summary>Returns the dot product of two double values. Equivalent to multiplication.</summary>
-        /// <param name="x">The first value.</param>
-        /// <param name="y">The second value.</param>
-        /// <returns>The dot product of two values.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double dot(double x, double y) { return x * y; }
-
-        /// <summary>Returns the dot product of two double2 vectors.</summary>
-        /// <param name="x">The first vector.</param>
-        /// <param name="y">The second vector.</param>
-        /// <returns>The dot product of two vectors.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double dot(double2 x, double2 y) { return x.x * y.x + x.y * y.y; }
-
-        /// <summary>Returns the dot product of two double3 vectors.</summary>
-        /// <param name="x">The first vector.</param>
-        /// <param name="y">The second vector.</param>
-        /// <returns>The dot product of two vectors.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double dot(double3 x, double3 y) { return x.x * y.x + x.y * y.y + x.z * y.z; }
-
-        /// <summary>Returns the dot product of two double4 vectors.</summary>
-        /// <param name="x">The first vector.</param>
-        /// <param name="y">The second vector.</param>
-        /// <returns>The dot product of two vectors.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double dot(double4 x, double4 y) { return x.x * y.x + x.y * y.y + x.z * y.z + x.w * y.w; }
-
-
         /// <summary>Returns the tangent of a fp value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The tangent of the input.</returns>
@@ -2028,32 +1494,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise tangent of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 tan(float4 x) { return new float4(tan(x.x), tan(x.y), tan(x.z), tan(x.w)); }
-
-
-        /// <summary>Returns the tangent of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The tangent of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double tan(double x) { return System.Math.Tan(x); }
-
-        /// <summary>Returns the componentwise tangent of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise tangent of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 tan(double2 x) { return new double2(tan(x.x), tan(x.y)); }
-
-        /// <summary>Returns the componentwise tangent of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise tangent of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 tan(double3 x) { return new double3(tan(x.x), tan(x.y), tan(x.z)); }
-
-        /// <summary>Returns the componentwise tangent of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise tangent of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 tan(double4 x) { return new double4(tan(x.x), tan(x.y), tan(x.z), tan(x.w)); }
-
 
         /// <summary>Returns the hyperbolic tangent of a fp value.</summary>
         /// <param name="x">Input value.</param>
@@ -2079,32 +1519,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 tanh(float4 x) { return new float4(tanh(x.x), tanh(x.y), tanh(x.z), tanh(x.w)); }
 
-
-        /// <summary>Returns the hyperbolic tangent of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The hyperbolic tangent of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double tanh(double x) { return System.Math.Tanh(x); }
-
-        /// <summary>Returns the componentwise hyperbolic tangent of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic tangent of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 tanh(double2 x) { return new double2(tanh(x.x), tanh(x.y)); }
-
-        /// <summary>Returns the componentwise hyperbolic tangent of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic tangent of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 tanh(double3 x) { return new double3(tanh(x.x), tanh(x.y), tanh(x.z)); }
-
-        /// <summary>Returns the componentwise hyperbolic tangent of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic tangent of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 tanh(double4 x) { return new double4(tanh(x.x), tanh(x.y), tanh(x.z), tanh(x.w)); }
-
-
         /// <summary>Returns the arctangent of a fp value.</summary>
         /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
         /// <returns>The arctangent of the input, in radians.</returns>
@@ -2128,32 +1542,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise arctangent of the input, in radians.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 atan(float4 x) { return new float4(atan(x.x), atan(x.y), atan(x.z), atan(x.w)); }
-
-
-        /// <summary>Returns the arctangent of a double value.</summary>
-        /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
-        /// <returns>The arctangent of the input, in radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double atan(double x) { return System.Math.Atan(x); }
-
-        /// <summary>Returns the componentwise arctangent of a double2 vector.</summary>
-        /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the input, in radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 atan(double2 x) { return new double2(atan(x.x), atan(x.y)); }
-
-        /// <summary>Returns the componentwise arctangent of a double3 vector.</summary>
-        /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the input, in radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 atan(double3 x) { return new double3(atan(x.x), atan(x.y), atan(x.z)); }
-
-        /// <summary>Returns the componentwise arctangent of a double4 vector.</summary>
-        /// <param name="x">A tangent value, usually the ratio y/x on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the input, in radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 atan(double4 x) { return new double4(atan(x.x), atan(x.y), atan(x.z), atan(x.w)); }
-
 
         /// <summary>Returns the 2-argument arctangent of a pair of fp values.</summary>
         /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
@@ -2183,36 +1571,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 atan2(float4 y, float4 x) { return new float4(atan2(y.x, x.x), atan2(y.y, x.y), atan2(y.z, x.z), atan2(y.w, x.w)); }
 
-
-        /// <summary>Returns the 2-argument arctangent of a pair of double values.</summary>
-        /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
-        /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
-        /// <returns>The arctangent of the ratio y/x, in radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double atan2(double y, double x) { return System.Math.Atan2(y, x); }
-
-        /// <summary>Returns the 2-argument arctangent of a pair of double2 vectors.</summary>
-        /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
-        /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the ratio y/x, in radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 atan2(double2 y, double2 x) { return new double2(atan2(y.x, x.x), atan2(y.y, x.y)); }
-
-        /// <summary>Returns the 2-argument arctangent of a pair of double3 vectors.</summary>
-        /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
-        /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the ratio y/x, in radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 atan2(double3 y, double3 x) { return new double3(atan2(y.x, x.x), atan2(y.y, x.y), atan2(y.z, x.z)); }
-
-        /// <summary>Returns the 2-argument arctangent of a pair of double4 vectors.</summary>
-        /// <param name="y">Numerator of the ratio y/x, usually the y component on the unit circle.</param>
-        /// <param name="x">Denominator of the ratio y/x, usually the x component on the unit circle.</param>
-        /// <returns>The componentwise arctangent of the ratio y/x, in radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 atan2(double4 y, double4 x) { return new double4(atan2(y.x, x.x), atan2(y.y, x.y), atan2(y.z, x.z), atan2(y.w, x.w)); }
-
-
         /// <summary>Returns the cosine of a fp value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The cosine cosine of the input.</returns>
@@ -2236,32 +1594,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise cosine cosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 cos(float4 x) { return new float4(cos(x.x), cos(x.y), cos(x.z), cos(x.w)); }
-
-
-        /// <summary>Returns the cosine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The cosine cosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double cos(double x) { return System.Math.Cos(x); }
-
-        /// <summary>Returns the componentwise cosine of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise cosine cosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 cos(double2 x) { return new double2(cos(x.x), cos(x.y)); }
-
-        /// <summary>Returns the componentwise cosine of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise cosine cosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 cos(double3 x) { return new double3(cos(x.x), cos(x.y), cos(x.z)); }
-
-        /// <summary>Returns the componentwise cosine of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise cosine cosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 cos(double4 x) { return new double4(cos(x.x), cos(x.y), cos(x.z), cos(x.w)); }
-
 
         /// <summary>Returns the hyperbolic cosine of a fp value.</summary>
         /// <param name="x">Input value.</param>
@@ -2287,32 +1619,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 cosh(float4 x) { return new float4(cosh(x.x), cosh(x.y), cosh(x.z), cosh(x.w)); }
 
-
-        /// <summary>Returns the hyperbolic cosine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The hyperbolic cosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double cosh(double x) { return System.Math.Cosh(x); }
-
-        /// <summary>Returns the componentwise hyperbolic cosine of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic cosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 cosh(double2 x) { return new double2(cosh(x.x), cosh(x.y)); }
-
-        /// <summary>Returns the componentwise hyperbolic cosine of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic cosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 cosh(double3 x) { return new double3(cosh(x.x), cosh(x.y), cosh(x.z)); }
-
-        /// <summary>Returns the componentwise hyperbolic cosine of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic cosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 cosh(double4 x) { return new double4(cosh(x.x), cosh(x.y), cosh(x.z), cosh(x.w)); }
-
-
         /// <summary>Returns the arccosine of a fp value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The arccosine of the input.</returns>
@@ -2336,32 +1642,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise arccosine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 acos(float4 x) { return new float4(acos(x.x), acos(x.y), acos(x.z), acos(x.w)); }
-
-
-        /// <summary>Returns the arccosine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The arccosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double acos(double x) { return System.Math.Acos(x); }
-
-        /// <summary>Returns the componentwise arccosine of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arccosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 acos(double2 x) { return new double2(acos(x.x), acos(x.y)); }
-
-        /// <summary>Returns the componentwise arccosine of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arccosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 acos(double3 x) { return new double3(acos(x.x), acos(x.y), acos(x.z)); }
-
-        /// <summary>Returns the componentwise arccosine of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arccosine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 acos(double4 x) { return new double4(acos(x.x), acos(x.y), acos(x.z), acos(x.w)); }
-
 
         /// <summary>Returns the sine of a fp value.</summary>
         /// <param name="x">Input value.</param>
@@ -2387,32 +1667,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 sin(float4 x) { return new float4(sin(x.x), sin(x.y), sin(x.z), sin(x.w)); }
 
-
-        /// <summary>Returns the sine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The sine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double sin(double x) { return System.Math.Sin(x); }
-
-        /// <summary>Returns the componentwise sine of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise sine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 sin(double2 x) { return new double2(sin(x.x), sin(x.y)); }
-
-        /// <summary>Returns the componentwise sine of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise sine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 sin(double3 x) { return new double3(sin(x.x), sin(x.y), sin(x.z)); }
-
-        /// <summary>Returns the componentwise sine of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise sine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 sin(double4 x) { return new double4(sin(x.x), sin(x.y), sin(x.z), sin(x.w)); }
-
-
         /// <summary>Returns the hyperbolic sine of a fp value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The hyperbolic sine of the input.</returns>
@@ -2436,32 +1690,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise hyperbolic sine of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 sinh(float4 x) { return new float4(sinh(x.x), sinh(x.y), sinh(x.z), sinh(x.w)); }
-
-
-        /// <summary>Returns the hyperbolic sine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The hyperbolic sine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double sinh(double x) { return System.Math.Sinh(x); }
-
-        /// <summary>Returns the componentwise hyperbolic sine of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic sine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 sinh(double2 x) { return new double2(sinh(x.x), sinh(x.y)); }
-
-        /// <summary>Returns the componentwise hyperbolic sine of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic sine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 sinh(double3 x) { return new double3(sinh(x.x), sinh(x.y), sinh(x.z)); }
-
-        /// <summary>Returns the componentwise hyperbolic sine of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise hyperbolic sine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 sinh(double4 x) { return new double4(sinh(x.x), sinh(x.y), sinh(x.z), sinh(x.w)); }
-
 
         /// <summary>Returns the arcsine of a fp value.</summary>
         /// <param name="x">Input value.</param>
@@ -2487,32 +1715,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 asin(float4 x) { return new float4(asin(x.x), asin(x.y), asin(x.z), asin(x.w)); }
 
-
-        /// <summary>Returns the arcsine of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The arcsine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double asin(double x) { return System.Math.Asin(x); }
-
-        /// <summary>Returns the componentwise arcsine of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arcsine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 asin(double2 x) { return new double2(asin(x.x), asin(x.y)); }
-
-        /// <summary>Returns the componentwise arcsine of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arcsine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 asin(double3 x) { return new double3(asin(x.x), asin(x.y), asin(x.z)); }
-
-        /// <summary>Returns the componentwise arcsine of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise arcsine of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 asin(double4 x) { return new double4(asin(x.x), asin(x.y), asin(x.z), asin(x.w)); }
-
-
         /// <summary>Returns the result of rounding a fp value up to the nearest integral value less or equal to the original value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The round down to nearest integral value of the input.</returns>
@@ -2536,32 +1738,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise round down to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 floor(float4 x) { return new float4(floor(x.x), floor(x.y), floor(x.z), floor(x.w)); }
-
-
-        /// <summary>Returns the result of rounding a double value up to the nearest integral value less or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The round down to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double floor(double x) { return System.Math.Floor(x); }
-
-        /// <summary>Returns the result of rounding each component of a double2 vector value down to the nearest value less or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round down to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 floor(double2 x) { return new double2(floor(x.x), floor(x.y)); }
-
-        /// <summary>Returns the result of rounding each component of a double3 vector value down to the nearest value less or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round down to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 floor(double3 x) { return new double3(floor(x.x), floor(x.y), floor(x.z)); }
-
-        /// <summary>Returns the result of rounding each component of a double4 vector value down to the nearest value less or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round down to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 floor(double4 x) { return new double4(floor(x.x), floor(x.y), floor(x.z), floor(x.w)); }
-
 
         /// <summary>Returns the result of rounding a fp value up to the nearest integral value greater or equal to the original value.</summary>
         /// <param name="x">Input value.</param>
@@ -2587,32 +1763,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 ceil(float4 x) { return new float4(ceil(x.x), ceil(x.y), ceil(x.z), ceil(x.w)); }
 
-
-        /// <summary>Returns the result of rounding a double value up to the nearest greater integral value greater or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The round up to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double ceil(double x) { return System.Math.Ceiling(x); }
-
-        /// <summary>Returns the result of rounding each component of a double2 vector value up to the nearest integral value greater or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round up to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 ceil(double2 x) { return new double2(ceil(x.x), ceil(x.y)); }
-
-        /// <summary>Returns the result of rounding each component of a double3 vector value up to the nearest integral value greater or equal to the original value..</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round up to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 ceil(double3 x) { return new double3(ceil(x.x), ceil(x.y), ceil(x.z)); }
-
-        /// <summary>Returns the result of rounding each component of a double4 vector value up to the nearest integral value greater or equal to the original value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round up to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 ceil(double4 x) { return new double4(ceil(x.x), ceil(x.y), ceil(x.z), ceil(x.w)); }
-
-
         /// <summary>Returns the result of rounding a fp value to the nearest integral value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The round to nearest integral value of the input.</returns>
@@ -2636,32 +1786,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise round to nearest integral value of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 round(float4 x) { return new float4(round(x.x), round(x.y), round(x.z), round(x.w)); }
-
-
-        /// <summary>Returns the result of rounding a double value to the nearest integral value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The round to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double round(double x) { return System.Math.Round(x); }
-
-        /// <summary>Returns the result of rounding each component of a double2 vector value to the nearest integral value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 round(double2 x) { return new double2(round(x.x), round(x.y)); }
-
-        /// <summary>Returns the result of rounding each component of a double3 vector value to the nearest integral value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 round(double3 x) { return new double3(round(x.x), round(x.y), round(x.z)); }
-
-        /// <summary>Returns the result of rounding each component of a double4 vector value to the nearest integral value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise round to nearest integral value of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 round(double4 x) { return new double4(round(x.x), round(x.y), round(x.z), round(x.w)); }
-
 
         /// <summary>Returns the result of truncating a fp value to an integral fp value.</summary>
         /// <param name="x">Input value.</param>
@@ -2687,32 +1811,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 trunc(float4 x) { return new float4(trunc(x.x), trunc(x.y), trunc(x.z), trunc(x.w)); }
 
-
-        /// <summary>Returns the result of truncating a double value to an integral double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The truncation of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double trunc(double x) { return System.Math.Truncate(x); }
-
-        /// <summary>Returns the result of a componentwise truncation of a double2 value to an integral double2 value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise truncation of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 trunc(double2 x) { return new double2(trunc(x.x), trunc(x.y)); }
-
-        /// <summary>Returns the result of a componentwise truncation of a double3 value to an integral double3 value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise truncation of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 trunc(double3 x) { return new double3(trunc(x.x), trunc(x.y), trunc(x.z)); }
-
-        /// <summary>Returns the result of a componentwise truncation of a double4 value to an integral double4 value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise truncation of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 trunc(double4 x) { return new double4(trunc(x.x), trunc(x.y), trunc(x.z), trunc(x.w)); }
-
-
         /// <summary>Returns the fractional part of a fp value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The fractional part of the input.</returns>
@@ -2737,32 +1835,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 frac(float4 x) { return x - floor(x); }
 
-
-        /// <summary>Returns the fractional part of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The fractional part of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double frac(double x) { return x - floor(x); }
-
-        /// <summary>Returns the componentwise fractional parts of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise fractional part of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 frac(double2 x) { return x - floor(x); }
-
-        /// <summary>Returns the componentwise fractional parts of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise fractional part of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 frac(double3 x) { return x - floor(x); }
-
-        /// <summary>Returns the componentwise fractional parts of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise fractional part of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 frac(double4 x) { return x - floor(x); }
-
-
         /// <summary>Returns the reciprocal a fp value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The reciprocal of the input.</returns>
@@ -2786,31 +1858,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise reciprocal of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 rcp(float4 x) { return fp._1 / x; }
-
-
-        /// <summary>Returns the reciprocal a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The reciprocal of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double rcp(double x) { return 1.0 / x; }
-
-        /// <summary>Returns the componentwise reciprocal a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise reciprocal of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 rcp(double2 x) { return 1.0 / x; }
-
-        /// <summary>Returns the componentwise reciprocal a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise reciprocal of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 rcp(double3 x) { return 1.0 / x; }
-
-        /// <summary>Returns the componentwise reciprocal a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise reciprocal of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 rcp(double4 x) { return 1.0 / x; }
 
         /// <summary>Returns the sign of a int value. -1 if it is less than zero, 0 if it is zero and 1 if it greater than zero.</summary>
         /// <param name="x">Input value.</param>
@@ -2860,32 +1907,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 sign(float4 x) { return new float4(sign(x.x), sign(x.y), sign(x.z), sign(x.w)); }
 
-
-        /// <summary>Returns the sign of a double value. -1.0 if it is less than zero, 0.0 if it is zero and 1.0 if it greater than zero.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The sign of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double sign(double x) { return x == 0 ? 0 : (x > 0.0 ? 1.0 : 0.0) - (x < 0.0 ? 1.0 : 0.0); }
-
-        /// <summary>Returns the componentwise sign of a double2 value. 1.0 for positive components, 0.0 for zero components and -1.0 for negative components.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise sign of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 sign(double2 x) { return new double2(sign(x.x), sign(x.y)); }
-
-        /// <summary>Returns the componentwise sign of a double3 value. 1.0 for positive components, 0.0 for zero components and -1.0 for negative components.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise sign of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 sign(double3 x) { return new double3(sign(x.x), sign(x.y), sign(x.z)); }
-
-        /// <summary>Returns the componentwise sign of a double4 value. 1.0 for positive components, 0.0 for zero components and -1.0 for negative components.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise sign of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 sign(double4 x) { return new double4(sign(x.x), sign(x.y), sign(x.z), sign(x.w)); }
-
-
         /// <summary>Returns x raised to the power y.</summary>
         /// <param name="x">The exponent base.</param>
         /// <param name="y">The exponent power.</param>
@@ -2914,36 +1935,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 pow(float4 x, float4 y) { return new float4(pow(x.x, y.x), pow(x.y, y.y), pow(x.z, y.z), pow(x.w, y.w)); }
 
-
-        /// <summary>Returns x raised to the power y.</summary>
-        /// <param name="x">The exponent base.</param>
-        /// <param name="y">The exponent power.</param>
-        /// <returns>The result of raising x to the power y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double pow(double x, double y) { return System.Math.Pow(x, y); }
-
-        /// <summary>Returns the componentwise result of raising x to the power y.</summary>
-        /// <param name="x">The exponent base.</param>
-        /// <param name="y">The exponent power.</param>
-        /// <returns>The componentwise result of raising x to the power y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 pow(double2 x, double2 y) { return new double2(pow(x.x, y.x), pow(x.y, y.y)); }
-
-        /// <summary>Returns the componentwise result of raising x to the power y.</summary>
-        /// <param name="x">The exponent base.</param>
-        /// <param name="y">The exponent power.</param>
-        /// <returns>The componentwise result of raising x to the power y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 pow(double3 x, double3 y) { return new double3(pow(x.x, y.x), pow(x.y, y.y), pow(x.z, y.z)); }
-
-        /// <summary>Returns the componentwise result of raising x to the power y.</summary>
-        /// <param name="x">The exponent base.</param>
-        /// <param name="y">The exponent power.</param>
-        /// <returns>The componentwise result of raising x to the power y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 pow(double4 x, double4 y) { return new double4(pow(x.x, y.x), pow(x.y, y.y), pow(x.z, y.z), pow(x.w, y.w)); }
-
-
         /// <summary>Returns the base-e exponential of x.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The base-e exponential of the input.</returns>
@@ -2967,32 +1958,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise base-e exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 exp(float4 x) { return new float4(exp(x.x), exp(x.y), exp(x.z), exp(x.w)); }
-
-
-        /// <summary>Returns the base-e exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-e exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double exp(double x) { return System.Math.Exp(x); }
-
-        /// <summary>Returns the componentwise base-e exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-e exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 exp(double2 x) { return new double2(exp(x.x), exp(x.y)); }
-
-        /// <summary>Returns the componentwise base-e exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-e exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 exp(double3 x) { return new double3(exp(x.x), exp(x.y), exp(x.z)); }
-
-        /// <summary>Returns the componentwise base-e exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-e exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 exp(double4 x) { return new double4(exp(x.x), exp(x.y), exp(x.z), exp(x.w)); }
-
 
         /// <summary>Returns the base-2 exponential of x.</summary>
         /// <param name="x">Input value.</param>
@@ -3018,32 +1983,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 exp2(float4 x) { return new float4(exp2(x.x), exp2(x.y), exp2(x.z), exp2(x.w)); }
 
-
-        /// <summary>Returns the base-2 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-2 exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double exp2(double x) { return System.Math.Exp(x * 0.693147180559945309); }
-
-        /// <summary>Returns the componentwise base-2 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 exp2(double2 x) { return new double2(exp2(x.x), exp2(x.y)); }
-
-        /// <summary>Returns the componentwise base-2 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 exp2(double3 x) { return new double3(exp2(x.x), exp2(x.y), exp2(x.z)); }
-
-        /// <summary>Returns the componentwise base-2 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 exp2(double4 x) { return new double4(exp2(x.x), exp2(x.y), exp2(x.z), exp2(x.w)); }
-
-
         /// <summary>Returns the base-10 exponential of x.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The base-10 exponential of the input.</returns>
@@ -3067,32 +2006,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise base-10 exponential of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 exp10(float4 x) { return new float4(exp10(x.x), exp10(x.y), exp10(x.z), exp10(x.w)); }
-
-
-        /// <summary>Returns the base-10 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-10 exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double exp10(double x) { return System.Math.Exp(x * 2.302585092994045684); }
-
-        /// <summary>Returns the componentwise base-10 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 exp10(double2 x) { return new double2(exp10(x.x), exp10(x.y)); }
-
-        /// <summary>Returns the componentwise base-10 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 exp10(double3 x) { return new double3(exp10(x.x), exp10(x.y), exp10(x.z)); }
-
-        /// <summary>Returns the componentwise base-10 exponential of x.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 exponential of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 exp10(double4 x) { return new double4(exp10(x.x), exp10(x.y), exp10(x.z), exp10(x.w)); }
-
 
         /// <summary>Returns the natural logarithm of a fp value.</summary>
         /// <param name="x">Input value.</param>
@@ -3118,32 +2031,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 log(float4 x) { return new float4(log(x.x), log(x.y), log(x.z), log(x.w)); }
 
-
-        /// <summary>Returns the natural logarithm of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The natural logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double log(double x) { return System.Math.Log(x); }
-
-        /// <summary>Returns the componentwise natural logarithm of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise natural logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 log(double2 x) { return new double2(log(x.x), log(x.y)); }
-
-        /// <summary>Returns the componentwise natural logarithm of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise natural logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 log(double3 x) { return new double3(log(x.x), log(x.y), log(x.z)); }
-
-        /// <summary>Returns the componentwise natural logarithm of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise natural logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 log(double4 x) { return new double4(log(x.x), log(x.y), log(x.z), log(x.w)); }
-
-
         /// <summary>Returns the base-2 logarithm of a fp value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The base-2 logarithm of the input.</returns>
@@ -3168,31 +2055,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 log2(float4 x) { return new float4(log2(x.x), log2(x.y), log2(x.z), log2(x.w)); }
 
-
-        /// <summary>Returns the base-2 logarithm of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-2 logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double log2(double x) { return System.Math.Log(x, 2.0); }
-
-        /// <summary>Returns the componentwise base-2 logarithm of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 log2(double2 x) { return new double2(log2(x.x), log2(x.y)); }
-
-        /// <summary>Returns the componentwise base-2 logarithm of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 log2(double3 x) { return new double3(log2(x.x), log2(x.y), log2(x.z)); }
-
-        /// <summary>Returns the componentwise base-2 logarithm of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-2 logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 log2(double4 x) { return new double4(log2(x.x), log2(x.y), log2(x.z), log2(x.w)); }
-
         /// <summary>Returns the base-10 logarithm of a fp value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>The base-10 logarithm of the input.</returns>
@@ -3216,32 +2078,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise base-10 logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 log10(float4 x) { return new float4(log10(x.x), log10(x.y), log10(x.z), log10(x.w)); }
-
-
-        /// <summary>Returns the base-10 logarithm of a double value.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The base-10 logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double log10(double x) { return System.Math.Log10(x); }
-
-        /// <summary>Returns the componentwise base-10 logarithm of a double2 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 log10(double2 x) { return new double2(log10(x.x), log10(x.y)); }
-
-        /// <summary>Returns the componentwise base-10 logarithm of a double3 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 log10(double3 x) { return new double3(log10(x.x), log10(x.y), log10(x.z)); }
-
-        /// <summary>Returns the componentwise base-10 logarithm of a double4 vector.</summary>
-        /// <param name="x">Input value.</param>
-        /// <returns>The componentwise base-10 logarithm of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 log10(double4 x) { return new double4(log10(x.x), log10(x.y), log10(x.z), log10(x.w)); }
-
 
         /// <summary>Returns the floating point remainder of x/y.</summary>
         /// <param name="x">The dividend in x/y.</param>
@@ -3270,36 +2106,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise remainder of x/y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 fmod(float4 x, float4 y) { return new float4(x.x % y.x, x.y % y.y, x.z % y.z, x.w % y.w); }
-
-
-        /// <summary>Returns the double precision floating point remainder of x/y.</summary>
-        /// <param name="x">The dividend in x/y.</param>
-        /// <param name="y">The divisor in x/y.</param>
-        /// <returns>The remainder of x/y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double fmod(double x, double y) { return x % y; }
-
-        /// <summary>Returns the componentwise double precision floating point remainder of x/y.</summary>
-        /// <param name="x">The dividend in x/y.</param>
-        /// <param name="y">The divisor in x/y.</param>
-        /// <returns>The componentwise remainder of x/y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 fmod(double2 x, double2 y) { return new double2(x.x % y.x, x.y % y.y); }
-
-        /// <summary>Returns the componentwise double precision floating point remainder of x/y.</summary>
-        /// <param name="x">The dividend in x/y.</param>
-        /// <param name="y">The divisor in x/y.</param>
-        /// <returns>The componentwise remainder of x/y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 fmod(double3 x, double3 y) { return new double3(x.x % y.x, x.y % y.y, x.z % y.z); }
-
-        /// <summary>Returns the componentwise double precision floating point remainder of x/y.</summary>
-        /// <param name="x">The dividend in x/y.</param>
-        /// <param name="y">The divisor in x/y.</param>
-        /// <returns>The componentwise remainder of x/y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 fmod(double4 x, double4 y) { return new double4(x.x % y.x, x.y % y.y, x.z % y.z, x.w % y.w); }
-
 
         /// <summary>Splits a fp value into an integral part i and a fractional part that gets returned. Both parts take the sign of the input.</summary>
         /// <param name="x">Value to split into integral and fractional part.</param>
@@ -3338,45 +2144,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 modf(float4 x, out float4 i) { i = trunc(x); return x - i; }
 
-
-        /// <summary>Splits a double value into an integral part i and a fractional part that gets returned. Both parts take the sign of the input.</summary>
-        /// <param name="x">Value to split into integral and fractional part.</param>
-        /// <param name="i">Output value containing integral part of x.</param>
-        /// <returns>The fractional part of x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double modf(double x, out double i) { i = trunc(x); return x - i; }
-
-        /// <summary>
-        /// Performs a componentwise split of a double2 vector into an integral part i and a fractional part that gets returned.
-        /// Both parts take the sign of the corresponding input component.
-        /// </summary>
-        /// <param name="x">Value to split into integral and fractional part.</param>
-        /// <param name="i">Output value containing integral part of x.</param>
-        /// <returns>The componentwise fractional part of x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 modf(double2 x, out double2 i) { i = trunc(x); return x - i; }
-
-        /// <summary>
-        /// Performs a componentwise split of a double3 vector into an integral part i and a fractional part that gets returned.
-        /// Both parts take the sign of the corresponding input component.
-        /// </summary>
-        /// <param name="x">Value to split into integral and fractional part.</param>
-        /// <param name="i">Output value containing integral part of x.</param>
-        /// <returns>The componentwise fractional part of x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 modf(double3 x, out double3 i) { i = trunc(x); return x - i; }
-
-        /// <summary>
-        /// Performs a componentwise split of a double4 vector into an integral part i and a fractional part that gets returned.
-        /// Both parts take the sign of the corresponding input component.
-        /// </summary>
-        /// <param name="x">Value to split into integral and fractional part.</param>
-        /// <param name="i">Output value containing integral part of x.</param>
-        /// <returns>The componentwise fractional part of x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 modf(double4 x, out double4 i) { i = trunc(x); return x - i; }
-
-
         /// <summary>Returns the square root of a fp value.</summary>
         /// <param name="x">Value to use when computing square root.</param>
         /// <returns>The square root.</returns>
@@ -3400,32 +2167,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The componentwise square root.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 sqrt(float4 x) { return new float4(sqrt(x.x), sqrt(x.y), sqrt(x.z), sqrt(x.w)); }
-
-
-        /// <summary>Returns the square root of a double value.</summary>
-        /// <param name="x">Value to use when computing square root.</param>
-        /// <returns>The square root.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double sqrt(double x) { return System.Math.Sqrt(x); }
-
-        /// <summary>Returns the componentwise square root of a double2 vector.</summary>
-        /// <param name="x">Value to use when computing square root.</param>
-        /// <returns>The componentwise square root.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 sqrt(double2 x) { return new double2(sqrt(x.x), sqrt(x.y)); }
-
-        /// <summary>Returns the componentwise square root of a double3 vector.</summary>
-        /// <param name="x">Value to use when computing square root.</param>
-        /// <returns>The componentwise square root.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 sqrt(double3 x) { return new double3(sqrt(x.x), sqrt(x.y), sqrt(x.z)); }
-
-        /// <summary>Returns the componentwise square root of a double4 vector.</summary>
-        /// <param name="x">Value to use when computing square root.</param>
-        /// <returns>The componentwise square root.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 sqrt(double4 x) { return new double4(sqrt(x.x), sqrt(x.y), sqrt(x.z), sqrt(x.w)); }
-
 
         /// <summary>Returns the reciprocal square root of a fp value.</summary>
         /// <param name="x">Value to use when computing reciprocal square root.</param>
@@ -3451,32 +2192,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 rsqrt(float4 x) { return fp._1 / sqrt(x); }
 
-
-        /// <summary>Returns the reciprocal square root of a double value.</summary>
-        /// <param name="x">Value to use when computing reciprocal square root.</param>
-        /// <returns>The reciprocal square root.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double rsqrt(double x) { return 1.0 / sqrt(x); }
-
-        /// <summary>Returns the componentwise reciprocal square root of a double2 vector.</summary>
-        /// <param name="x">Value to use when computing reciprocal square root.</param>
-        /// <returns>The componentwise reciprocal square root.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 rsqrt(double2 x) { return 1.0 / sqrt(x); }
-
-        /// <summary>Returns the componentwise reciprocal square root of a double3 vector.</summary>
-        /// <param name="x">Value to use when computing reciprocal square root.</param>
-        /// <returns>The componentwise reciprocal square root.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 rsqrt(double3 x) { return 1.0 / sqrt(x); }
-
-        /// <summary>Returns the componentwise reciprocal square root of a double4 vector.</summary>
-        /// <param name="x">Value to use when computing reciprocal square root.</param>
-        /// <returns>The componentwise reciprocal square root.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 rsqrt(double4 x) { return 1.0 / sqrt(x); }
-
-
         /// <summary>Returns a normalized version of the float2 vector x by scaling it by 1 / length(x).</summary>
         /// <param name="x">Vector to normalize.</param>
         /// <returns>The normalized vector.</returns>
@@ -3494,26 +2209,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The normalized vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 normalize(float4 x) { return rsqrt(dot(x, x)) * x; }
-
-
-        /// <summary>Returns a normalized version of the double2 vector x by scaling it by 1 / length(x).</summary>
-        /// <param name="x">Vector to normalize.</param>
-        /// <returns>The normalized vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 normalize(double2 x) { return rsqrt(dot(x, x)) * x; }
-
-        /// <summary>Returns a normalized version of the double3 vector x by scaling it by 1 / length(x).</summary>
-        /// <param name="x">Vector to normalize.</param>
-        /// <returns>The normalized vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 normalize(double3 x) { return rsqrt(dot(x, x)) * x; }
-
-        /// <summary>Returns a normalized version of the double4 vector x by scaling it by 1 / length(x).</summary>
-        /// <param name="x">Vector to normalize.</param>
-        /// <returns>The normalized vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 normalize(double4 x) { return rsqrt(dot(x, x)) * x; }
-
 
         /// <summary>
         /// Returns a safe normalized version of the float2 vector x by scaling it by 1 / length(x).
@@ -3557,50 +2252,6 @@ namespace Unity.Mathematics.Fixed
             return math.select(defaultvalue, x * math.rsqrt(len), len > FP_MIN_NORMAL);
         }
 
-
-        /// <summary>
-        /// Returns a safe normalized version of the double4 vector x by scaling it by 1 / length(x).
-        /// Returns the given default value when 1 / length(x) does not produce a finite number.
-        /// </summary>
-        /// <param name="x">Vector to normalize.</param>
-        /// <param name="defaultvalue">Vector to return if normalized vector is not finite.</param>
-        /// <returns>The normalized vector or the default value if the normalized vector is not finite.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static public double2 normalizesafe(double2 x, double2 defaultvalue = new double2())
-        {
-            double len = math.dot(x, x);
-            return math.select(defaultvalue, x * math.rsqrt(len), len > FLT_MIN_NORMAL);
-        }
-
-        /// <summary>
-        /// Returns a safe normalized version of the double4 vector x by scaling it by 1 / length(x).
-        /// Returns the given default value when 1 / length(x) does not produce a finite number.
-        /// </summary>
-        /// <param name="x">Vector to normalize.</param>
-        /// <param name="defaultvalue">Vector to return if normalized vector is not finite.</param>
-        /// <returns>The normalized vector or the default value if the normalized vector is not finite.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static public double3 normalizesafe(double3 x, double3 defaultvalue = new double3())
-        {
-            double len = math.dot(x, x);
-            return math.select(defaultvalue, x * math.rsqrt(len), len > FLT_MIN_NORMAL);
-        }
-
-        /// <summary>
-        /// Returns a safe normalized version of the double4 vector x by scaling it by 1 / length(x).
-        /// Returns the given default value when 1 / length(x) does not produce a finite number.
-        /// </summary>
-        /// <param name="x">Vector to normalize.</param>
-        /// <param name="defaultvalue">Vector to return if normalized vector is not finite.</param>
-        /// <returns>The normalized vector or the default value if the normalized vector is not finite.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static public double4 normalizesafe(double4 x, double4 defaultvalue = new double4())
-        {
-            double len = math.dot(x, x);
-            return math.select(defaultvalue, x * math.rsqrt(len), len > FLT_MIN_NORMAL);
-        }
-
-
         /// <summary>Returns the length of a fp value. Equivalent to the absolute value.</summary>
         /// <param name="x">Value to use when computing length.</param>
         /// <returns>Length of x.</returns>
@@ -3625,32 +2276,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp length(float4 x) { return sqrt(dot(x, x)); }
 
-
-        /// <summary>Returns the length of a double value. Equivalent to the absolute value.</summary>
-        /// <param name="x">Value to use when computing squared length.</param>
-        /// <returns>Squared length of x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double length(double x) { return abs(x); }
-
-        /// <summary>Returns the length of a double2 vector.</summary>
-        /// <param name="x">Vector to use when computing squared length.</param>
-        /// <returns>Squared length of vector x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double length(double2 x) { return sqrt(dot(x, x)); }
-
-        /// <summary>Returns the length of a double3 vector.</summary>
-        /// <param name="x">Vector to use when computing squared length.</param>
-        /// <returns>Squared length of vector x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double length(double3 x) { return sqrt(dot(x, x)); }
-
-        /// <summary>Returns the length of a double4 vector.</summary>
-        /// <param name="x">Vector to use when computing squared length.</param>
-        /// <returns>Squared length of vector x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double length(double4 x) { return sqrt(dot(x, x)); }
-
-
         /// <summary>Returns the squared length of a fp value. Equivalent to squaring the value.</summary>
         /// <param name="x">Value to use when computing squared length.</param>
         /// <returns>Squared length of x.</returns>
@@ -3674,32 +2299,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>Squared length of vector x.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp lengthsq(float4 x) { return dot(x, x); }
-
-
-        /// <summary>Returns the squared length of a double value. Equivalent to squaring the value.</summary>
-        /// <param name="x">Value to use when computing squared length.</param>
-        /// <returns>Squared length of x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double lengthsq(double x) { return x * x; }
-
-        /// <summary>Returns the squared length of a double2 vector.</summary>
-        /// <param name="x">Vector to use when computing squared length.</param>
-        /// <returns>Squared length of vector x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double lengthsq(double2 x) { return dot(x, x); }
-
-        /// <summary>Returns the squared length of a double3 vector.</summary>
-        /// <param name="x">Vector to use when computing squared length.</param>
-        /// <returns>Squared length of vector x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double lengthsq(double3 x) { return dot(x, x); }
-
-        /// <summary>Returns the squared length of a double4 vector.</summary>
-        /// <param name="x">Vector to use when computing squared length.</param>
-        /// <returns>Squared length of vector x.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double lengthsq(double4 x) { return dot(x, x); }
-
 
         /// <summary>Returns the distance between two fp values.</summary>
         /// <param name="x">First value to use in distance computation.</param>
@@ -3729,36 +2328,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp distance(float4 x, float4 y) { return length(y - x); }
 
-
-        /// <summary>Returns the distance between two double values.</summary>
-        /// <param name="x">First value to use in distance computation.</param>
-        /// <param name="y">Second value to use in distance computation.</param>
-        /// <returns>The distance between x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double distance(double x, double y) { return abs(y - x); }
-
-        /// <summary>Returns the distance between two double2 vectors.</summary>
-        /// <param name="x">First vector to use in distance computation.</param>
-        /// <param name="y">Second vector to use in distance computation.</param>
-        /// <returns>The distance between x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double distance(double2 x, double2 y) { return length(y - x); }
-
-        /// <summary>Returns the distance between two double3 vectors.</summary>
-        /// <param name="x">First vector to use in distance computation.</param>
-        /// <param name="y">Second vector to use in distance computation.</param>
-        /// <returns>The distance between x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double distance(double3 x, double3 y) { return length(y - x); }
-
-        /// <summary>Returns the distance between two double4 vectors.</summary>
-        /// <param name="x">First vector to use in distance computation.</param>
-        /// <param name="y">Second vector to use in distance computation.</param>
-        /// <returns>The distance between x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double distance(double4 x, double4 y) { return length(y - x); }
-
-
         /// <summary>Returns the squared distance between two fp values.</summary>
         /// <param name="x">First value to use in distance computation.</param>
         /// <param name="y">Second value to use in distance computation.</param>
@@ -3787,50 +2356,12 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp distancesq(float4 x, float4 y) { return lengthsq(y - x); }
 
-
-        /// <summary>Returns the squared distance between two double values.</summary>
-        /// <param name="x">First value to use in distance computation.</param>
-        /// <param name="y">Second value to use in distance computation.</param>
-        /// <returns>The squared distance between x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double distancesq(double x, double y) { return (y - x) * (y - x); }
-
-        /// <summary>Returns the squared distance between two double2 vectors.</summary>
-        /// <param name="x">First vector to use in distance computation.</param>
-        /// <param name="y">Second vector to use in distance computation.</param>
-        /// <returns>The squared distance between x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double distancesq(double2 x, double2 y) { return lengthsq(y - x); }
-
-        /// <summary>Returns the squared distance between two double3 vectors.</summary>
-        /// <param name="x">First vector to use in distance computation.</param>
-        /// <param name="y">Second vector to use in distance computation.</param>
-        /// <returns>The squared distance between x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double distancesq(double3 x, double3 y) { return lengthsq(y - x); }
-
-        /// <summary>Returns the squared distance between two double4 vectors.</summary>
-        /// <param name="x">First vector to use in distance computation.</param>
-        /// <param name="y">Second vector to use in distance computation.</param>
-        /// <returns>The squared distance between x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double distancesq(double4 x, double4 y) { return lengthsq(y - x); }
-
-
         /// <summary>Returns the cross product of two float3 vectors.</summary>
         /// <param name="x">First vector to use in cross product.</param>
         /// <param name="y">Second vector to use in cross product.</param>
         /// <returns>The cross product of x and y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 cross(float3 x, float3 y) { return (x * y.yzx - x.yzx * y).yzx; }
-
-        /// <summary>Returns the cross product of two double3 vectors.</summary>
-        /// <param name="x">First vector to use in cross product.</param>
-        /// <param name="y">Second vector to use in cross product.</param>
-        /// <returns>The cross product of x and y.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 cross(double3 x, double3 y) { return (x * y.yzx - x.yzx * y).yzx; }
-
 
         /// <summary>Returns a smooth Hermite interpolation between fp._0 and fp._1 when x is in the interval (inclusive) [xMin, xMax].</summary>
         /// <param name="xMin">The minimum range of the x parameter.</param>
@@ -3879,56 +2410,6 @@ namespace Unity.Mathematics.Fixed
             var t = saturate((x - xMin) / (xMax - xMin));
             return t * t * (fp._3 - (fp._2 * t));
         }
-
-
-        /// <summary>Returns a smooth Hermite interpolation between 0.0 and 1.0 when x is in the interval (inclusive) [xMin, xMax].</summary>
-        /// <param name="xMin">The minimum range of the x parameter.</param>
-        /// <param name="xMax">The maximum range of the x parameter.</param>
-        /// <param name="x">The value to be interpolated.</param>
-        /// <returns>Returns a value camped to the range [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double smoothstep(double xMin, double xMax, double x)
-        {
-            var t = saturate((x - xMin) / (xMax - xMin));
-            return t * t * (3.0 - (2.0 * t));
-        }
-
-        /// <summary>Returns a componentwise smooth Hermite interpolation between 0.0 and 1.0 when x is in the interval (inclusive) [xMin, xMax].</summary>
-        /// <param name="xMin">The minimum range of the x parameter.</param>
-        /// <param name="xMax">The maximum range of the x parameter.</param>
-        /// <param name="x">The value to be interpolated.</param>
-        /// <returns>Returns component values camped to the range [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 smoothstep(double2 xMin, double2 xMax, double2 x)
-        {
-            var t = saturate((x - xMin) / (xMax - xMin));
-            return t * t * (3.0 - (2.0 * t));
-        }
-
-        /// <summary>Returns a componentwise smooth Hermite interpolation between 0.0 and 1.0 when x is in the interval (inclusive) [xMin, xMax].</summary>
-        /// <param name="xMin">The minimum range of the x parameter.</param>
-        /// <param name="xMax">The maximum range of the x parameter.</param>
-        /// <param name="x">The value to be interpolated.</param>
-        /// <returns>Returns component values camped to the range [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 smoothstep(double3 xMin, double3 xMax, double3 x)
-        {
-            var t = saturate((x - xMin) / (xMax - xMin));
-            return t * t * (3.0 - (2.0 * t));
-        }
-
-        /// <summary>Returns a componentwise smooth Hermite interpolation between 0.0 and 1.0 when x is in the interval (inclusive) [xMin, xMax].</summary>
-        /// <param name="xMin">The minimum range of the x parameter.</param>
-        /// <param name="xMax">The maximum range of the x parameter.</param>
-        /// <param name="x">The value to be interpolated.</param>
-        /// <returns>Returns component values camped to the range [0, 1].</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 smoothstep(double4 xMin, double4 xMax, double4 x)
-        {
-            var t = saturate((x - xMin) / (xMax - xMin));
-            return t * t * (3.0 - (2.0 * t));
-        }
-
 
         /// <summary>Returns true if any component of the input bool2 vector is true, false otherwise.</summary>
         /// <param name="x">Vector of values to compare.</param>
@@ -4005,26 +2486,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool any(float4 x) { return x.x != fp._0 || x.y != fp._0 || x.z != fp._0 || x.w != fp._0; }
 
-
-        /// <summary>Returns true if any component of the input double2 vector is non-zero, false otherwise.</summary>
-        /// <param name="x">Vector of values to compare.</param>
-        /// <returns>True if any the components of x are non-zero, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool any(double2 x) { return x.x != 0.0 || x.y != 0.0; }
-
-        /// <summary>Returns true if any component of the input double3 vector is non-zero, false otherwise.</summary>
-        /// <param name="x">Vector of values to compare.</param>
-        /// <returns>True if any the components of x are non-zero, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool any(double3 x) { return x.x != 0.0 || x.y != 0.0 || x.z != 0.0; }
-
-        /// <summary>Returns true if any component of the input double4 vector is non-zero, false otherwise.</summary>
-        /// <param name="x">Vector of values to compare.</param>
-        /// <returns>True if any the components of x are non-zero, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool any(double4 x) { return x.x != 0.0 || x.y != 0.0 || x.z != 0.0 || x.w != 0.0; }
-
-
         /// <summary>Returns true if all components of the input bool2 vector are true, false otherwise.</summary>
         /// <param name="x">Vector of values to compare.</param>
         /// <returns>True if all the components of x are true, false otherwise.</returns>
@@ -4099,26 +2560,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>True if all the components of x are non-zero, false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool all(float4 x) { return x.x != fp._0 && x.y != fp._0 && x.z != fp._0 && x.w != fp._0; }
-
-
-        /// <summary>Returns true if all components of the input double2 vector are non-zero, false otherwise.</summary>
-        /// <param name="x">Vector of values to compare.</param>
-        /// <returns>True if all the components of x are non-zero, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool all(double2 x) { return x.x != 0.0 && x.y != 0.0; }
-
-        /// <summary>Returns true if all components of the input double3 vector are non-zero, false otherwise.</summary>
-        /// <param name="x">Vector of values to compare.</param>
-        /// <returns>True if all the components of x are non-zero, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool all(double3 x) { return x.x != 0.0 && x.y != 0.0 && x.z != 0.0; }
-
-        /// <summary>Returns true if all components of the input double4 vector are non-zero, false otherwise.</summary>
-        /// <param name="x">Vector of values to compare.</param>
-        /// <returns>True if all the components of x are non-zero, false otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool all(double4 x) { return x.x != 0.0 && x.y != 0.0 && x.z != 0.0 && x.w != 0.0; }
-
 
         /// <summary>Returns trueValue if test is true, falseValue otherwise.</summary>
         /// <param name="falseValue">Value to use if test is false.</param>
@@ -4338,71 +2779,6 @@ namespace Unity.Mathematics.Fixed
         public static float4 select(float4 falseValue, float4 trueValue, bool4 test) { return new float4(test.x ? trueValue.x : falseValue.x, test.y ? trueValue.y : falseValue.y, test.z ? trueValue.z : falseValue.z, test.w ? trueValue.w : falseValue.w); }
 
 
-        /// <summary>Returns trueValue if test is true, falseValue otherwise.</summary>
-        /// <param name="falseValue">Value to use if test is false.</param>
-        /// <param name="trueValue">Value to use if test is true.</param>
-        /// <param name="test">Bool value to choose between falseValue and trueValue.</param>
-        /// <returns>The selection between falseValue and trueValue according to bool test.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double select(double falseValue, double trueValue, bool test) { return test ? trueValue : falseValue; }
-
-        /// <summary>Returns trueValue if test is true, falseValue otherwise.</summary>
-        /// <param name="falseValue">Value to use if test is false.</param>
-        /// <param name="trueValue">Value to use if test is true.</param>
-        /// <param name="test">Bool value to choose between falseValue and trueValue.</param>
-        /// <returns>The selection between falseValue and trueValue according to bool test.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 select(double2 falseValue, double2 trueValue, bool test) { return test ? trueValue : falseValue; }
-
-        /// <summary>Returns trueValue if test is true, falseValue otherwise.</summary>
-        /// <param name="falseValue">Value to use if test is false.</param>
-        /// <param name="trueValue">Value to use if test is true.</param>
-        /// <param name="test">Bool value to choose between falseValue and trueValue.</param>
-        /// <returns>The selection between falseValue and trueValue according to bool test.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 select(double3 falseValue, double3 trueValue, bool test) { return test ? trueValue : falseValue; }
-
-        /// <summary>Returns trueValue if test is true, falseValue otherwise.</summary>
-        /// <param name="falseValue">Value to use if test is false.</param>
-        /// <param name="trueValue">Value to use if test is true.</param>
-        /// <param name="test">Bool value to choose between falseValue and trueValue.</param>
-        /// <returns>The selection between falseValue and trueValue according to bool test.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 select(double4 falseValue, double4 trueValue, bool test) { return test ? trueValue : falseValue; }
-
-        /// <summary>
-        /// Returns a componentwise selection between two double4 vectors falseValue and trueValue based on a bool4 selection mask test.
-        /// Per component, the component from trueValue is selected when test is true, otherwise the component from falseValue is selected.
-        /// </summary>
-        /// <param name="falseValue">Values to use if test is false.</param>
-        /// <param name="trueValue">Values to use if test is true.</param>
-        /// <param name="test">Selection mask to choose between falseValue and trueValue.</param>
-        /// <returns>The componentwise selection between falseValue and trueValue according to selection mask test.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 select(double2 falseValue, double2 trueValue, bool2 test) { return new double2(test.x ? trueValue.x : falseValue.x, test.y ? trueValue.y : falseValue.y); }
-
-        /// <summary>
-        /// Returns a componentwise selection between two double4 vectors falseValue and trueValue based on a bool4 selection mask test.
-        /// Per component, the component from trueValue is selected when test is true, otherwise the component from falseValue is selected.
-        /// </summary>
-        /// <param name="falseValue">Values to use if test is false.</param>
-        /// <param name="trueValue">Values to use if test is true.</param>
-        /// <param name="test">Selection mask to choose between falseValue and trueValue.</param>
-        /// <returns>The componentwise selection between falseValue and trueValue according to selection mask test.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 select(double3 falseValue, double3 trueValue, bool3 test) { return new double3(test.x ? trueValue.x : falseValue.x, test.y ? trueValue.y : falseValue.y, test.z ? trueValue.z : falseValue.z); }
-
-        /// <summary>
-        /// Returns a componentwise selection between two double4 vectors falseValue and trueValue based on a bool4 selection mask test.
-        /// Per component, the component from trueValue is selected when test is true, otherwise the component from falseValue is selected.
-        /// </summary>
-        /// <param name="falseValue">Values to use if test is false.</param>
-        /// <param name="trueValue">Values to use if test is true.</param>
-        /// <param name="test">Selection mask to choose between falseValue and trueValue.</param>
-        /// <returns>The componentwise selection between falseValue and trueValue according to selection mask test.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 select(double4 falseValue, double4 trueValue, bool4 test) { return new double4(test.x ? trueValue.x : falseValue.x, test.y ? trueValue.y : falseValue.y, test.z ? trueValue.z : falseValue.z, test.w ? trueValue.w : falseValue.w); }
-
 
         /// <summary>Returns the result of a step function where the result is fp._1 when x &gt;= threshold and fp._0 otherwise.</summary>
         /// <param name="threshold">Value to be used as a threshold for returning 1.</param>
@@ -4432,36 +2808,6 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 step(float4 threshold, float4 x) { return select(float4(fp._0), float4(fp._1), x >= threshold); }
 
-
-        /// <summary>Returns the result of a step function where the result is fp._1 when x &gt;= threshold and fp._0 otherwise.</summary>
-        /// <param name="threshold">Values to be used as a threshold for returning 1.</param>
-        /// <param name="x">Value to compare against threshold.</param>
-        /// <returns>1 if the comparison x &gt;= threshold is true, otherwise 0.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double step(double threshold, double x) { return select(0.0, 1.0, x >= threshold); }
-
-        /// <summary>Returns the result of a componentwise step function where each component is fp._1 when x &gt;= threshold and fp._0 otherwise.</summary>
-        /// <param name="threshold">Vector of values to be used as a threshold for returning 1.</param>
-        /// <param name="x">Vector of values to compare against threshold.</param>
-        /// <returns>1 if the componentwise comparison x &gt;= threshold is true, otherwise 0.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 step(double2 threshold, double2 x) { return select(double2(0.0), double2(1.0), x >= threshold); }
-
-        /// <summary>Returns the result of a componentwise step function where each component is fp._1 when x &gt;= threshold and fp._0 otherwise.</summary>
-        /// <param name="threshold">Vector of values to be used as a threshold for returning 1.</param>
-        /// <param name="x">Vector of values to compare against threshold.</param>
-        /// <returns>1 if the componentwise comparison x &gt;= threshold is true, otherwise 0.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 step(double3 threshold, double3 x) { return select(double3(0.0), double3(1.0), x >= threshold); }
-
-        /// <summary>Returns the result of a componentwise step function where each component is fp._1 when x &gt;= threshold and fp._0 otherwise.</summary>
-        /// <param name="threshold">Vector of values to be used as a threshold for returning 1.</param>
-        /// <param name="x">Vector of values to compare against threshold.</param>
-        /// <returns>1 if the componentwise comparison x &gt;= threshold is true, otherwise 0.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 step(double4 threshold, double4 x) { return select(double4(0.0), double4(1.0), x >= threshold); }
-
-
         /// <summary>Given an incident vector i and a normal vector n, returns the reflection vector r = i - fp._2 * dot(i, n) * n.</summary>
         /// <param name="i">Incident vector.</param>
         /// <param name="n">Normal vector.</param>
@@ -4482,29 +2828,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>Reflection vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 reflect(float4 i, float4 n) { return i - 2 * n * dot(i, n); }
-
-
-        /// <summary>Given an incident vector i and a normal vector n, returns the reflection vector r = i - 2.0 * dot(i, n) * n.</summary>
-        /// <param name="i">Incident vector.</param>
-        /// <param name="n">Normal vector.</param>
-        /// <returns>Reflection vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 reflect(double2 i, double2 n) { return i - 2 * n * dot(i, n); }
-
-        /// <summary>Given an incident vector i and a normal vector n, returns the reflection vector r = i - 2.0 * dot(i, n) * n.</summary>
-        /// <param name="i">Incident vector.</param>
-        /// <param name="n">Normal vector.</param>
-        /// <returns>Reflection vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 reflect(double3 i, double3 n) { return i - 2 * n * dot(i, n); }
-
-        /// <summary>Given an incident vector i and a normal vector n, returns the reflection vector r = i - 2.0 * dot(i, n) * n.</summary>
-        /// <param name="i">Incident vector.</param>
-        /// <param name="n">Normal vector.</param>
-        /// <returns>Reflection vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 reflect(double4 i, double4 n) { return i - 2 * n * dot(i, n); }
-
 
         /// <summary>Returns the refraction vector given the incident vector i, the normal vector n and the refraction index.</summary>
         /// <param name="i">Incident vector.</param>
@@ -4545,45 +2868,6 @@ namespace Unity.Mathematics.Fixed
             return select(fp._0, indexOfRefraction * i - (indexOfRefraction * ni + sqrt(k)) * n, k >= 0);
         }
 
-
-        /// <summary>Returns the refraction vector given the incident vector i, the normal vector n and the refraction index.</summary>
-        /// <param name="i">Incident vector.</param>
-        /// <param name="n">Normal vector.</param>
-        /// <param name="indexOfRefraction">Index of refraction.</param>
-        /// <returns>Refraction vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 refract(double2 i, double2 n, double indexOfRefraction)
-        {
-            double ni = dot(n, i);
-            double k = 1.0 - indexOfRefraction * indexOfRefraction * (1.0 - ni * ni);
-            return select(fp._0, indexOfRefraction * i - (indexOfRefraction * ni + sqrt(k)) * n, k >= 0);
-        }
-
-        /// <summary>Returns the refraction vector given the incident vector i, the normal vector n and the refraction index.</summary>
-        /// <param name="i">Incident vector.</param>
-        /// <param name="n">Normal vector.</param>
-        /// <param name="indexOfRefraction">Index of refraction.</param>
-        /// <returns>Refraction vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 refract(double3 i, double3 n, double indexOfRefraction)
-        {
-            double ni = dot(n, i);
-            double k = 1.0 - indexOfRefraction * indexOfRefraction * (1.0 - ni * ni);
-            return select(fp._0, indexOfRefraction * i - (indexOfRefraction * ni + sqrt(k)) * n, k >= 0);
-        }
-
-        /// <summary>Returns the refraction vector given the incident vector i, the normal vector n and the refraction index.</summary>
-        /// <param name="i">Incident vector.</param>
-        /// <param name="n">Normal vector.</param>
-        /// <param name="indexOfRefraction">Index of refraction.</param>
-        /// <returns>Refraction vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 refract(double4 i, double4 n, double indexOfRefraction)
-        {
-            double ni = dot(n, i);
-            double k = 1.0 - indexOfRefraction * indexOfRefraction * (1.0 - ni * ni);
-            return select(fp._0, indexOfRefraction * i - (indexOfRefraction * ni + sqrt(k)) * n, k >= 0);
-        }
 
         /// <summary>
         /// Compute vector projection of a onto b.
@@ -4702,123 +2986,6 @@ namespace Unity.Mathematics.Fixed
             return select(defaultValue, proj, all(isfinite(proj)));
         }
 
-        /// <summary>
-        /// Compute vector projection of a onto b.
-        /// </summary>
-        /// <remarks>
-        /// Some finite vectors a and b could generate a non-finite result. This is most likely when a's components
-        /// are very large (close to Double.MaxValue) or when b's components are very small (close to DBL_MIN_NORMAL).
-        /// In these cases, you can call <see cref="projectsafe(Unity.Mathematics.Fixed.double2,Unity.Mathematics.Fixed.double2,Unity.Mathematics.Fixed.double2)"/>
-        /// which will use a given default value if the result is not finite.
-        /// </remarks>
-        /// <param name="a">Vector to project.</param>
-        /// <param name="ontoB">Non-zero vector to project onto.</param>
-        /// <returns>Vector projection of a onto b.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 project(double2 a, double2 ontoB)
-        {
-            return (dot(a, ontoB) / dot(ontoB, ontoB)) * ontoB;
-        }
-
-        /// <summary>
-        /// Compute vector projection of a onto b.
-        /// </summary>
-        /// <remarks>
-        /// Some finite vectors a and b could generate a non-finite result. This is most likely when a's components
-        /// are very large (close to Double.MaxValue) or when b's components are very small (close to DBL_MIN_NORMAL).
-        /// In these cases, you can call <see cref="projectsafe(Unity.Mathematics.Fixed.double3,Unity.Mathematics.Fixed.double3,Unity.Mathematics.Fixed.double3)"/>
-        /// which will use a given default value if the result is not finite.
-        /// </remarks>
-        /// <param name="a">Vector to project.</param>
-        /// <param name="ontoB">Non-zero vector to project onto.</param>
-        /// <returns>Vector projection of a onto b.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 project(double3 a, double3 ontoB)
-        {
-            return (dot(a, ontoB) / dot(ontoB, ontoB)) * ontoB;
-        }
-
-        /// <summary>
-        /// Compute vector projection of a onto b.
-        /// </summary>
-        /// <remarks>
-        /// Some finite vectors a and b could generate a non-finite result. This is most likely when a's components
-        /// are very large (close to Double.MaxValue) or when b's components are very small (close to DBL_MIN_NORMAL).
-        /// In these cases, you can call <see cref="projectsafe(Unity.Mathematics.Fixed.double4,Unity.Mathematics.Fixed.double4,Unity.Mathematics.Fixed.double4)"/>
-        /// which will use a given default value if the result is not finite.
-        /// </remarks>
-        /// <param name="a">Vector to project.</param>
-        /// <param name="ontoB">Non-zero vector to project onto.</param>
-        /// <returns>Vector projection of a onto b.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 project(double4 a, double4 ontoB)
-        {
-            return (dot(a, ontoB) / dot(ontoB, ontoB)) * ontoB;
-        }
-
-        /// <summary>
-        /// Compute vector projection of a onto b. If result is not finite, then return the default value instead.
-        /// </summary>
-        /// <remarks>
-        /// This function performs extra checks to see if the result of projecting a onto b is finite. If you know that
-        /// your inputs will generate a finite result or you don't care if the result is finite, then you can call
-        /// <see cref="project(Unity.Mathematics.Fixed.double2,Unity.Mathematics.Fixed.double2)"/> instead which is faster than this
-        /// function.
-        /// </remarks>
-        /// <param name="a">Vector to project.</param>
-        /// <param name="ontoB">Non-zero vector to project onto.</param>
-        /// <param name="defaultValue">Default value to return if projection is not finite.</param>
-        /// <returns>Vector projection of a onto b or the default value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 projectsafe(double2 a, double2 ontoB, double2 defaultValue = new double2())
-        {
-            var proj = project(a, ontoB);
-
-            return select(defaultValue, proj, all(isfinite(proj)));
-        }
-
-        /// <summary>
-        /// Compute vector projection of a onto b. If result is not finite, then return the default value instead.
-        /// </summary>
-        /// <remarks>
-        /// This function performs extra checks to see if the result of projecting a onto b is finite. If you know that
-        /// your inputs will generate a finite result or you don't care if the result is finite, then you can call
-        /// <see cref="project(Unity.Mathematics.Fixed.double3,Unity.Mathematics.Fixed.double3)"/> instead which is faster than this
-        /// function.
-        /// </remarks>
-        /// <param name="a">Vector to project.</param>
-        /// <param name="ontoB">Non-zero vector to project onto.</param>
-        /// <param name="defaultValue">Default value to return if projection is not finite.</param>
-        /// <returns>Vector projection of a onto b or the default value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 projectsafe(double3 a, double3 ontoB, double3 defaultValue = new double3())
-        {
-            var proj = project(a, ontoB);
-
-            return select(defaultValue, proj, all(isfinite(proj)));
-        }
-
-        /// <summary>
-        /// Compute vector projection of a onto b. If result is not finite, then return the default value instead.
-        /// </summary>
-        /// <remarks>
-        /// This function performs extra checks to see if the result of projecting a onto b is finite. If you know that
-        /// your inputs will generate a finite result or you don't care if the result is finite, then you can call
-        /// <see cref="project(Unity.Mathematics.Fixed.double4,Unity.Mathematics.Fixed.double4)"/> instead which is faster than this
-        /// function.
-        /// </remarks>
-        /// <param name="a">Vector to project.</param>
-        /// <param name="ontoB">Non-zero vector to project onto.</param>
-        /// <param name="defaultValue">Default value to return if projection is not finite.</param>
-        /// <returns>Vector projection of a onto b or the default value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 projectsafe(double4 a, double4 ontoB, double4 defaultValue = new double4())
-        {
-            var proj = project(a, ontoB);
-
-            return select(defaultValue, proj, all(isfinite(proj)));
-        }
-
         /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</summary>
         /// <param name="n">Vector to conditionally flip.</param>
         /// <param name="i">First vector in direction comparison.</param>
@@ -4842,32 +3009,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>-n if i and ng point in the same direction; otherwise return n unchanged.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 faceforward(float4 n, float4 i, float4 ng) { return select(n, -n, dot(ng, i) >= fp._0); }
-
-
-        /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</summary>
-        /// <param name="n">Vector to conditionally flip.</param>
-        /// <param name="i">First vector in direction comparison.</param>
-        /// <param name="ng">Second vector in direction comparison.</param>
-        /// <returns>-n if i and ng point in the same direction; otherwise return n unchanged.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 faceforward(double2 n, double2 i, double2 ng) { return select(n, -n, dot(ng, i) >= 0); }
-
-        /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</summary>
-        /// <param name="n">Vector to conditionally flip.</param>
-        /// <param name="i">First vector in direction comparison.</param>
-        /// <param name="ng">Second vector in direction comparison.</param>
-        /// <returns>-n if i and ng point in the same direction; otherwise return n unchanged.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 faceforward(double3 n, double3 i, double3 ng) { return select(n, -n, dot(ng, i) >= 0); }
-
-        /// <summary>Conditionally flips a vector n if two vectors i and ng are pointing in the same direction. Returns n if dot(i, ng) &lt; 0, -n otherwise.</summary>
-        /// <param name="n">Vector to conditionally flip.</param>
-        /// <param name="i">First vector in direction comparison.</param>
-        /// <param name="ng">Second vector in direction comparison.</param>
-        /// <returns>-n if i and ng point in the same direction; otherwise return n unchanged.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 faceforward(double4 n, double4 i, double4 ng) { return select(n, -n, dot(ng, i) >= 0); }
-
 
         /// <summary>Returns the sine and cosine of the input fp value x through the out parameters s and c.</summary>
         /// <remarks>When Burst compiled, his method is faster than calling sin() and cos() separately.</remarks>
@@ -4900,40 +3041,6 @@ namespace Unity.Mathematics.Fixed
         /// <param name="c">Output vector containing the componentwise cosine of the input.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void sincos(float4 x, out float4 s, out float4 c) { s = sin(x); c = cos(x); }
-
-
-        /// <summary>Returns the sine and cosine of the input double value x through the out parameters s and c.</summary>
-        /// <remarks>When Burst compiled, his method is faster than calling sin() and cos() separately.</remarks>
-        /// <param name="x">Input angle in radians.</param>
-        /// <param name="s">Output sine of the input.</param>
-        /// <param name="c">Output cosine of the input.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincos(double x, out double s, out double c) { s = sin(x); c = cos(x); }
-
-        /// <summary>Returns the componentwise sine and cosine of the input double2 vector x through the out parameters s and c.</summary>
-        /// <remarks>When Burst compiled, his method is faster than calling sin() and cos() separately.</remarks>
-        /// <param name="x">Input vector containing angles in radians.</param>
-        /// <param name="s">Output vector containing the componentwise sine of the input.</param>
-        /// <param name="c">Output vector containing the componentwise cosine of the input.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincos(double2 x, out double2 s, out double2 c) { s = sin(x); c = cos(x); }
-
-        /// <summary>Returns the componentwise sine and cosine of the input double3 vector x through the out parameters s and c.</summary>
-        /// <remarks>When Burst compiled, his method is faster than calling sin() and cos() separately.</remarks>
-        /// <param name="x">Input vector containing angles in radians.</param>
-        /// <param name="s">Output vector containing the componentwise sine of the input.</param>
-        /// <param name="c">Output vector containing the componentwise cosine of the input.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincos(double3 x, out double3 s, out double3 c) { s = sin(x); c = cos(x); }
-
-        /// <summary>Returns the componentwise sine and cosine of the input double4 vector x through the out parameters s and c.</summary>
-        /// <remarks>When Burst compiled, his method is faster than calling sin() and cos() separately.</remarks>
-        /// <param name="x">Input vector containing angles in radians.</param>
-        /// <param name="s">Output vector containing the componentwise sine of the input.</param>
-        /// <param name="c">Output vector containing the componentwise cosine of the input.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void sincos(double4 x, out double4 s, out double4 c) { s = sin(x); c = cos(x); }
-
 
         /// <summary>Returns number of 1-bits in the binary representation of an int value. Also known as the Hamming weight, popcnt on x86, and vcnt on ARM.</summary>
         /// <param name="x">int value in which to count bits set to 1.</param>
@@ -5913,31 +4020,6 @@ namespace Unity.Mathematics.Fixed
         public static float4 radians(float4 x) { return x * fp.TORADIANS; }
 
 
-        /// <summary>Returns the result of converting a fp value from degrees to radians.</summary>
-        /// <param name="x">Angle in degrees.</param>
-        /// <returns>Angle converted to radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double radians(double x) { return x * TORADIANS_DBL; }
-
-        /// <summary>Returns the result of a componentwise conversion of a float2 vector from degrees to radians.</summary>
-        /// <param name="x">Vector containing angles in degrees.</param>
-        /// <returns>Vector containing angles converted to radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 radians(double2 x) { return x * TORADIANS_DBL; }
-
-        /// <summary>Returns the result of a componentwise conversion of a float3 vector from degrees to radians.</summary>
-        /// <param name="x">Vector containing angles in degrees.</param>
-        /// <returns>Vector containing angles converted to radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 radians(double3 x) { return x * TORADIANS_DBL; }
-
-        /// <summary>Returns the result of a componentwise conversion of a float4 vector from degrees to radians.</summary>
-        /// <param name="x">Vector containing angles in degrees.</param>
-        /// <returns>Vector containing angles converted to radians.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 radians(double4 x) { return x * TORADIANS_DBL; }
-
-
         /// <summary>Returns the result of converting a double value from radians to degrees.</summary>
         /// <param name="x">Angle in radians.</param>
         /// <returns>Angle converted to degrees.</returns>
@@ -5961,31 +4043,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>Vector containing angles converted to degrees.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float4 degrees(float4 x) { return x * fp.TODEGREES; }
-
-
-        /// <summary>Returns the result of converting a double value from radians to degrees.</summary>
-        /// <param name="x">Angle in radians.</param>
-        /// <returns>Angle converted to degrees.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double degrees(double x) { return x * TODEGREES_DBL; }
-
-        /// <summary>Returns the result of a componentwise conversion of a double2 vector from radians to degrees.</summary>
-        /// <param name="x">Vector containing angles in radians.</param>
-        /// <returns>Vector containing angles converted to degrees.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 degrees(double2 x) { return x * TODEGREES_DBL; }
-
-        /// <summary>Returns the result of a componentwise conversion of a double3 vector from radians to degrees.</summary>
-        /// <param name="x">Vector containing angles in radians.</param>
-        /// <returns>Vector containing values converted to degrees.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 degrees(double3 x) { return x * TODEGREES_DBL; }
-
-        /// <summary>Returns the result of a componentwise conversion of a double4 vector from radians to degrees.</summary>
-        /// <param name="x">Vector containing angles in radians.</param>
-        /// <returns>Vector containing angles converted to degrees.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 degrees(double4 x) { return x * TODEGREES_DBL; }
 
 
         /// <summary>Returns the minimum component of an int2 vector.</summary>
@@ -6045,25 +4102,6 @@ namespace Unity.Mathematics.Fixed
         public static fp cmin(float4 x) { return min(min(x.x, x.y), min(x.z, x.w)); }
 
 
-        /// <summary>Returns the minimum component of a double2 vector.</summary>
-        /// <param name="x">The vector to use when computing the minimum component.</param>
-        /// <returns>The value of the minimum component of the vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double cmin(double2 x) { return min(x.x, x.y); }
-
-        /// <summary>Returns the minimum component of a double3 vector.</summary>
-        /// <param name="x">The vector to use when computing the minimum component.</param>
-        /// <returns>The value of the minimum component of the vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double cmin(double3 x) { return min(min(x.x, x.y), x.z); }
-
-        /// <summary>Returns the minimum component of a double4 vector.</summary>
-        /// <param name="x">The vector to use when computing the minimum component.</param>
-        /// <returns>The value of the minimum component of the vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double cmin(double4 x) { return min(min(x.x, x.y), min(x.z, x.w)); }
-
-
         /// <summary>Returns the maximum component of an int2 vector.</summary>
         /// <param name="x">The vector to use when computing the maximum component.</param>
         /// <returns>The value of the maximum component of the vector.</returns>
@@ -6119,25 +4157,6 @@ namespace Unity.Mathematics.Fixed
         /// <returns>The value of the maximum component of the vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp cmax(float4 x) { return max(max(x.x, x.y), max(x.z, x.w)); }
-
-
-        /// <summary>Returns the maximum component of a double2 vector.</summary>
-        /// <param name="x">The vector to use when computing the maximum component.</param>
-        /// <returns>The value of the maximum component of the vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double cmax(double2 x) { return max(x.x, x.y); }
-
-        /// <summary>Returns the maximum component of a double3 vector.</summary>
-        /// <param name="x">The vector to use when computing the maximum component.</param>
-        /// <returns>The value of the maximum component of the vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double cmax(double3 x) { return max(max(x.x, x.y), x.z); }
-
-        /// <summary>Returns the maximum component of a double4 vector.</summary>
-        /// <param name="x">The vector to use when computing the maximum component.</param>
-        /// <returns>The value of the maximum component of the vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double cmax(double4 x) { return max(max(x.x, x.y), max(x.z, x.w)); }
 
 
         /// <summary>Returns the horizontal sum of components of an int2 vector.</summary>
@@ -6197,24 +4216,6 @@ namespace Unity.Mathematics.Fixed
         public static fp csum(float4 x) { return (x.x + x.y) + (x.z + x.w); }
 
 
-        /// <summary>Returns the horizontal sum of components of a double2 vector.</summary>
-        /// <param name="x">The vector to use when computing the horizontal sum.</param>
-        /// <returns>The horizontal sum of of components of the vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double csum(double2 x) { return x.x + x.y; }
-
-        /// <summary>Returns the horizontal sum of components of a double3 vector.</summary>
-        /// <param name="x">The vector to use when computing the horizontal sum.</param>
-        /// <returns>The horizontal sum of of components of the vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double csum(double3 x) { return x.x + x.y + x.z; }
-
-        /// <summary>Returns the horizontal sum of components of a double4 vector.</summary>
-        /// <param name="x">The vector to use when computing the horizontal sum.</param>
-        /// <returns>The horizontal sum of of components of the vector.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double csum(double4 x) { return (x.x + x.y) + (x.z + x.w); }
-
         /// <summary>
         /// Computes the square (x * x) of the input argument x.
         /// </summary>
@@ -6259,49 +4260,6 @@ namespace Unity.Mathematics.Fixed
             return x * x;
         }
 
-        /// <summary>
-        /// Computes the square (x * x) of the input argument x.
-        /// </summary>
-        /// <param name="x">Value to square.</param>
-        /// <returns>Returns the square of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double square(double x)
-        {
-            return x * x;
-        }
-
-        /// <summary>
-        /// Computes the component-wise square (x * x) of the input argument x.
-        /// </summary>
-        /// <param name="x">Value to square.</param>
-        /// <returns>Returns the square of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double2 square(double2 x)
-        {
-            return x * x;
-        }
-
-        /// <summary>
-        /// Computes the component-wise square (x * x) of the input argument x.
-        /// </summary>
-        /// <param name="x">Value to square.</param>
-        /// <returns>Returns the square of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double3 square(double3 x)
-        {
-            return x * x;
-        }
-
-        /// <summary>
-        /// Computes the component-wise square (x * x) of the input argument x.
-        /// </summary>
-        /// <param name="x">Value to square.</param>
-        /// <returns>Returns the square of the input.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double4 square(double4 x)
-        {
-            return x * x;
-        }
 
         /// <summary>
         /// Computes the square (x * x) of the input argument x.
@@ -6651,28 +4609,6 @@ namespace Unity.Mathematics.Fixed
             basis2.z = -normal.y;
         }
 
-        /// <summary>
-        /// Generate an orthonormal basis given a single unit length normal vector.
-        /// </summary>
-        /// <remarks>
-        /// This implementation is from "Building an Orthonormal Basis, Revisited"
-        /// https://graphics.pixar.com/library/OrthonormalB/paper.pdf
-        /// </remarks>
-        /// <param name="normal">Unit length normal vector.</param>
-        /// <param name="basis1">Output unit length vector, orthogonal to normal vector.</param>
-        /// <param name="basis2">Output unit length vector, orthogonal to normal vector and basis1.</param>
-        public static void orthonormal_basis(double3 normal, out double3 basis1, out double3 basis2)
-        {
-            var sign = normal.z >= 0.0 ? 1.0 : -1.0;
-            var a = -1.0 / (sign + normal.z);
-            var b = normal.x * normal.y * a;
-            basis1.x = 1.0 + sign * normal.x * normal.x * a;
-            basis1.y = sign * b;
-            basis1.z = -sign * normal.x;
-            basis2.x = b;
-            basis2.y = sign + normal.y * normal.y * a;
-            basis2.z = -normal.y;
-        }
 
         /// <summary>Change the sign of x based on the most significant bit of y [msb(y) ? -x : x].</summary>
         /// <param name="x">The single precision fp to change the sign.</param>
@@ -7185,19 +5121,7 @@ namespace Unity.Mathematics.Fixed
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double4 unpacklo(double4 a, double4 b)
-        {
-            return shuffle(a, b, ShuffleComponent.LeftX, ShuffleComponent.RightX, ShuffleComponent.LeftY, ShuffleComponent.RightY);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static float4 unpackhi(float4 a, float4 b)
-        {
-            return shuffle(a, b, ShuffleComponent.LeftZ, ShuffleComponent.RightZ, ShuffleComponent.LeftW, ShuffleComponent.RightW);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double4 unpackhi(double4 a, double4 b)
         {
             return shuffle(a, b, ShuffleComponent.LeftZ, ShuffleComponent.RightZ, ShuffleComponent.LeftW, ShuffleComponent.RightW);
         }
@@ -7209,21 +5133,9 @@ namespace Unity.Mathematics.Fixed
             return shuffle(a, b, ShuffleComponent.LeftX, ShuffleComponent.LeftY, ShuffleComponent.RightX, ShuffleComponent.RightY);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double4 movelh(double4 a, double4 b)
-        {
-            return shuffle(a, b, ShuffleComponent.LeftX, ShuffleComponent.LeftY, ShuffleComponent.RightX, ShuffleComponent.RightY);
-        }
-
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static float4 movehl(float4 a, float4 b)
-        {
-            return shuffle(b, a, ShuffleComponent.LeftZ, ShuffleComponent.LeftW, ShuffleComponent.RightZ, ShuffleComponent.RightW);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static double4 movehl(double4 a, double4 b)
         {
             return shuffle(b, a, ShuffleComponent.LeftZ, ShuffleComponent.LeftW, ShuffleComponent.RightZ, ShuffleComponent.RightW);
         }
@@ -7238,11 +5150,11 @@ namespace Unity.Mathematics.Fixed
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static uint2 fold_to_uint(double2 x) { return uint2(fold_to_uint(x.x), fold_to_uint(x.y)); }
+        internal static uint2 fold_to_uint(double2 x) { return Unity.Mathematics.math.uint2(fold_to_uint(x.x), fold_to_uint(x.y)); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static uint3 fold_to_uint(double3 x) { return uint3(fold_to_uint(x.x), fold_to_uint(x.y), fold_to_uint(x.z)); }
+        internal static uint3 fold_to_uint(double3 x) { return Unity.Mathematics.math.uint3(fold_to_uint(x.x), fold_to_uint(x.y), fold_to_uint(x.z)); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static uint4 fold_to_uint(double4 x) { return uint4(fold_to_uint(x.x), fold_to_uint(x.y), fold_to_uint(x.z), fold_to_uint(x.w)); }
+        internal static uint4 fold_to_uint(double4 x) { return Unity.Mathematics.math.uint4(fold_to_uint(x.x), fold_to_uint(x.y), fold_to_uint(x.z), fold_to_uint(x.w)); }
 
         [StructLayout(LayoutKind.Explicit)]
         internal struct LongDoubleUnion

@@ -9,6 +9,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
+using static Unity.Mathematics.math;
 
 
 #pragma warning disable 0660, 0661

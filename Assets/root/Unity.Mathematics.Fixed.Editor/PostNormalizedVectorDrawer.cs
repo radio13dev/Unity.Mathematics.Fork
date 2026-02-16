@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Unity.Mathematics;
+using Unity.Mathematics.Fixed;
 using UnityObject = UnityEngine.Object;
 
 namespace Unity.Mathematics.Fixed.Editor
@@ -149,7 +151,7 @@ namespace Unity.Mathematics.Fixed.Editor
 
         protected virtual double4 Normalize(double4 value)
         {
-            return math.normalizesafe(value);
+            return Unity.Mathematics.math.normalizesafe(value);
         }
 
         VectorPropertyGUIData GetGUIData(SerializedProperty property)
