@@ -22,6 +22,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="v">Vector2 to convert.</param>
         /// <returns>The converted float2.</returns>
         public static implicit operator float2(Vector2 v)     { return new float2(fp.ParseUnsafe(v.x), fp.ParseUnsafe(v.y)); }
+        public static explicit operator float2(Unity.Mathematics.float2 v)     { return new float2(fp.ParseUnsafe(v.x), fp.ParseUnsafe(v.y)); }
     }
 
     public partial struct float3
@@ -40,6 +41,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="v">Vector3 to convert.</param>
         /// <returns>The converted float3.</returns>
         public static implicit operator float3(Vector3 v)     { return new float3(fp.ParseUnsafe(v.x), fp.ParseUnsafe(v.y), fp.ParseUnsafe(v.z)); }
+        public static explicit operator float3(Unity.Mathematics.float3 v)     { return new float3(fp.ParseUnsafe(v.x), fp.ParseUnsafe(v.y), fp.ParseUnsafe(v.z)); }
     }
 
     public partial struct float4
@@ -75,6 +77,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="q">Quaternion to convert.</param>
         /// <returns>The converted quaternion.</returns>
         public static implicit operator quaternion(Quaternion q)  { return new quaternion(fp.ParseUnsafe(q.x), fp.ParseUnsafe(q.y), fp.ParseUnsafe(q.z), fp.ParseUnsafe(q.w)); }
+        public static explicit operator quaternion(Unity.Mathematics.quaternion q)  { return new quaternion(fp.ParseUnsafe(q.value.x), fp.ParseUnsafe(q.value.y), fp.ParseUnsafe(q.value.z), fp.ParseUnsafe(q.value.w)); }
     }
 
     public partial struct float4x4
