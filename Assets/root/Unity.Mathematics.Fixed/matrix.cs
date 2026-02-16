@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using Deterministic.FixedPoint;
+
 using static Unity.Mathematics.Fixed.math;
 
 namespace Unity.Mathematics.Fixed

@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Deterministic.FixedPoint {
+namespace Unity.Mathematics.Fixed {
     [StructLayout(LayoutKind.Explicit, Size = SIZE)]
     // ReSharper disable once InconsistentNaming
     public struct fbool {

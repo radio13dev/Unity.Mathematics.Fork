@@ -4,7 +4,7 @@
 // See LICENSE file for details.
 // https://github.com/stegu/webgl-noise
 
-using Deterministic.FixedPoint;
+
 using static Unity.Mathematics.Fixed.math;
 
 namespace Unity.Mathematics.Fixed

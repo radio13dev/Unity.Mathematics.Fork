@@ -1,5 +1,4 @@
 using System;
-using Deterministic.FixedPoint;
 using Unity.Mathematics.Fixed;
 using UnityEngine;
 

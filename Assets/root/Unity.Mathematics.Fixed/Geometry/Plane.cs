@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
-using Deterministic.FixedPoint;
+
 
 namespace Unity.Mathematics.Fixed.Geometry
 {

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using static Unity.Mathematics.Fixed.math;
 using System.Diagnostics;
 using Unity.IL2CPP.CompilerServices;
-using Deterministic.FixedPoint;
+
 
 namespace Unity.Mathematics.Fixed
 {

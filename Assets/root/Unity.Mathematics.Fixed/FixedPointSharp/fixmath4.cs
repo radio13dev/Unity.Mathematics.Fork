@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Deterministic.FixedPoint {
+namespace Unity.Mathematics.Fixed {
     public partial struct fixmath
     { 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

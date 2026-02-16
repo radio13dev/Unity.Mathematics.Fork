@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEditor;
 using UnityEngine;
-using Deterministic.FixedPoint;
+
 
 namespace Unity.Mathematics.Fixed.Editor
 {

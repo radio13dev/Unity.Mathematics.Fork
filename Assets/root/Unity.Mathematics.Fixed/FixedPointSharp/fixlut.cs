@@ -1,4 +1,4 @@
-﻿namespace Deterministic.FixedPoint {
+﻿namespace Unity.Mathematics.Fixed {
     public static partial class fixlut {
         public const int  FRACTIONS_COUNT = 5;
         public const int  PRECISION       = 16;

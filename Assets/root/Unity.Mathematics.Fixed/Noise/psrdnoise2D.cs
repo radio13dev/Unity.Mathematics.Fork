@@ -67,7 +67,7 @@
 // (If you run into problems with this, please let me know.)
 //
 
-using Deterministic.FixedPoint;
+
 using static Unity.Mathematics.Fixed.math;
 
 namespace Unity.Mathematics.Fixed

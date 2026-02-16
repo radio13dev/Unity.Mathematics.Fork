@@ -1,5 +1,5 @@
 #if !UNITY_DOTSPLAYER
-using Deterministic.FixedPoint;
+
 using UnityEngine;
 
 #pragma warning disable 0660, 0661

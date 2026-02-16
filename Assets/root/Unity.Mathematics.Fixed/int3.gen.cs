@@ -10,7 +10,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using Unity.IL2CPP.CompilerServices;
-using Deterministic.FixedPoint;
+
 
 #pragma warning disable 0660, 0661
 

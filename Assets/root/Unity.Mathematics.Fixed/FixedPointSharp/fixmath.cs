@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Deterministic.FixedPoint {
+namespace Unity.Mathematics.Fixed {
     public partial struct fixmath {
         private static readonly fp _atan2Number1 = new fp(-883);
         private static readonly fp _atan2Number2 = new fp(3767);
