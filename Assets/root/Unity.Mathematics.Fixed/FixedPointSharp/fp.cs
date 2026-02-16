@@ -349,10 +349,21 @@ namespace Unity.Mathematics.Fixed {
             f.value = (long) value << fixlut.PRECISION;
             return f;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator fp(byte value) {
+            fp f;
+            f.value = (long) value << fixlut.PRECISION;
+            return f;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator int(fp value) {
             return (int) (value.value >> fixlut.PRECISION);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator byte(fp value) {
+            return (byte) (value.value >> fixlut.PRECISION);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
