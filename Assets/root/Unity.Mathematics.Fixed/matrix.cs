@@ -466,7 +466,7 @@ namespace Unity.Mathematics.Fixed
             fp mn = min(min(forwardLengthSq, upLengthSq), tLengthSq);
             fp mx = max(max(forwardLengthSq, upLengthSq), tLengthSq);
 
-            bool accept = mn > fp.epsilon && mx < fp.usable_max && isfinite(forwardLengthSq) && isfinite(upLengthSq) && isfinite(tLengthSq);
+            bool accept = mn > fp.epsilon && mx < fp.max && isfinite(forwardLengthSq) && isfinite(upLengthSq) && isfinite(tLengthSq);
             return float3x3(
                 select(math.float3(1,0,0), t, accept),
                 select(math.float3(0,1,0), cross(forward, t), accept),

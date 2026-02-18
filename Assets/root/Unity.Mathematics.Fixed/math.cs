@@ -523,49 +523,49 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">The fp value to test.</param>
         /// <returns>True if the fp is finite, false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool isfinite(fp x) { return abs(x) <= fp.usable_max; }
+        public static bool isfinite(fp x) { return abs(x) < fp.max; }
 
         /// <summary>Returns a bool2 indicating for each component of a float2 whether it is a finite floating point value.</summary>
         /// <param name="x">The float2 value to test.</param>
         /// <returns>A bool2 where it is true in a component if that component is finite, false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool2 isfinite(float2 x) { return abs(x) <= fp.usable_max; }
+        public static bool2 isfinite(float2 x) { return abs(x) < fp.max; }
 
         /// <summary>Returns a bool3 indicating for each component of a float3 whether it is a finite floating point value.</summary>
         /// <param name="x">The float3 value to test.</param>
         /// <returns>A bool3 where it is true in a component if that component is finite, false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3 isfinite(float3 x) { return abs(x) <= fp.usable_max; }
+        public static bool3 isfinite(float3 x) { return abs(x) < fp.max; }
 
         /// <summary>Returns a bool4 indicating for each component of a float4 whether it is a finite floating point value.</summary>
         /// <param name="x">The float4 value to test.</param>
         /// <returns>A bool4 where it is true in a component if that component is finite, false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4 isfinite(float4 x) { return abs(x) <= fp.usable_max; }
+        public static bool4 isfinite(float4 x) { return abs(x) < fp.max; }
 
         /// <summary>Returns true if the input fp is an infinite floating point value, false otherwise.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>True if the input was an infinite value; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool isinf(fp x) { return abs(x) > fp.usable_max; }
+        public static bool isinf(fp x) { return abs(x) >= fp.max; }
 
         /// <summary>Returns a bool2 indicating for each component of a float2 whether it is an infinite floating point value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>True if the component was an infinite value; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool2 isinf(float2 x) { return abs(x) > fp.usable_max; }
+        public static bool2 isinf(float2 x) { return abs(x) >= fp.max; }
 
         /// <summary>Returns a bool3 indicating for each component of a float3 whether it is an infinite floating point value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>True if the component was an infinite value; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3 isinf(float3 x) { return abs(x) > fp.usable_max; }
+        public static bool3 isinf(float3 x) { return abs(x) >= fp.max; }
 
         /// <summary>Returns a bool4 indicating for each component of a float4 whether it is an infinite floating point value.</summary>
         /// <param name="x">Input value.</param>
         /// <returns>True if the component was an infinite value; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4 isinf(float4 x) { return abs(x) > fp.usable_max; }
+        public static bool4 isinf(float4 x) { return abs(x) >= fp.max; }
 
         /// <summary>Returns true if the input fp is a NaN (not a number) floating point value, false otherwise.</summary>
         /// <remarks>
@@ -574,7 +574,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>True if the value was NaN; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool isnan(fp x) { return (asuint(x) & 0x7FFFFFFF) > 0x7F800000; }
+        public static bool isnan(fp x) { return abs(x) >= fp.max; }
 
         /// <summary>Returns a bool2 indicating for each component of a float2 whether it is a NaN (not a number) floating point value.</summary>
         /// <remarks>
@@ -583,7 +583,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>True if the component was NaN; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool2 isnan(float2 x) { return (asuint(x) & 0x7FFFFFFF) > 0x7F800000; }
+        public static bool2 isnan(float2 x) { return abs(x) >= fp.max; }
 
         /// <summary>Returns a bool3 indicating for each component of a float3 whether it is a NaN (not a number) floating point value.</summary>
         /// <remarks>
@@ -592,7 +592,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>True if the component was NaN; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool3 isnan(float3 x) { return (asuint(x) & 0x7FFFFFFF) > 0x7F800000; }
+        public static bool3 isnan(float3 x) { return abs(x) >= fp.max; }
 
         /// <summary>Returns a bool4 indicating for each component of a float4 whether it is a NaN (not a number) floating point value.</summary>
         /// <remarks>
@@ -601,7 +601,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>True if the component was NaN; false otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool4 isnan(float4 x) { return (asuint(x) & 0x7FFFFFFF) > 0x7F800000; }
+        public static bool4 isnan(float4 x) { return abs(x) >= fp.max; }
 
         /// <summary>
         /// Checks if the input is a power of two.

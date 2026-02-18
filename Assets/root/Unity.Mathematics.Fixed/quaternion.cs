@@ -418,7 +418,7 @@ namespace Unity.Mathematics.Fixed
             fp mn = min(min(forwardLengthSq, upLengthSq), tLengthSq);
             fp mx = max(max(forwardLengthSq, upLengthSq), tLengthSq);
 
-            bool accept = mn > fp.epsilon && mx < fp.usable_max && isfinite(forwardLengthSq) && isfinite(upLengthSq) && isfinite(tLengthSq);
+            bool accept = mn > fp.epsilon && mx < fp.max && isfinite(forwardLengthSq) && isfinite(upLengthSq) && isfinite(tLengthSq);
             return quaternion(select(float4(fp._0, fp._0, fp._0, fp._1), quaternion(float3x3(t, cross(forward, t),forward)).value, accept));
         }
 
