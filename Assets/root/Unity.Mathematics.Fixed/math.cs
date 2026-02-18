@@ -149,7 +149,7 @@ namespace Unity.Mathematics.Fixed
 
         /// <summary>The smallest positive normal number representable in a fp.</summary>
         internal const float FLT_MIN_NORMAL = 1.175494351e-38F;
-        public static readonly fp FP_MIN_NORMAL = fp.epsilonroot;
+        public static readonly fp FP_MIN_NORMAL = fp.epsilon;
 
         /// <summary>The smallest positive normal number representable in a double. This is a f64/double precision constant.</summary>
         internal const double DBL_MIN_NORMAL = 2.2250738585072014e-308;
