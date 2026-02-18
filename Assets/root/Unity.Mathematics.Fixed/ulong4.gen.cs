@@ -418,6 +418,12 @@ namespace Unity.Mathematics.Fixed
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ulong4 operator & (ulong4 lhs, ulong4 rhs) { return new ulong4 (lhs.x & rhs.x, lhs.y & rhs.y, lhs.z & rhs.z, lhs.w & rhs.w); }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ulong4 operator | (ulong4 lhs, ulong4 rhs) { return new ulong4 (lhs.x | rhs.x, lhs.y | rhs.y, lhs.z | rhs.z, lhs.w | rhs.w); }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ulong4 operator ~ (ulong4 lhs) { return new ulong4 (~lhs.x, ~lhs.y, ~lhs.z, ~lhs.w); }
 
         /// <summary>Swizzles the vector.</summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
@@ -3699,6 +3705,8 @@ namespace Unity.Mathematics.Fixed
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ulong4 ulong4(ulong v) { return new ulong4(v); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ulong4 ulong4(long v) { return new ulong4((ulong)v); }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint4 uint4(ulong4 v) { return unchecked(new uint4((uint)v.x,(uint)v.y,(uint)v.z,(uint)v.w)); }
