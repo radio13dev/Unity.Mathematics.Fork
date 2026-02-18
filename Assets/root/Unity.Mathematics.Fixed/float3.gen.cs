@@ -1771,14 +1771,14 @@ namespace Unity.Mathematics.Fixed
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 float3(double3 v) { return new float3(v); }
-
+        
         /// <summary>Returns a uint hash code of a float3 vector.</summary>
         /// <param name="v">Vector value to hash.</param>
         /// <returns>uint hash of the argument.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint hash(float3 v)
         {
-            return csum(asuint(v) * uint3(0x9B13B92Du, 0x4ABF0813u, 0x86068063u)) + 0xD75513F9u;
+            return unchecked(csum(uint3(asulong_unsafe(v) * ulong3(hash_05, hash_06, hash_07))) + (uint)hash_08);
         }
 
         /// <summary>
@@ -1791,7 +1791,8 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint3 hashwide(float3 v)
         {
-            return (asuint(v) * uint3(0x5AB3E8CDu, 0x676E8407u, 0xB36DE767u)) + 0x6FCA387Du;
+            
+            return uint3((asulong_unsafe(v) * ulong3(hash_01, hash_02, hash_03)) + hash_04);
         }
 
         /// <summary>Returns the result of specified shuffling of the components from two float3 vectors into a fp value.</summary>

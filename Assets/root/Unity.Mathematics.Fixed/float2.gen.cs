@@ -902,7 +902,7 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint hash(float2 v)
         {
-            return csum(asuint(v) * uint2(0xFA3A3285u, 0xAD55999Du)) + 0xDCDD5341u;
+            return unchecked(csum(uint2(asulong_unsafe(v) * ulong2(hash_14, hash_04))) + (uint)hash_06);
         }
 
         /// <summary>
@@ -915,7 +915,7 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint2 hashwide(float2 v)
         {
-            return (asuint(v) * uint2(0x94DDD769u, 0xA1E92D39u)) + 0x4583C801u;
+            return unchecked(uint2(asulong_unsafe(v) * ulong2(hash_11, hash_08)) + (uint)hash_09);
         }
 
         /// <summary>Returns the result of specified shuffling of the components from two float2 vectors into a fp value.</summary>

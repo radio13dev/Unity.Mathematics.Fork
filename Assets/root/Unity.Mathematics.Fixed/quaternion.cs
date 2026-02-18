@@ -48,45 +48,160 @@ namespace Unity.Mathematics.Fixed
             float3 v = m.c1;
             float3 w = m.c2;
 
-            uint u_sign = (asuint(u.x) & 0x80000000);
-            fp t = v.y + math.asfloat(asuint(w.z) ^ u_sign);
-            uint4 u_mask = uint4((int)u_sign >> 31);
-            uint4 t_mask = uint4(asint(t) >> 31);
+            // matrix elements (column-major): m00 = u.x, m11 = v.y, m22 = w.z
+            fp m00 = u.x;
+            fp m11 = v.y;
+            fp m22 = w.z;
 
-            fp tr = fp._1 + abs(u.x);
+            fp tr = m00 + m11 + m22;
 
-            uint4 sign_flips = uint4(0x00000000, 0x80000000, 0x80000000, 0x80000000) ^ (u_mask & uint4(0x00000000, 0x80000000, 0x00000000, 0x80000000)) ^ (t_mask & uint4(0x80000000, 0x80000000, 0x80000000, 0x00000000));
+            fp qx = fp._0;
+            fp qy = fp._0;
+            fp qz = fp._0;
+            fp qw = fp._0;
 
-            value = float4(tr, u.y, w.x, v.z) + math.asfloat(asuint(math.float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
+            if (tr > fp._0)
+            {
+                // trace positive: compute w first
+                fp s = sqrt(tr + fp._1);
+                // qw = s * 0.5
+                qw = s * fp._0_50;
+                // inv = 1 / (2*s)
+                fp inv = rcp(2 * s);
+                qx = (v.z - w.y) * inv; // (m21 - m12) / (2*s)
+                qy = (w.x - u.z) * inv; // (m02 - m20) / (2*s)
+                qz = (u.y - v.x) * inv; // (m10 - m01) / (2*s)
+            }
+            else
+            {
+                // find the major diagonal element and compute accordingly
+                if (m00 > m11 && m00 > m22)
+                {
+                    // m00 largest -> compute x first
+                    fp s = sqrt(fp._1 + m00 - m11 - m22);
+                    // qx = s * 0.5
+                    qx = s * fp._0_50;
+                    fp inv = rcp(2 * s);
+                    qy = (v.x + u.y) * inv; // (m01 + m10) / (2*s)
+                    qz = (w.x + u.z) * inv; // (m02 + m20) / (2*s)
+                    qw = (v.z - w.y) * inv; // (m21 - m12) / (2*s)
+                }
+                else if (m11 > m22)
+                {
+                    // m11 largest -> compute y first
+                    fp s = sqrt(fp._1 + m11 - m00 - m22);
+                    qy = s * fp._0_50;
+                    fp inv = rcp(2 * s);
+                    qx = (v.x + u.y) * inv; // (m01 + m10) / (2*s)
+                    qz = (w.y + v.z) * inv; // (m12 + m21) / (2*s)
+                    qw = (w.x - u.z) * inv; // (m02 - m20) / (2*s)
+                }
+                else
+                {
+                    // m22 largest -> compute z first
+                    fp s = sqrt(fp._1 + m22 - m00 - m11);
+                    qz = s * fp._0_50;
+                    fp inv = rcp(2 * s);
+                    qx = (w.x + u.z) * inv; // (m02 + m20) / (2*s)
+                    qy = (w.y + v.z) * inv; // (m12 + m21) / (2*s)
+                    qw = (u.y - v.x) * inv; // (m10 - m01) / (2*s)
+                }
+            }
 
-            value = math.asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
-            value = math.asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
-            value = normalize(value);
+            value = normalize(float4(qx, qy, qz, qw));
         }
 
         /// <summary>Constructs a unit quaternion from an orthonormal float4x4 matrix.</summary>
         /// <param name="m">The float4x4 orthonormal rotation matrix.</param>
         public quaternion(float4x4 m)
         {
+            /*
+                float4 u = m.c0;
+                float4 v = m.c1;
+                float4 w = m.c2;
+
+                uint u_sign = (asuint(u.x) & 0x80000000);
+                fp t = v.y + math.asfloat(asuint(w.z) ^ u_sign);
+                uint4 u_mask = uint4((int)u_sign >> 31);
+                uint4 t_mask = uint4(asint(t) >> 31);
+
+                fp tr = fp._1 + abs(u.x);
+
+                uint4 sign_flips = uint4(0x00000000, 0x80000000, 0x80000000, 0x80000000) ^ (u_mask & uint4(0x00000000, 0x80000000, 0x00000000, 0x80000000)) ^ (t_mask & uint4(0x80000000, 0x80000000, 0x80000000, 0x00000000));
+
+                value = float4(tr, u.y, w.x, v.z) + math.asfloat(asuint(math.float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
+
+                value = math.asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
+                value = math.asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
+
+                value = normalize(value);
+            */
+
             float4 u = m.c0;
             float4 v = m.c1;
             float4 w = m.c2;
 
-            uint u_sign = (asuint(u.x) & 0x80000000);
-            fp t = v.y + math.asfloat(asuint(w.z) ^ u_sign);
-            uint4 u_mask = uint4((int)u_sign >> 31);
-            uint4 t_mask = uint4(asint(t) >> 31);
+            // matrix elements (column-major): m00 = u.x, m11 = v.y, m22 = w.z
+            fp m00 = u.x;
+            fp m11 = v.y;
+            fp m22 = w.z;
 
-            fp tr = fp._1 + abs(u.x);
+            fp tr = m00 + m11 + m22;
 
-            uint4 sign_flips = uint4(0x00000000, 0x80000000, 0x80000000, 0x80000000) ^ (u_mask & uint4(0x00000000, 0x80000000, 0x00000000, 0x80000000)) ^ (t_mask & uint4(0x80000000, 0x80000000, 0x80000000, 0x00000000));
+            fp qx = fp._0;
+            fp qy = fp._0;
+            fp qz = fp._0;
+            fp qw = fp._0;
 
-            value = float4(tr, u.y, w.x, v.z) + math.asfloat(asuint(math.float4(t, v.x, u.z, w.y)) ^ sign_flips);   // +---, +++-, ++-+, +-++
+            if (tr > fp._0)
+            {
+                // trace positive: compute w first
+                fp s = sqrt(tr + fp._1);
+                // qw = s * 0.5
+                qw = s * fp._0_50;
+                // inv = 1 / (2*s)
+                fp inv = rcp(2 * s);
+                qx = (v.z - w.y) * inv; // (m21 - m12) / (2*s)
+                qy = (w.x - u.z) * inv; // (m02 - m20) / (2*s)
+                qz = (u.y - v.x) * inv; // (m10 - m01) / (2*s)
+            }
+            else
+            {
+                // find the major diagonal element and compute accordingly
+                if (m00 > m11 && m00 > m22)
+                {
+                    // m00 largest -> compute x first
+                    fp s = sqrt(fp._1 + m00 - m11 - m22);
+                    // qx = s * 0.5
+                    qx = s * fp._0_50;
+                    fp inv = rcp(2 * s);
+                    qy = (v.x + u.y) * inv; // (m01 + m10) / (2*s)
+                    qz = (w.x + u.z) * inv; // (m02 + m20) / (2*s)
+                    qw = (v.z - w.y) * inv; // (m21 - m12) / (2*s)
+                }
+                else if (m11 > m22)
+                {
+                    // m11 largest -> compute y first
+                    fp s = sqrt(fp._1 + m11 - m00 - m22);
+                    qy = s * fp._0_50;
+                    fp inv = rcp(2 * s);
+                    qx = (v.x + u.y) * inv; // (m01 + m10) / (2*s)
+                    qz = (w.y + v.z) * inv; // (m12 + m21) / (2*s)
+                    qw = (w.x - u.z) * inv; // (m02 - m20) / (2*s)
+                }
+                else
+                {
+                    // m22 largest -> compute z first
+                    fp s = sqrt(fp._1 + m22 - m00 - m11);
+                    qz = s * fp._0_50;
+                    fp inv = rcp(2 * s);
+                    qx = (w.x + u.z) * inv; // (m02 + m20) / (2*s)
+                    qy = (w.y + v.z) * inv; // (m12 + m21) / (2*s)
+                    qw = (u.y - v.x) * inv; // (m10 - m01) / (2*s)
+                }
+            }
 
-            value = math.asfloat((asuint(value) & ~u_mask) | (asuint(value.zwxy) & u_mask));
-            value = math.asfloat((asuint(value.wzyx) & ~t_mask) | (asuint(value) & t_mask));
-
-            value = normalize(value);
+            value = normalize(float4(qx, qy, qz, qw));
         }
 
         /// <summary>

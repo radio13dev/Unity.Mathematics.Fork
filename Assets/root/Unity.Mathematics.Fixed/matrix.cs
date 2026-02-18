@@ -73,6 +73,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="q">The quaternion rotation.</param>
         public float3x3(quaternion q)
         {
+        /*
             float4 v = q.value;
             float4 v2 = v + v;
 
@@ -82,7 +83,44 @@ namespace Unity.Mathematics.Fixed
             c0 = v2.y * math.asfloat(asuint(v.yxw) ^ npn) - v2.z * math.asfloat(asuint(v.zwx) ^ pnn) + math.float3(1, 0, 0);
             c1 = v2.z * math.asfloat(asuint(v.wzy) ^ nnp) - v2.x * math.asfloat(asuint(v.yxw) ^ npn) + math.float3(0, 1, 0);
             c2 = v2.x * math.asfloat(asuint(v.zwx) ^ pnn) - v2.y * math.asfloat(asuint(v.wzy) ^ nnp) + math.float3(0, 0, 1);
+        */
+            
+            float4 v = q.value;
+            fp x = v.x;
+            fp y = v.y;
+            fp z = v.z;
+            fp w = v.w;
+
+            // quadratic and cross terms
+            fp xx = x * x;
+            fp yy = y * y;
+            fp zz = z * z;
+            fp xy = x * y;
+            fp xz = x * z;
+            fp yz = y * z;
+            fp wx = w * x;
+            fp wy = w * y;
+            fp wz = w * z;
+
+            // double terms (avoid relying on literal fp._2)
+            fp two_xy = xy + xy;
+            fp two_xz = xz + xz;
+            fp two_yz = yz + yz;
+            fp two_wx = wx + wx;
+            fp two_wy = wy + wy;
+            fp two_wz = wz + wz;
+
+            // columns (column-major)
+            fp t0 = yy + zz;
+            c0 = math.float3(fp._1 - (t0 + t0), two_xy + two_wz, two_xz - two_wy);
+
+            fp t1 = xx + zz;
+            c1 = math.float3(two_xy - two_wz, fp._1 - (t1 + t1), two_yz + two_wx);
+
+            fp t2 = xx + yy;
+            c2 = math.float3(two_xz + two_wy, two_yz - two_wx, fp._1 - (t2 + t2));
         }
+
 
         /// <summary>
         /// Returns a float3x3 matrix representing a rotation around a unit axis by an angle in radians.
@@ -103,14 +141,14 @@ namespace Unity.Mathematics.Fixed
             float3 u_inv_cosa = u - u * cosa;  // u * (fp._1 - cosa);
             float4 t = float4(u * sina, cosa);
 
-            uint3 ppn = uint3(0x00000000, 0x00000000, 0x80000000);
-            uint3 npp = uint3(0x80000000, 0x00000000, 0x00000000);
-            uint3 pnp = uint3(0x00000000, 0x80000000, 0x00000000);
+            ulong3 ppn = ulong3(0x00000000_00000000UL, 0x00000000_00000000UL, 0x80000000_00000000UL);
+            ulong3 npp = ulong3(0x80000000_00000000UL, 0x00000000_00000000UL, 0x00000000_00000000UL);
+            ulong3 pnp = ulong3(0x00000000_00000000UL, 0x80000000_00000000UL, 0x00000000_00000000UL);
 
             return float3x3(
-                u.x * u_inv_cosa + math.asfloat(asuint(t.wzy) ^ ppn),
-                u.y * u_inv_cosa + math.asfloat(asuint(t.zwx) ^ npp),
-                u.z * u_inv_cosa + math.asfloat(asuint(t.yxw) ^ pnp)
+                u.x * u_inv_cosa + math.asfloat_unsafe(asulong_unsafe(t.wzy) ^ ppn),
+                u.y * u_inv_cosa + math.asfloat_unsafe(asulong_unsafe(t.zwx) ^ npp),
+                u.z * u_inv_cosa + math.asfloat_unsafe(asulong_unsafe(t.yxw) ^ pnp)
                 );
             /*
             return float3x3(
@@ -536,15 +574,15 @@ namespace Unity.Mathematics.Fixed
             float4 u_inv_cosa = u - u * cosa;  // u * (fp._1 - cosa);
             float4 t = float4(u.xyz * sina, cosa);
 
-            uint4 ppnp = uint4(0x00000000, 0x00000000, 0x80000000, 0x00000000);
-            uint4 nppp = uint4(0x80000000, 0x00000000, 0x00000000, 0x00000000);
-            uint4 pnpp = uint4(0x00000000, 0x80000000, 0x00000000, 0x00000000);
-            uint4 mask = uint4(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000);
+            ulong4 ppnp = ulong4(0x00000000_00000000UL, 0x00000000_00000000UL, 0x80000000_00000000UL, 0x00000000_00000000UL);
+            ulong4 nppp = ulong4(0x80000000_00000000UL, 0x00000000_00000000UL, 0x00000000_00000000UL, 0x00000000_00000000UL);
+            ulong4 pnpp = ulong4(0x00000000_00000000UL, 0x80000000_00000000UL, 0x00000000_00000000UL, 0x00000000_00000000UL);
+            ulong4 mask = ulong4(0xFFFFFFFF_FFFFFFFFUL, 0xFFFFFFFF_FFFFFFFFUL, 0xFFFFFFFF_FFFFFFFFUL, 0x00000000_FFFFFFFFUL);
 
             return float4x4(
-                u.x * u_inv_cosa + math.asfloat((asuint(t.wzyx) ^ ppnp) & mask),
-                u.y * u_inv_cosa + math.asfloat((asuint(t.zwxx) ^ nppp) & mask),
-                u.z * u_inv_cosa + math.asfloat((asuint(t.yxwx) ^ pnpp) & mask),
+                u.x * u_inv_cosa + math.asfloat_unsafe((asulong_unsafe(t.wzyx) ^ ppnp) & mask),
+                u.y * u_inv_cosa + math.asfloat_unsafe((asulong_unsafe(t.zwxx) ^ nppp) & mask),
+                u.z * u_inv_cosa + math.asfloat_unsafe((asulong_unsafe(t.yxwx) ^ pnpp) & mask),
                 float4(fp._0, fp._0, fp._0, fp._1)
                 );
 

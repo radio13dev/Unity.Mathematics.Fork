@@ -611,8 +611,8 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint hash(float3x2 v)
         {
-            return csum(asuint(v.c0) * uint3(0xE121E6ADu, 0xC9CA1249u, 0x69B60C81u) +
-                        asuint(v.c1) * uint3(0xE0EB6C25u, 0xF648BEABu, 0x6BDB2B07u)) + 0xEF63C699u;
+            return unchecked(csum(uint3(asulong_unsafe(v.c0) * ulong3(hash_14, hash_04, hash_03) +
+                        asulong_unsafe(v.c1) * ulong3(hash_01, hash_12, hash_10))) + (uint)hash_08);
         }
 
         /// <summary>
@@ -625,8 +625,8 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint3 hashwide(float3x2 v)
         {
-            return (asuint(v.c0) * uint3(0x9001903Fu, 0xA895B9CDu, 0x9D23B201u) +
-                    asuint(v.c1) * uint3(0x4B01D3E1u, 0x7461CA0Du, 0x79725379u)) + 0xD6258E5Bu;
+            return unchecked (uint3(asulong_unsafe(v.c0) * ulong3(hash_01, hash_03, hash_02) +
+                    asulong_unsafe(v.c1) * ulong3(hash_13, hash_14, hash_12)) + (uint)hash_14);
         }
 
     }

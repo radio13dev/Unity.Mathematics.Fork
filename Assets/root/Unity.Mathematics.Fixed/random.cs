@@ -413,7 +413,8 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public fp NextFloat()
         {
-            return math.asfloat(0x3f800000 | (NextState() >> 9)) - fp._1;
+            return fp.ParseRaw(NextInt((int)fp._0.value, (int)fp._1.value));
+            //return math.asfloat(0x3f800000 | (NextState() >> 9)) - fp._1;
         }
 
         /// <summary>Returns a uniformly random float2 value with all components in the interval [0, 1).</summary>
@@ -421,7 +422,8 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float2 NextFloat2()
         {
-            return math.asfloat(0x3f800000 | (uint2(NextState(), NextState()) >> 9)) - fp._1;
+            return float2(NextFloat(), NextFloat());
+            //return math.asfloat(0x3f800000 | (uint2(NextState(), NextState()) >> 9)) - fp._1;
         }
 
         /// <summary>Returns a uniformly random float3 value with all components in the interval [0, 1).</summary>
@@ -429,7 +431,8 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float3 NextFloat3()
         {
-            return math.asfloat(0x3f800000 | (uint3(NextState(), NextState(), NextState()) >> 9)) - fp._1;
+            return float3(NextFloat(), NextFloat(), NextFloat());
+            //return math.asfloat(0x3f800000 | (uint3(NextState(), NextState(), NextState()) >> 9)) - fp._1;
         }
 
         /// <summary>Returns a uniformly random float4 value with all components in the interval [0, 1).</summary>
@@ -437,7 +440,8 @@ namespace Unity.Mathematics.Fixed
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float4 NextFloat4()
         {
-            return math.asfloat(0x3f800000 | (uint4(NextState(), NextState(), NextState(), NextState()) >> 9)) - fp._1;
+            return float4(NextFloat(), NextFloat(), NextFloat(), NextFloat());
+            //return math.asfloat(0x3f800000 | (uint4(NextState(), NextState(), NextState(), NextState()) >> 9)) - fp._1;
         }
 
 
