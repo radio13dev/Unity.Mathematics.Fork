@@ -118,12 +118,15 @@ namespace Unity.Mathematics.Fixed {
 
         public static fp Rcp(fp num) {
             //(fp.1 << 16)
+            if (num.value == 0) return fp.max;
             return new fp(4294967296 / num.value);
         }
         
         public static fp Rsqrt(fp num) {
             //(fp.1 << 16)
-            return new fp(4294967296 / Sqrt(num).value);
+            var sqrt = Sqrt(num);
+            if (sqrt.value == 0) return fp.max;
+            return new fp(4294967296 / sqrt.value);
         }
 
         public static fp Sqrt(fp num) {

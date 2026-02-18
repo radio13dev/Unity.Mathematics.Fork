@@ -204,36 +204,42 @@ namespace Unity.Mathematics.Fixed {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp operator /(fp a, fp b) {
+            if (b.value == 0) return fp.max;
             a.value = (a.value << fixlut.PRECISION) / b.value;
             return a;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp operator /(fp a, int b) {
+            if (b == 0) return fp.max;
             a.value /= b;
             return a;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp operator /(int a, fp b) {
+            if (b.value == 0) return fp.max;
             b.value = ((long) a << 32) / b.value;
             return b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp operator %(fp a, fp b) {
+            if (b.value == 0) return fp.max;
             a.value %= b.value;
             return a;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp operator %(fp a, int b) {
+            if (b == 0) return fp.max;
             a.value %= (long) b << fixlut.PRECISION;
             return a;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp operator %(int a, fp b) {
+            if (b.value == 0) return fp.max;
             b.value = ((long) a << fixlut.PRECISION) % b.value;
             return b;
         }
