@@ -48,16 +48,16 @@ namespace Unity.Mathematics.Fixed
             float3 v = m.c1;
             float3 w = m.c2;
 
-            ulong u_sign = (asulong_unsafe(u.x) & 0x80000000_00000000UL);
+            ulong u_sign = (asulong_unsafe(u.x) & 0x80000000_00000000);
             fp t = v.y + math.asfloat_unsafe(asulong_unsafe(w.z) ^ u_sign);
             ulong4 u_mask = ulong4((long)u_sign >> 63);
-            ulong4 t_mask = ulong4(asulong_unsafe(t) >> 63);
+            ulong4 t_mask = ulong4(aslong_unsafe(t) >> 63);
 
             fp tr = fp._1 + abs(u.x);
 
-            ulong4 sign_flips = ulong4(0x00000000_00000000UL, 0x80000000_00000000UL, 0x80000000_00000000UL, 0x80000000_00000000UL) ^ 
-                                (u_mask & ulong4(0x00000000_00000000UL, 0x80000000_00000000UL, 0x00000000_00000000UL, 0x80000000_00000000UL)) ^
-                                (t_mask & ulong4(0x80000000_00000000UL, 0x80000000_00000000UL, 0x80000000_00000000UL, 0x00000000_00000000UL));
+            ulong4 sign_flips = ulong4(0x00000000_00000000, 0x80000000_00000000, 0x80000000_00000000, 0x80000000_00000000) ^ 
+                                (u_mask & ulong4(0x00000000_00000000, 0x80000000_00000000, 0x00000000_00000000, 0x80000000_00000000)) ^
+                                (t_mask & ulong4(0x80000000_00000000, 0x80000000_00000000, 0x80000000_00000000, 0x00000000_00000000));
 
             value = float4(tr, u.y, w.x, v.z) + math.asfloat_unsafe(asulong_unsafe(math.float4(t, v.x, u.z, w.y)) ^ sign_flips); // +---, +++-, ++-+, +-++
 
@@ -78,7 +78,7 @@ namespace Unity.Mathematics.Fixed
             ulong u_sign = (asulong_unsafe(u.x) & 0x80000000_00000000UL);
             fp t = v.y + math.asfloat_unsafe(asulong_unsafe(w.z) ^ u_sign);
             ulong4 u_mask = ulong4((long)u_sign >> 63);
-            ulong4 t_mask = ulong4(asulong_unsafe(t) >> 63);
+            ulong4 t_mask = ulong4(aslong_unsafe(t) >> 63);
 
             fp tr = fp._1 + abs(u.x);
 

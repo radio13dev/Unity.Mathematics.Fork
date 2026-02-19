@@ -331,6 +331,18 @@ namespace Unity.Mathematics.Fixed
             }
         }
 
+        /// <summary>Returns the bit pattern of a fp as a uint.</summary>
+        /// <param name="x">The fp bits to copy.</param>
+        /// <returns>The uint with the same bit pattern as the input.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long aslong_unsafe(fp x)
+        {
+            unsafe
+            {
+                return *(long*)&x;
+            }
+        }
+
         /// <summary>Returns the bit pattern of a float2 as a uint2.</summary>
         /// <param name="x">The float2 bits to copy.</param>
         /// <returns>The uint2 with the same bit pattern as the input.</returns>
