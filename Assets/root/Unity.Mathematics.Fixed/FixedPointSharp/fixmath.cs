@@ -334,6 +334,71 @@ namespace Unity.Mathematics.Fixed {
 
             return result;
         }
+        
+        public static fp Log(fp num)
+        {
+            if (num <= fp._0) return fp.min;
+            if (num == fp._1) return fp._0;
+
+            var value = num.value;
+    
+            // Find the position of the most significant bit
+            int exponent = 0;
+            var absValue = value;
+    
+            // Normalize to [1, 2) range in fixed-point (i.e., [65536, 131072) in raw values)
+            var one = fixlut.ONE;  // 65536 for Q48.16
+            var two = one << 1;     // 131072 for Q48.16
+    
+            if (absValue >= two)
+            {
+                while (absValue >= two)
+                {
+                    absValue >>= 1;
+                    exponent++;
+                }
+            }
+            else if (absValue < one)
+            {
+                while (absValue < one)
+                {
+                    absValue <<= 1;
+                    exponent--;
+                }
+            }
+
+            // Normalize to [1, 2) as fixed-point
+            var normalized = new fp(absValue);
+
+            // Taylor series: ln(x) = 2 * sum((x-1)/(x+1))^(2n+1) / (2n+1)
+            var x_minus_1 = normalized - fp._1;
+            var x_plus_1 = normalized + fp._1;
+            var quotient = x_minus_1 / x_plus_1;
+            var quotient_sq = quotient * quotient;
+
+            var result = quotient;
+            var term = quotient;
+
+            for (var i = 1; i < 20; i++)
+            {
+                term *= quotient_sq;
+                result += term / (2 * i + 1);
+
+                if (term.value < 100)
+                    break;
+            }
+
+            result *= 2;
+
+            // Add ln(2) * exponent to account for the exponent part
+            // ln(2) ≈ 0.693147180559945 in Q48.16
+            var ln2 = new fp(45426L);
+            result += ln2 * (fp)exponent;
+
+            return result;
+        }
+
+
 
         public static fp sinh(fp x) {
             // For a practical implementation, the input x must be range-reduced.

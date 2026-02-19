@@ -1857,7 +1857,28 @@ namespace Unity.Mathematics.Fixed
         /// <param name="y">The exponent power.</param>
         /// <returns>The result of raising x to the power y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp pow(fp x, fp y) { throw new NotImplementedException(); } //{ return (fp)System.Math.Pow((fp)x, (fp)y); }
+        public static fp pow(fp x, fp y)
+        {
+            if (y == fp._0) return fp._1;
+            if (x == fp._0) return fp._0;
+            if (x == fp._1) return fp._1;
+    
+            // For negative base with non-integer exponent, return max (undefined)
+            if (x < fp._0 && y.value % fixlut.ONE != 0) return fp.max;
+    
+            var isNegativeBase = x < fp._0;
+            if (isNegativeBase) x = -x;
+    
+            // x^y = e^(y * ln(x))
+            var lnX = fixmath.Log(x);
+            var result = fixmath.Exp(y * lnX);
+    
+            // If base was negative and exponent is odd integer, negate result
+            if (isNegativeBase && fixmath.RoundToInt(y) % 2 != 0)
+                result = -result;
+    
+            return result;
+        }
 
         /// <summary>Returns the componentwise result of raising x to the power y.</summary>
         /// <param name="x">The exponent base.</param>
@@ -1956,7 +1977,7 @@ namespace Unity.Mathematics.Fixed
         /// <param name="x">Input value.</param>
         /// <returns>The natural logarithm of the input.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static fp log(fp x) { throw new NotImplementedException(); } //{ return (fp)System.Math.Log((fp)x); }
+        public static fp log(fp x) { return fixmath.Log(x); }
 
         /// <summary>Returns the componentwise natural logarithm of a float2 vector.</summary>
         /// <param name="x">Input value.</param>

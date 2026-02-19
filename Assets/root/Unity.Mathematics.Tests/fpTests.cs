@@ -69,6 +69,15 @@ public class fpTests
             ignoredB = new HashSet<fp>(c.ignoredB),
             ignoredPair = new HashSet<(fp a,fp b)>(c.ignoredPair)
         };
+        
+        public static implicit operator op((float acc, opString str, fpOp fp, fOp f, fp[] ignoredA) c) => new op()
+        {
+            Accuracy = c.acc,
+            str = c.str,
+            fp = c.fp,
+            f = c.f,
+            ignoredA = new HashSet<fp>(c.ignoredA)
+        };
     }
         
     static readonly op[] ops = new op[]
@@ -114,28 +123,28 @@ public class fpTests
                 new fp[] { -1, -2, fp.usable_min }
             ),
             (
+                0.05f,
                 (a,b) => $"math.rsqrt({a})",
                 (a,b) => math.rsqrt(a),
                 (a,b) => Unity.Mathematics.math.rsqrt(a),
-                new fp[] { -1, -2, fp.usable_min }
+                new fp[] { 0, -1, -2, fp.usable_min }
             ),
             
-            // NOT IMPLEMENTED
-            //(
-            //    (a,b) => $"math.log({a})",
-            //    (a,b) => math.log(a),
-            //    (a,b) => Unity.Mathematics.math.log(a)
-            //),
+            (
+                (a,b) => $"math.log({a})",
+                (a,b) => math.log(a),
+                (a,b) => Unity.Mathematics.math.log(a),
+                new fp[] { 0, -1, -2, fp.usable_min }
+            ),
             
-            // NOT IMPLEMENTED
-            //(
-            //    (a,b) => $"math.pow({a},{b})",
-            //    (a,b) => math.pow(a,b),
-            //    (a,b) => Unity.Mathematics.math.pow(a,b),
-            //    new fp[] { },
-            //    new fp[] { },
-            //    new (fp,fp)[] { (0,-1), (0,-2), (0,fp.usable_min) }
-            //),
+            (
+                (a,b) => $"math.pow({a},{b})",
+                (a,b) => math.pow(a,b),
+                (a,b) => Unity.Mathematics.math.pow(a,b),
+                new fp[] { },
+                new fp[] { },
+                new (fp,fp)[] { (0,-1), (0,-2), (0,fp.usable_min) }
+            ),
             
             (
                 0.1f,
@@ -185,6 +194,8 @@ public class fpTests
     [Test]
     public void fpOps_OperationAccuracy_Success()
     {
+        fp test = fp.ParseUnsafe(1.44269504089f);
+        
         List<string> errors = new();
     
         for (int opIndex = 0; opIndex < ops.Length; ++opIndex)
