@@ -71,6 +71,16 @@ using quaternion = Unity.Mathematics.Fixed.quaternion;
             ignoredB = new (c.ignoredB),
             ignoredPair = new (c.ignoredPair)
         };
+        
+        public static implicit operator op2<a, aR, b, bR>((float acc, opString str, fpOp fp, fOp f, a[] ignoredA, a[] ignoredB) c) => new op2<a, aR, b, bR>()
+        {
+            Accuracy = c.acc,
+            str = c.str,
+            fp = c.fp,
+            f = c.f,
+            ignoredA = new (c.ignoredA),
+            ignoredB = new (c.ignoredB),
+        };
 
         public override bool Ignores(params object[] args)
         {
@@ -170,9 +180,12 @@ public class quaternionTests
     static readonly op2<Unity.Mathematics.Fixed.float3, quaternion, Unity.Mathematics.float3, Unity.Mathematics.quaternion>[] f3_f3_To_q = new op2<Unity.Mathematics.Fixed.float3, quaternion, Unity.Mathematics.float3, Unity.Mathematics.quaternion>[]
     {
         (
+            0.15f,
             (a,b) => $"quaternion.LookRotationSafe({a}, {b})",
             (a,b) => quaternion.LookRotationSafe(a, b),
-            (a,b) => Unity.Mathematics.quaternion.LookRotationSafe(a, b)
+            (a,b) => Unity.Mathematics.quaternion.LookRotationSafe(a, b),
+            new [] { new float3(fp.epsilon,0,0), fp.epsilon, },
+            new [] { new float3(fp.epsilon,0,0), fp.epsilon, }
         ),
     };
     static readonly op2<Unity.Mathematics.Fixed.float3, Unity.Mathematics.Fixed.float3, Unity.Mathematics.float3, Unity.Mathematics.float3>[] f3_f3_To_f3 = new op2<Unity.Mathematics.Fixed.float3, Unity.Mathematics.Fixed.float3, Unity.Mathematics.float3, Unity.Mathematics.float3>[]
@@ -224,5 +237,14 @@ public class quaternionTests
             float fDif = Unity.Mathematics.math.angle((Unity.Mathematics.quaternion)aA, bA);
             Assert.IsTrue(fDif < Accuracy, $"|{aA} - {bA}| == {fDif}");
         }
+    }
+    [Test]
+    public void custom()
+    {
+        float a = Unity.Mathematics.math.asfloat(Unity.Mathematics.math.asuint(1.0f)^0x80000000);
+        float b = Unity.Mathematics.math.asfloat(Unity.Mathematics.math.asuint(-1.0f)^0x80000000);
+        float c = Unity.Mathematics.math.asfloat(Unity.Mathematics.math.asuint(2.0f)^0x80000000);
+        float d = Unity.Mathematics.math.asfloat(Unity.Mathematics.math.asuint(-2.0f)^0x80000000);
+        float f = 0;
     }
 }

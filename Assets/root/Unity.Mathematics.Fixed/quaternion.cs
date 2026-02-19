@@ -48,21 +48,57 @@ namespace Unity.Mathematics.Fixed
             float3 v = m.c1;
             float3 w = m.c2;
 
-            ulong u_sign = (asulong_unsafe(u.x) & 0x80000000_00000000);
-            fp t = v.y + math.asfloat_unsafe(asulong_unsafe(w.z) ^ u_sign);
-            ulong4 u_mask = ulong4((long)u_sign >> 63);
-            ulong4 t_mask = ulong4(aslong_unsafe(t) >> 63);
-
+            fp t;
+            bool u_mask;
+            bool t_mask;
             fp tr = fp._1 + abs(u.x);
+            
+            if (u.x >= 0)
+            {
+                // If positive, don't flip w.z
+                // Also, set u_mask to false
+                t = v.y + w.z;
+                u_mask = false;
+            }
+            else
+            {
+                t = v.y - w.z;
+                u_mask = true;
+            }
+                
+            if (t >= 0)
+            {
+                // if positive, t_mask is false
+                t_mask = false;
+            }
+            else
+            {
+                t_mask = true;
+            }
 
-            ulong4 sign_flips = ulong4(0x00000000_00000000, 0x80000000_00000000, 0x80000000_00000000, 0x80000000_00000000) ^ 
-                                (u_mask & ulong4(0x00000000_00000000, 0x80000000_00000000, 0x00000000_00000000, 0x80000000_00000000)) ^
-                                (t_mask & ulong4(0x80000000_00000000, 0x80000000_00000000, 0x80000000_00000000, 0x00000000_00000000));
+            bool4 sign_flips = bool4(false, true, true, true) ^
+                    (u_mask & bool4(false, true, false, true)) ^ 
+                    (t_mask & bool4(true, true, true, false));
 
-            value = float4(tr, u.y, w.x, v.z) + math.asfloat_unsafe(asulong_unsafe(math.float4(t, v.x, u.z, w.y)) ^ sign_flips); // +---, +++-, ++-+, +-++
+            value = float4(tr, u.y, w.x, v.z) + (math.float4(t, v.x, u.z, w.y) ^ sign_flips); // +---, +++-, ++-+, +-++
 
-            value = math.asfloat_unsafe((asulong_unsafe(value) & ~u_mask) | (asulong_unsafe(value.zwxy) & u_mask));
-            value = math.asfloat_unsafe((asulong_unsafe(value.wzyx) & ~t_mask) | (asulong_unsafe(value) & t_mask));
+            if (u_mask)
+            {
+                value = value.zwxy;// math.asfloat_unsafe((asulong_unsafe(value) & ~u_mask) | (asulong_unsafe(value.zwxy) & u_mask));
+            }
+            else
+            {
+                value = value;
+            }
+            
+            if (t_mask)
+            {
+                value = value;
+            }
+            else
+            {
+                value = value.wzyx;
+            }
 
             value = normalize(value);
         }
