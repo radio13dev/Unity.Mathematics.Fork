@@ -406,6 +406,14 @@ namespace Unity.Mathematics.Fixed
                 return *(fp*)&x;
             }
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static fp asfloat_unsafe(long x)
+        {
+            unsafe
+            {
+                return *(fp*)&x;
+            }
+        }
 
         /// <summary>Returns the bit pattern of a float2 as a uint2.</summary>
         /// <param name="x">The float2 bits to copy.</param>
