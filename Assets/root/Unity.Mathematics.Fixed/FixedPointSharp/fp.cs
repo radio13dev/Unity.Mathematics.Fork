@@ -5,38 +5,15 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Unity.Mathematics.Fixed {
-    public static class raw {
 
-        public const long max        = long.MaxValue;
-        public const long min        = long.MinValue;
-        public const long usable_max = 2147483648L;
-            
-        public const long pi          = 205887L;
-        public const long deg2rad          = 1143L;
-        public const long rad2deg          = 3754936L;
-        public const long epsilon          = 1;
-        public const long epsilonroot          = 256;
-        public const long epsilon_e9f          = 4096;
-        public const long epsilon_e6f          = 16384;
-        public const long e          = 178145L;
-            
-        public const long sqrt2 = 92672L;
-        public const long cos_pidiv8 = 60549L;
-        public const long sin_pidiv8 = 25074L;
-        public const long one_div_pi2 = 10430L;
-            
-        public const long taylorInvSqrtA = 117496L;
-        public const long taylorInvSqrtB = 55950L;
-    }
-    
     [Serializable]
     [StructLayout(LayoutKind.Explicit, Size = SIZE)]
     public struct fp : IEquatable<fp>, IComparable<fp> {
         public const int SIZE = 8;
 
-        public static readonly fp max        = new fp(raw.max);
-        public static readonly fp min        = new fp(raw.min);
-        public static readonly fp usable_max = new fp(raw.usable_max);
+        public static readonly fp max        = new fp(raw_max);
+        public static readonly fp min        = new fp(raw_min);
+        public static readonly fp usable_max = new fp(raw_usable_max);
         public static readonly fp usable_min = -usable_max;
 
         public static readonly fp _0   = 0;
@@ -98,32 +75,56 @@ namespace Unity.Mathematics.Fixed {
         public static readonly fp _1div41 = _1 / _41;
 
         public static readonly fp minus_one   = -1;
-        public static readonly fp pi          = new fp(raw.pi);
+        public static readonly fp pi          = new fp(raw_pi);
         public static readonly fp pi2         = pi * 2;
         public static readonly fp pi_quarter  = pi * _0_25;
         public static readonly fp pi_half     = pi * _0_50;
-        public static readonly fp one_div_pi2 = new fp(raw.one_div_pi2);//1 / pi2;
-        public static readonly fp sqrt2       = new fp(raw.sqrt2); //fixmath.Sqrt(fp._2);
+        public static readonly fp one_div_pi2 = new fp(raw_one_div_pi2);//1 / pi2;
+        public static readonly fp sqrt2       = new fp(raw_sqrt2); //fixmath.Sqrt(fp._2);
         public static readonly fp halfsqrt2       = sqrt2/2;
-        public static readonly fp deg2rad     = new fp(raw.deg2rad);
-        public static readonly fp rad2deg     = new fp(raw.rad2deg);
-        public static readonly fp epsilon     = new fp(raw.epsilon);
-        public static readonly fp epsilonroot     = new fp(raw.epsilonroot);
-        public static readonly fp epsilon_e9f     = new fp(raw.epsilon_e9f);
-        public static readonly fp epsilon_e6f     = new fp(raw.epsilon_e6f);
-        public static readonly fp e           = new fp(raw.e);
+        public static readonly fp deg2rad     = new fp(raw_deg2rad);
+        public static readonly fp rad2deg     = new fp(raw_rad2deg);
+        public static readonly fp epsilon     = new fp(raw_epsilon);
+        public static readonly fp epsilonroot     = new fp(raw_epsilonroot);
+        public static readonly fp epsilon_e9f     = new fp(raw_epsilon_e9f);
+        public static readonly fp epsilon_e6f     = new fp(raw_epsilon_e6f);
+        public static readonly fp e           = new fp(raw_e);
         
-        public static readonly fp _cos_pidiv8   = new fp(raw.cos_pidiv8);//fixmath.Cos(fp.pi/fp._8);
-        public static readonly fp _sin_pidiv8   = new fp(raw.sin_pidiv8);//fixmath.Sin(fp.pi/fp._8);
+        public static readonly fp _cos_pidiv8   = new fp(raw_cos_pidiv8);//fixmath.Cos(fp.pi/fp._8);
+        public static readonly fp _sin_pidiv8   = new fp(raw_sin_pidiv8);//fixmath.Sin(fp.pi/fp._8);
         
-        public static readonly fp taylorInvSqrtA = new fp(raw.taylorInvSqrtA);//ParseUnsafe(1.79284291400159f);
-        public static readonly fp taylorInvSqrtB = new fp(raw.taylorInvSqrtB);//ParseUnsafe(0.85373472095314f);
+        public static readonly fp taylorInvSqrtA = new fp(raw_taylorInvSqrtA);//ParseUnsafe(1.79284291400159f);
+        public static readonly fp taylorInvSqrtB = new fp(raw_taylorInvSqrtB);//ParseUnsafe(0.85373472095314f);
         
         public static readonly fp snoiseA = taylorInvSqrtA;
         public static readonly fp snoiseB = taylorInvSqrtB;
         
         public static readonly fp TODEGREES = ((fp)360)/fp.pi2;
         public static readonly fp TORADIANS = fp.pi2/((fp)360);
+        
+        // <CONSTANTS>
+        public const long raw_max        = long.MaxValue;
+        public const long raw_min        = long.MinValue;
+        public const long raw_usable_max = 2147483648L;
+        
+        public const long raw_pi          = 205887L;
+        public const long raw_deg2rad          = 1143L;
+        public const long raw_rad2deg          = 3754936L;
+        public const long raw_epsilon          = 1;
+        public const long raw_epsilonroot          = 256;
+        public const long raw_epsilon_e9f          = 4096;
+        public const long raw_epsilon_e6f          = 16384;
+        public const long raw_e          = 178145L;
+        
+        public const long raw_sqrt2 = 92672L;
+        public const long raw_cos_pidiv8 = 60549L;
+        public const long raw_sin_pidiv8 = 25074L;
+        public const long raw_one_div_pi2 = 10430L;
+        
+        public const long raw_taylorInvSqrtA = 117496L;
+        public const long raw_taylorInvSqrtB = 55950L;
+        // </CONSTANTS>
+        
 
         [FieldOffset(0)]
         public long value;
