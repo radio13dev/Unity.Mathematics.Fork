@@ -32,7 +32,7 @@ namespace Unity.Mathematics.Fixed {
         /// <param name="num">Angle in radians</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp Sin(fp num) {
-            num.value %= fp.pi2.value;
+            num.value %= fp.raw.pi*2;
             num       *= fp.one_div_pi2;
             var raw = fixlut.sin(num.value);
             fp result;
@@ -43,7 +43,7 @@ namespace Unity.Mathematics.Fixed {
         /// <param name="num">Angle in radians</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp Cos(fp num) {
-            num.value %= fp.pi2.value;
+            num.value %= fp.raw.pi*2;
             num       *= fp.one_div_pi2;
             return new fp(fixlut.cos(num.value));
         }
@@ -51,7 +51,7 @@ namespace Unity.Mathematics.Fixed {
         /// <param name="num">Angle in radians</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static fp Tan(fp num) {
-            num.value %= fp.pi2.value;
+            num.value %= fp.raw.pi*2;
             num       *= fp.one_div_pi2;
             return new fp(fixlut.tan(num.value));
         }

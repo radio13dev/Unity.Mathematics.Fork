@@ -248,4 +248,14 @@ public class fpTests
             Assert.IsTrue(fDif < Accuracy, $"|{fpA} - {fA}| == {fDif}");
         }
     }
+    
+    [Test]
+    public void custom()
+    {
+        long sqrt2 = fp.sqrt2.value;
+        long cos_pidiv8 = fp._cos_pidiv8.value;
+        long sin_pidiv8 = fp._sin_pidiv8.value;
+        long one_div_pi2 = fp.one_div_pi2.value;
+        Assert.IsTrue(true);
+    }
 }

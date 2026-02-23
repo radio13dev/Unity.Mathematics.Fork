@@ -78,8 +78,8 @@ namespace Unity.Mathematics.Fixed {
         public static readonly fp pi2         = pi * 2;
         public static readonly fp pi_quarter  = pi * _0_25;
         public static readonly fp pi_half     = pi * _0_50;
-        public static readonly fp one_div_pi2 = 1 / pi2;
-        public static readonly fp sqrt2       = fixmath.Sqrt(fp._2);
+        public static readonly fp one_div_pi2 = new fp(raw.one_div_pi2);//1 / pi2;
+        public static readonly fp sqrt2       = new fp(raw.sqrt2); //fixmath.Sqrt(fp._2);
         public static readonly fp halfsqrt2       = sqrt2/2;
         public static readonly fp deg2rad     = new fp(raw.deg2rad);
         public static readonly fp rad2deg     = new fp(raw.rad2deg);
@@ -89,8 +89,8 @@ namespace Unity.Mathematics.Fixed {
         public static readonly fp epsilon_e6f     = new fp(raw.epsilon_e6f);
         public static readonly fp e           = new fp(raw.e);
         
-        public static readonly fp _cos_pidiv8   = fixmath.Cos(fp.pi/fp._8);
-        public static readonly fp _sin_pidiv8   = fixmath.Sin(fp.pi/fp._8);
+        public static readonly fp _cos_pidiv8   = new fp(raw.cos_pidiv8);//fixmath.Cos(fp.pi/fp._8);
+        public static readonly fp _sin_pidiv8   = new fp(raw.sin_pidiv8);//fixmath.Sin(fp.pi/fp._8);
         
         public static readonly fp taylorInvSqrtA = new fp(raw.taylorInvSqrtA);//ParseUnsafe(1.79284291400159f);
         public static readonly fp taylorInvSqrtB = new fp(raw.taylorInvSqrtB);//ParseUnsafe(0.85373472095314f);
@@ -115,6 +115,11 @@ namespace Unity.Mathematics.Fixed {
             public const long epsilon_e9f          = 4096;
             public const long epsilon_e6f          = 16384;
             public const long e          = 178145L;
+            
+            public const long sqrt2 = 92672L;
+            public const long cos_pidiv8 = 60549L;
+            public const long sin_pidiv8 = 25074L;
+            public const long one_div_pi2 = 10430L;
             
             public const long taylorInvSqrtA = 117496L;
             public const long taylorInvSqrtB = 55950L;
