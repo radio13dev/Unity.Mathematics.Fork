@@ -11,10 +11,10 @@ namespace Unity.Mathematics.Fixed {
     public struct fp : IEquatable<fp>, IComparable<fp> {
         public const int SIZE = 8;
 
-        public static readonly fp max               ;//= new fp(raw_max);
-        public static readonly fp min               ;//= new fp(raw_min);
-        public static readonly fp usable_max        ;//= new fp(raw_usable_max);
-        public static readonly fp usable_min        ;//= -usable_max;
+        public static readonly fp max               = new fp(raw_max);
+        public static readonly fp min               = new fp(raw_min);
+        public static readonly fp usable_max        = new fp(raw_usable_max);
+        public static readonly fp usable_min        = -usable_max;
     
         public static readonly fp _0                ;//= 0;
         public static readonly fp _1                ;//= 1;
