@@ -35,7 +35,7 @@ namespace Unity.Mathematics.Fixed {
         public const int SIZE = 8;
 
         public static readonly fp max       ;// = new fp(raw.max);
-        public static readonly fp min       ;// = new fp(raw.min);
+        public static readonly fp min        = new fp(long.MinValue);
         public static readonly fp usable_max;// = new fp(raw.usable_max);
         public static readonly fp usable_min;// = -usable_max;
 
