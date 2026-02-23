@@ -252,10 +252,65 @@ public class fpTests
     [Test]
     public void custom()
     {
-        long sqrt2 = fp.sqrt2.value;
-        long cos_pidiv8 = fp._cos_pidiv8.value;
-        long sin_pidiv8 = fp._sin_pidiv8.value;
-        long one_div_pi2 = fp.one_div_pi2.value;
+    
+        Assert.AreEqual(fp. _0_001.value,            fp.raw__0_001            );
+        Assert.AreEqual(fp. _0_01.value,             fp.raw__0_01             );
+        Assert.AreEqual(fp. _0_02.value,             fp.raw__0_02             );
+        Assert.AreEqual(fp. _0_03.value,             fp.raw__0_03             );
+        Assert.AreEqual(fp. _0_04.value,             fp.raw__0_04             );
+        Assert.AreEqual(fp. _0_05.value,             fp.raw__0_05             );
+        Assert.AreEqual(fp. _0_10.value,             fp.raw__0_10             );
+        Assert.AreEqual(fp. _0_20.value,             fp.raw__0_20             );
+        Assert.AreEqual(fp. _0_30.value,             fp.raw__0_30             );
+        Assert.AreEqual(fp. _0_25.value,             fp.raw__0_25             );
+        Assert.AreEqual(fp. _0_33.value,             fp.raw__0_33             );
+        Assert.AreEqual(fp. _0_50.value,             fp.raw__0_50             );
+        Assert.AreEqual(fp. _0_6.value,              fp.raw__0_6              );
+        Assert.AreEqual(fp. _0_75.value,             fp.raw__0_75             );
+        Assert.AreEqual(fp. _0_8.value,              fp.raw__0_8              );
+        Assert.AreEqual(fp. _0_95.value,             fp.raw__0_95             );
+        Assert.AreEqual(fp. _0_99.value,             fp.raw__0_99             );
+        Assert.AreEqual(fp. _0_999.value,            fp.raw__0_999            );
+        Assert.AreEqual(fp. _1_001.value,            fp.raw__1_001            );
+        Assert.AreEqual(fp. _1_01.value,             fp.raw__1_01             );
+        Assert.AreEqual(fp. _1_10.value,             fp.raw__1_10             );
+        Assert.AreEqual(fp. _1_50.value,             fp.raw__1_50             );
+        Assert.AreEqual(fp. _2_2.value,              fp.raw__2_2              );
+        Assert.AreEqual(fp. _2_3.value,              fp.raw__2_3              );
+        
+        Assert.AreEqual(fp. _0_0005.value,           fp.raw__0_0005           );  
+        Assert.AreEqual(fp. _0_9995.value,           fp.raw__0_9995           );
+        
+        Assert.AreEqual(fp. _1div3.value,            fp.raw__1div3            );      
+        Assert.AreEqual(fp. _1div6.value,            fp.raw__1div6            );
+        Assert.AreEqual(fp. _1div41.value,           fp.raw__1div41           );
+    
+        Assert.AreEqual(fp. minus_one.value,         fp.raw_minus_one         );
+        Assert.AreEqual(fp. pi.value,                fp.raw_pi                );
+        Assert.AreEqual(fp. pi2.value,               fp.raw_pi2               );
+        Assert.AreEqual(fp. pi_quarter.value,        fp.raw_pi_quarter        );
+        Assert.AreEqual(fp. pi_half.value,           fp.raw_pi_half           );
+        Assert.AreEqual(fp. one_div_pi2.value,       fp.raw_one_div_pi2       );
+        Assert.AreEqual(fp. sqrt2.value,             fp.raw_sqrt2             );
+        Assert.AreEqual(fp. halfsqrt2.value,         fp.raw_halfsqrt2         );
+        Assert.AreEqual(fp. deg2rad.value,           fp.raw_deg2rad           );
+        Assert.AreEqual(fp. rad2deg.value,           fp.raw_rad2deg           );
+        Assert.AreEqual(fp. epsilon.value,           fp.raw_epsilon           );
+        Assert.AreEqual(fp. epsilonroot.value,       fp.raw_epsilonroot       );
+        Assert.AreEqual(fp. epsilon_e9f.value,       fp.raw_epsilon_e9f       );
+        Assert.AreEqual(fp. epsilon_e6f.value,       fp.raw_epsilon_e6f       );
+        Assert.AreEqual(fp. e.value,                 fp.raw_e                 );
+        Assert.AreEqual(fp. _cos_pidiv8.value,       fp.raw__cos_pidiv8       );      
+        Assert.AreEqual(fp. _sin_pidiv8.value,       fp.raw__sin_pidiv8       );
+        
+        Assert.AreEqual(fp. taylorInvSqrtA.value,    fp.raw_taylorInvSqrtA    );
+        Assert.AreEqual(fp. taylorInvSqrtB.value,    fp.raw_taylorInvSqrtB    );
+        
+        Assert.AreEqual(fp. snoiseA.value,           fp.raw_snoiseA           );
+        Assert.AreEqual(fp. snoiseB.value,           fp.raw_snoiseB           );
+        
+        Assert.AreEqual(fp. TODEGREES.value,         fp.raw_TODEGREES         );
+        Assert.AreEqual(fp. TORADIANS.value,         fp.raw_TORADIANS         );
         Assert.IsTrue(true);
     }
 }
