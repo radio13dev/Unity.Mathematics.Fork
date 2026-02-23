@@ -5,6 +5,30 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Unity.Mathematics.Fixed {
+    public static class raw {
+
+        public const long max        = long.MaxValue;
+        public const long min        = long.MinValue;
+        public const long usable_max = 2147483648L;
+            
+        public const long pi          = 205887L;
+        public const long deg2rad          = 1143L;
+        public const long rad2deg          = 3754936L;
+        public const long epsilon          = 1;
+        public const long epsilonroot          = 256;
+        public const long epsilon_e9f          = 4096;
+        public const long epsilon_e6f          = 16384;
+        public const long e          = 178145L;
+            
+        public const long sqrt2 = 92672L;
+        public const long cos_pidiv8 = 60549L;
+        public const long sin_pidiv8 = 25074L;
+        public const long one_div_pi2 = 10430L;
+            
+        public const long taylorInvSqrtA = 117496L;
+        public const long taylorInvSqrtB = 55950L;
+    }
+    
     [Serializable]
     [StructLayout(LayoutKind.Explicit, Size = SIZE)]
     public struct fp : IEquatable<fp>, IComparable<fp> {
@@ -100,30 +124,6 @@ namespace Unity.Mathematics.Fixed {
         
         public static readonly fp TODEGREES = ((fp)360)/fp.pi2;
         public static readonly fp TORADIANS = fp.pi2/((fp)360);
-        
-        public static class raw {
-
-            public const long max        = long.MaxValue;
-            public const long min        = long.MinValue;
-            public const long usable_max = 2147483648L;
-            
-            public const long pi          = 205887L;
-            public const long deg2rad          = 1143L;
-            public const long rad2deg          = 3754936L;
-            public const long epsilon          = 1;
-            public const long epsilonroot          = 256;
-            public const long epsilon_e9f          = 4096;
-            public const long epsilon_e6f          = 16384;
-            public const long e          = 178145L;
-            
-            public const long sqrt2 = 92672L;
-            public const long cos_pidiv8 = 60549L;
-            public const long sin_pidiv8 = 25074L;
-            public const long one_div_pi2 = 10430L;
-            
-            public const long taylorInvSqrtA = 117496L;
-            public const long taylorInvSqrtB = 55950L;
-        }
 
         [FieldOffset(0)]
         public long value;
